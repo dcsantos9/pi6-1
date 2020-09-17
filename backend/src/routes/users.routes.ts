@@ -15,8 +15,8 @@ upload.array
 usersRouter.get('/', async (request, response) => {
   const userRepository = getRepository(User);
   const usersAllData = await userRepository.find();
-  const users = usersAllData.map(({name,email, surname, phone, bio, age, address, avatar}) => {
-    return { name, email, surname, phone, bio, age, address, avatar }
+  const users = usersAllData.map(({id, name,email, surname, phone, bio, age, address, avatar}) => {
+    return { id, name, email, surname, phone, bio, age, address, avatar }
   })
 
   return response.json(users);
