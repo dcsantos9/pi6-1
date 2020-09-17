@@ -9,8 +9,23 @@ class User {
     name: string;
 
     @Column()
+    surname: string;
+
+    @Column()
+    phone: string;
+
+    @Column()
+    bio: string;
+
+    @Column('integer')
+    age: string;
+
+    @Column()
+    address: string;
+
+    @Column()
     email: string;
-   
+
     @Column()
     avatar: string;
 

@@ -4,15 +4,27 @@ import uploadConfig from '../config/upload';
 import CreateUserService from '../services/CreateUserService';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import UpdateAvatarUserService from '../services/UpdateUserAvatarService';
+import { getRepository } from 'typeorm';
+import User from '../models/User';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
 
 upload.array
 
-usersRouter.post('/', async (request, response) => { 
+usersRouter.get('/', async (request, response) => {
+  const userRepository = getRepository(User);
+  const usersAllData = await userRepository.find();
+  const users = usersAllData.map(({name,email, surname, phone, bio, age, address, avatar}) => {
+    return { name, email, surname, phone, bio, age, address, avatar }
+  })
 
-        const { name, email, password } = request.body;
+  return response.json(users);
+});
+
+usersRouter.post('/', async (request, response) => {
+
+        const { name, email, password , surname, phone, bio, age, address} = request.body;
 
         const createUser = new CreateUserService();
 
@@ -20,9 +32,14 @@ usersRouter.post('/', async (request, response) => {
             name,
             email,
             password,
+            surname,
+            phone,
+            bio,
+            age,
+            address
         });
         delete user.password;
-        
+
         return response.json(user);
 
 });
@@ -37,7 +54,7 @@ usersRouter.patch('/avatar', ensureAuthenticated, upload.single('avatar'), async
         delete user.password
         return response.json(user);
 
-    
+
 } );
 
  export default usersRouter;
