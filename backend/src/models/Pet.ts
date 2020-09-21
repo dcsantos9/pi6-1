@@ -1,6 +1,12 @@
 import { Entity, Column, ManyToOne, JoinColumn, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import User from './User';
 
+export enum Species {
+    DOG = "dog",
+    CAT = "cat",
+    OTHER = "other"
+}
+
 @Entity('pets')
 class Pet {
     @PrimaryGeneratedColumn('uuid')
@@ -9,17 +15,18 @@ class Pet {
     @Column()
     name: string;
 
-    @Column()
-    type: string;
+    @Column({
+        type: "enum",
+        enum: Species,
+        default: null
+    })
+    species: Species
 
     @Column()
-    weight: string;
+    particulars: string;
 
     @Column()
-    bio: string;
-
-    @Column('integer')
-    age: string;
+    info: string;
 
     @Column()
     avatar: string;

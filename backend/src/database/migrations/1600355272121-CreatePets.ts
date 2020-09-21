@@ -19,26 +19,23 @@ export class CreatePets1600355272121 implements MigrationInterface {
                     isNullable: false,
                 },
                 {
-                    name: 'type',
+                    name: 'species',
+                    type: 'enum',
+                    enum: ['dog','cat','other'],
+                    isNullable: false,
+                },
+                {
+                    name: 'particulars',
                     type: 'varchar',
                     isNullable: true,
                 },
                 {
-                    name: 'weight',
+                    name: 'avatar',
                     type: 'varchar',
                     isNullable: true,
                 },
                 {
-                    name: 'age',
-                    type: 'integer',
-                    isNullable: true,
-                },{
-                  name: 'avatar',
-                  type: 'varchar',
-                  isNullable: true,
-                },
-                {
-                    name: 'bio',
+                    name: 'info',
                     type: 'varchar',
                     isNullable: true,
                 },
@@ -74,8 +71,8 @@ export class CreatePets1600355272121 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-      await queryRunner.dropTable('pets');
       await queryRunner.dropForeignKey('pets', 'PetUser');
+      await queryRunner.dropTable('pets');
 
     }
 

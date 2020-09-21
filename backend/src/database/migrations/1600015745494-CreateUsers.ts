@@ -13,7 +13,13 @@ export default class CreateUsers1600015745494 implements MigrationInterface {
                         type: 'uuid',
                         isPrimary:  true,
                         generationStrategy: 'uuid',
-                        default: 'uuid_generate_v4()'                    },
+                        default: 'uuid_generate_v4()'
+                    },
+                    {
+                        name: 'type',
+                        type: 'enum',
+                        enum: ['adopter', 'institution']
+                    },
                     {
                         name: 'name',
                         type: 'varchar',
@@ -26,21 +32,58 @@ export default class CreateUsers1600015745494 implements MigrationInterface {
                     },
                     {
                         name: 'phone',
+                        type: 'enum',
+                        enum: ['mobile', 'home', 'work'],
+                        isNullable: true,
+                    },
+                    {
+                        name: 'birthday',
+                        type: 'timestamp',
+                        isNullable: true,
+                    },
+                    {
+                        name: 'street',
                         type: 'varchar',
                         isNullable: true,
                     },
                     {
-                        name: 'age',
-                        type: 'integer',
-                        isNullable: true,
-                    },
-                    {
-                        name: 'address',
+                        name: 'number',
                         type: 'varchar',
                         isNullable: true,
                     },
                     {
-                        name: 'bio',
+                        name: 'complement',
+                        type: 'varchar',
+                        isNullable: true,
+                    },
+                    {
+                        name: 'neightborhood',
+                        type: 'varchar',
+                        isNullable: true,
+                    },
+                    {
+                        name: 'city',
+                        type: 'varchar',
+                        isNullable: true,
+                    },
+                    {
+                        name: 'estate',
+                        type: 'varchar',
+                        isNullable: true,
+                    },
+
+                    {
+                        name: 'zipcode',
+                        type: 'varchar',
+                        isNullable: true,
+                    },
+                    {
+                        name: 'social_id',
+                        type: 'varchar',
+                        isNullable: true,
+                    },
+                    {
+                        name: 'info',
                         type: 'varchar',
                         isNullable: true,
                     },

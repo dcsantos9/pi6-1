@@ -1,5 +1,16 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
+export enum UserType {
+    ADOPTER="adopter",
+    INSTITUTION="institution"
+}
+
+export enum PhoneType {
+    MOBILE = "mobile",
+    HOME = "home",
+    WORK = "work"
+}
+
 @Entity('users')
 class User {
     @PrimaryGeneratedColumn('uuid')
@@ -8,20 +19,49 @@ class User {
     @Column()
     name: string;
 
-    @Column()
-    surname: string;
+    @Column({
+        type: "enum",
+        enum: UserType,
+        default: UserType.ADOPTER
+    })
+    type: UserType
+
+    @Column({
+        type: "enum",
+        enum: PhoneType,
+        default: PhoneType.MOBILE
+    })
+    phone: PhoneType
 
     @Column()
-    phone: string;
+    info: string;
+
+    @Column('timestamp')
+    birthday: string;
 
     @Column()
-    bio: string;
-
-    @Column('integer')
-    age: string;
+    street: string;
 
     @Column()
-    address: string;
+    number: string;
+
+    @Column()
+    complement: string;
+
+    @Column()
+    neightborhood: string;
+
+    @Column()
+    city: string;
+
+    @Column()
+    estate: string;
+
+    @Column()
+    zipcode: string;
+
+    @Column()
+    social_id: string;
 
     @Column()
     email: string;
