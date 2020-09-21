@@ -4,17 +4,26 @@ import User from "../models/User";
 import AppError from '../errors/AppError';
 
 interface Request{
-    name: string;
-    email: string;
-    password: string;
-    surname: string;
+    name : string;
+    type: string;
+    phone_type: string;
     phone: string;
-    bio: string;
-    age: string;
-    address: string;
+    info: string;
+    email: string;
+    birthday: string;
+    street: string;
+    complement: string;
+    number: string;
+    neightborhood: string;
+    city: string;
+    estate: string;
+    zipcode: string;
+    social_id: string;
+    password: string;
 }
+
 class CreateUserService {
-    public async execute({name, email, password, surname, phone, bio, age, address}: Request): Promise<User>{
+    public async execute({name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, password}: Request): Promise<User>{
         const usersRepository = getRepository(User);
         const checkUserExists = await usersRepository.findOne({
             where: {email},
@@ -26,13 +35,22 @@ class CreateUserService {
 
         const user = usersRepository.create({
             name,
-            email,
-            password: hashedPassword,
-            surname,
+            type,
+            phone_type,
             phone,
-            bio,
-            age,
-            address
+            info,
+            email,
+            birthday,
+            street,
+            complement,
+            neightborhood,
+            number,
+            city,
+            estate,
+            zipcode,
+            social_id,
+            password: hashedPassword,
+
         });
 
         await usersRepository.save(user);

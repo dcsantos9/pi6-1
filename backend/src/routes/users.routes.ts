@@ -15,8 +15,8 @@ upload.array
 usersRouter.get('/', async (request, response) => {
   const userRepository = getRepository(User);
   const usersAllData = await userRepository.find();
-  const users = usersAllData.map(({id, name,email, surname, phone, bio, age, address, avatar}) => {
-    return { id, name, email, surname, phone, bio, age, address, avatar }
+  const users = usersAllData.map(({id, name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, avatar}) => {
+    return { id, name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, avatar }
   })
 
   return response.json(users);
@@ -24,19 +24,27 @@ usersRouter.get('/', async (request, response) => {
 
 usersRouter.post('/', async (request, response) => {
 
-        const { name, email, password , surname, phone, bio, age, address} = request.body;
+        const { name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, password } = request.body;
 
         const createUser = new CreateUserService();
 
         const user = await createUser.execute({
             name,
-            email,
-            password,
-            surname,
+            type,
+            phone_type,
             phone,
-            bio,
-            age,
-            address
+            info,
+            email,
+            birthday,
+            street,
+            complement,
+            number,
+            neightborhood,
+            city,
+            estate,
+            zipcode,
+            social_id,
+            password
         });
         delete user.password;
 

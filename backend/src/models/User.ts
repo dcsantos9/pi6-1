@@ -31,7 +31,10 @@ class User {
         enum: PhoneType,
         default: PhoneType.MOBILE
     })
-    phone: PhoneType
+    phone_type: PhoneType
+
+    @Column()
+    phone: string;
 
     @Column()
     info: string;
