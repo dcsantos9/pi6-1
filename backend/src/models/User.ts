@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import Pet from './Pet'
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinTable } from 'typeorm';
 
 export enum UserType {
     ADOPTER="adopter",
@@ -74,6 +75,14 @@ class User {
 
     @Column()
     password: string;
+
+    @ManyToMany(type => Pet )
+    @JoinTable()
+    favorite_pets: Pet;
+
+    @ManyToMany(type => Pet )
+    @JoinTable()
+    candidate_pets: Pet;
 
     @CreateDateColumn()
     created_at: Date;
