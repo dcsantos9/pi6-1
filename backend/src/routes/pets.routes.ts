@@ -12,10 +12,11 @@ upload.array
 
 petsRouter.get('/', async (request, response) => {
   const petRepository = getRepository(Pet);
+
   const petsAllData = await petRepository.find();
-  const pets = petsAllData.map(({ id, user_id, name, type, age, bio, weight, avatar}) => {
-    console.log(user_id)
-    return { id, user_id, name, type, age, bio, weight, avatar }
+
+  const pets = petsAllData.map(({ id, user_id, name, species, particulars, info, avatar}) => {
+    return { id, user_id, name, species, particulars, info, avatar }
   })
 
   return response.json(pets);
@@ -23,12 +24,12 @@ petsRouter.get('/', async (request, response) => {
 
 petsRouter.post('/', async (request, response) => {
 
-        const { user_id, name, type, age, bio, weight} = request.body;
+        const { user_id, name, species, particulars, info} = request.body;
 
         const createPet = new CreatePetService();
 
         const pet = await createPet.execute({
-          user_id, name, type, age, bio, weight
+            user_id, name, species, particulars, info
         });
 
         return response.json(pet);

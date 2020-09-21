@@ -6,22 +6,20 @@ import AppError from '../errors/AppError';
 interface Request{
     user_id: string;
     name: string;
-    bio: string;
-    age: string;
-    type: string;
-    weight: string;
+    species: string;
+    particulars: string;
+    info: string;
 }
 class CreatePetService {
-    public async execute({user_id, name, bio, age, weight, type}: Request): Promise<Pet>{
+    public async execute({user_id, name, species, particulars, info}: Request): Promise<Pet>{
         const petsRepository = getRepository(Pet);
 
         const pet = petsRepository.create({
             user_id,
             name,
-            bio,
-            age,
-            type,
-            weight,
+            species,
+            particulars,
+            info
         });
 
         await petsRepository.save(pet);
