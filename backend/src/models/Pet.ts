@@ -18,7 +18,7 @@ class Pet {
     @Column({
         type: "enum",
         enum: Species,
-        default: null
+        default: Species.OTHER
     })
     species: Species
 

@@ -20,6 +20,7 @@ class User {
     @Column()
     name: string;
 
+
     @Column({
         type: "enum",
         enum: UserType,
@@ -48,6 +49,7 @@ class User {
 
     @Column()
     number: string;
+    isNullable: true;
 
     @Column()
     complement: string;
@@ -76,13 +78,13 @@ class User {
     @Column()
     password: string;
 
-    @ManyToMany(type => Pet )
+    @ManyToMany(type => Pet, {cascade:  ['insert', 'update'],  eager: true })
     @JoinTable()
-    favorite_pets: Pet;
+    favorite_pets: Pet[];
 
-    @ManyToMany(type => Pet )
+    @ManyToMany(type => Pet , {cascade:  ['insert', 'update'],  eager: true })
     @JoinTable()
-    candidate_pets: Pet;
+    candidate_pets: Pet[];
 
     @CreateDateColumn()
     created_at: Date;

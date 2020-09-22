@@ -6,6 +6,7 @@ import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import UpdateAvatarUserService from '../services/UpdateUserAvatarService';
 import { getRepository } from 'typeorm';
 import User from '../models/User';
+import Pet from '../models/Pet';
 import AppError from '../errors/AppError';
 
 const usersRouter = Router();
@@ -15,9 +16,10 @@ upload.array
 
 usersRouter.get('/', async (request, response) => {
   const userRepository = getRepository(User);
-  const usersAllData = await userRepository.find();
-  const users = usersAllData.map(({id, name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, avatar}) => {
-    return { id, name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, avatar }
+  const usersAllData = await userRepository.find({relations: ["favorite_pets", "candidate_pets"]});
+
+  const users = usersAllData.map(({id, name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, avatar, favorite_pets, candidate_pets}) => {
+    return { id, name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, avatar, favorite_pets, candidate_pets }
   })
 
   return response.json(users);
@@ -55,19 +57,41 @@ usersRouter.post('/', async (request, response) => {
 
 usersRouter.put('/:id', async (request, response) => {
     const userRepo = getRepository(User);
+    const petRepo = getRepository(Pet);
 
-    const user = await userRepo.findOne(request.params.id);
+    const user = await userRepo.findOne(
+        { where: { id: request.params.id},
+
+        });
 
     if (!user) {
         throw new AppError('User not found', 401);
     }
+    const { name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, password, favorite_pets, candidate_pets } = request.body;
+    const fav_pet = await petRepo.findOne(favorite_pets);
+    const cand_pet = await petRepo.findOne(candidate_pets);
 
-    await userRepo.update({ id: request.params.id}, request.body);
+    if (fav_pet) {
+        user.favorite_pets.push(fav_pet);
+    }
 
-    const user_updated = await userRepo.findOne(request.params.id);
+    if (cand_pet) {
+        user.candidate_pets.push(cand_pet);
+    }
 
-    delete user_updated.password;
-    return response.json(user_updated);
+    const merged = {...user,...request.body}
+
+    try{
+    await userRepo.save(merged);
+     } catch (err) {
+     console.log(err);
+    }
+
+
+    //const user_updated = await userRepo.findOne(request.params.id);
+
+    delete merged.password;
+    return response.json(merged);
 
 });
 
