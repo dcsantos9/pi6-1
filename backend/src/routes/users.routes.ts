@@ -25,6 +25,30 @@ usersRouter.get('/', async (request, response) => {
   return response.json(users);
 });
 
+usersRouter.get('/candidate/:id', async (request, response) => {
+    const userRepository = getRepository(User);
+    const usersAllData = await userRepository.find({relations: ["favorite_pets", "candidate_pets"]});
+
+    const users = usersAllData.map(({id, name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, avatar, favorite_pets, candidate_pets}) => {
+      return { id, name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, avatar, favorite_pets, candidate_pets }
+    })
+    let candidates = [];
+
+    const candidate = users.map((user) => {
+        const username = user.candidate_pets.map((pet) => {
+                if( pet.id === request.params.id ) {
+                    candidates.push(user)
+
+                }
+            });
+
+        }
+    );
+
+    return response.json(candidates);
+  });
+
+
 usersRouter.post('/', async (request, response) => {
 
         const { name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, password } = request.body;
@@ -56,6 +80,8 @@ usersRouter.post('/', async (request, response) => {
 });
 
 usersRouter.put('/:id', async (request, response) => {
+    // TODO : Refatorar e Migrar lógica de checkagem para serviço
+
     const userRepo = getRepository(User);
     const petRepo = getRepository(Pet);
 
@@ -81,14 +107,7 @@ usersRouter.put('/:id', async (request, response) => {
 
     const merged = {...user,...request.body}
 
-    try{
     await userRepo.save(merged);
-     } catch (err) {
-     console.log(err);
-    }
-
-
-    //const user_updated = await userRepo.findOne(request.params.id);
 
     delete merged.password;
     return response.json(merged);
