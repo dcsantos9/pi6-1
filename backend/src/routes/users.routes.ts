@@ -6,6 +6,7 @@ import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import UpdateAvatarUserService from '../services/UpdateUserAvatarService';
 import { getRepository } from 'typeorm';
 import User from '../models/User';
+import AppError from '../errors/AppError';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
@@ -49,6 +50,24 @@ usersRouter.post('/', async (request, response) => {
         delete user.password;
 
         return response.json(user);
+
+});
+
+usersRouter.put('/:id', async (request, response) => {
+    const userRepo = getRepository(User);
+
+    const user = await userRepo.findOne(request.params.id);
+
+    if (!user) {
+        throw new AppError('User not found', 401);
+    }
+
+    await userRepo.update({ id: request.params.id}, request.body);
+
+    const user_updated = await userRepo.findOne(request.params.id);
+
+    delete user_updated.password;
+    return response.json(user_updated);
 
 });
 

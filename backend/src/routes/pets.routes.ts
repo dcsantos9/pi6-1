@@ -4,6 +4,7 @@ import uploadConfig from '../config/upload';
 import CreatePetService from '../services/CreatePetService';
 import { getRepository } from 'typeorm';
 import Pet from '../models/Pet';
+import AppError from '../errors/AppError';
 
 const petsRouter = Router();
 const upload = multer(uploadConfig);
@@ -33,6 +34,24 @@ petsRouter.post('/', async (request, response) => {
         });
 
         return response.json(pet);
+
+});
+
+petsRouter.put('/:id', async (request, response) => {
+
+    const petRepo = getRepository(Pet);
+
+    const pet = await petRepo.findOne(request.params.id);
+
+    if (!pet) {
+        throw new AppError('Pet not found', 401);
+    }
+
+    await petRepo.update({ id: request.params.id}, request.body);
+
+    const pet_updated = await petRepo.findOne(request.params.id);
+
+    return response.json(pet_updated);
 
 });
 
