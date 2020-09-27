@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import signUpBG from '../../assets/dog-signup.jpg';
+import signUpBG from '../../assets/dog-signup2.jpg';
 import {shade} from 'polished';
 export const Container = styled.div`
     height: 100vh;
