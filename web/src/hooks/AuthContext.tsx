@@ -9,6 +9,7 @@ interface SignIntCredendials {
 interface AuthContextData {
     user: object;
     signIn(credentials: SignIntCredendials): Promise<void>;
+    signOut(): void;
 }
 
 interface AuthState {
@@ -44,8 +45,15 @@ const AuthContext = createContext<AuthContextData>(
          setData({ token, user});
     },[]);
 
+    const signOut = useCallback(()=>{
+        localStorage.removeItem('@QueroPet:token');
+        localStorage.removeItem('@QueroPet:user');
+        setData({} as AuthState);
+
+     },[]);
+
     return(
-        <AuthContext.Provider value={{ user: data.user, signIn }} >
+        <AuthContext.Provider value={{ user: data.user, signIn, signOut }} >
             {children}
         </AuthContext.Provider>
     );
