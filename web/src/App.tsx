@@ -4,7 +4,9 @@ import SignIn from './pages/SignIn';
 
 const App: React.FC = () => (
     <>
-        <SignIn></SignIn>
+        <authContext.Provider value={{ name: 'Foo'}}>
+            <SignIn/>
+        </authContext.Provider>
         <GlobalStyle/>
     </>
 );
