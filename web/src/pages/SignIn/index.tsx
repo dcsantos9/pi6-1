@@ -17,7 +17,8 @@ interface SignInFormData {
 
 const SignIn: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
-    const {signIn} = useContext(AuthContext);
+    const {user, signIn} = useContext(AuthContext);
+    console.log(user);
 
     const handleSubmit = useCallback( async (data: SignInFormData) => {
 
@@ -51,7 +52,7 @@ const SignIn: React.FC = () => {
                     <h1>Faça seu Logon</h1>
 
                     <Input icon={FiMail} name="email" placeholder="E-Mail"/>
-                    <Input icon={FiLock} name="password" placeholder="Senha" />
+                    <Input icon={FiLock} type="password" name="password" placeholder="Senha" />
                     <Button type="submit">Entrar</Button>
                     <a href="forgot">Esqueci minha senha</a>
 
