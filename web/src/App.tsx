@@ -1,7 +1,7 @@
 import React from 'react';
 import GlobalStyle from './styles/global';
 import SignIn from './pages/SignIn';
-import { AuthProvider } from './hooks/AuthContext';
+import { AuthProvider } from './hooks/auth';
 import ToastContainer from './components/ToastContainer';
 
 import AppProvider from './hooks';
