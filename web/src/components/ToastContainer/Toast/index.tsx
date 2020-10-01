@@ -31,7 +31,7 @@ const Toast: React.FC<ToastProps> = ({ message, style  }) => {
 
             <div>
                 <strong>{message.title}</strong>
-                    {message.description &&  <p>Não foi possível fazer login na aplicação</p>}
+                    <p>{message.description}</p>
                 <button onClick={() => removeToast(message.id)} type="button"><FiXCircle size={18} /></button>
             </div>
         </Container>
