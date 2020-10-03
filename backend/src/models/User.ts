@@ -20,59 +20,64 @@ class User {
     @Column()
     name: string;
 
-
     @Column({
         type: "enum",
         enum: UserType,
-        default: UserType.ADOPTER
+        default: UserType.ADOPTER,
+        nullable: true
     })
     type: UserType
+
 
     @Column({
         type: "enum",
         enum: PhoneType,
-        default: PhoneType.MOBILE
+        default: PhoneType.MOBILE,
+        nullable: true
     })
-    phone_type: PhoneType
+    phone_type: PhoneType;
 
-    @Column()
+    @Column({nullable: true})
     phone: string;
 
-    @Column()
+    @Column({nullable: true})
     info: string;
 
-    @Column('timestamp')
+    @Column({
+        type: "timestamp",
+        nullable: true
+    })
     birthday: string;
 
-    @Column()
+    @Column({nullable: true})
     street: string;
 
-    @Column()
+    @Column({nullable: true})
     number: string;
     isNullable: true;
 
-    @Column()
+    @Column({nullable: true})
     complement: string;
 
-    @Column()
+    @Column({nullable: true})
     neightborhood: string;
 
-    @Column()
+    @Column({nullable: true})
     city: string;
 
-    @Column()
+    @Column({nullable: true})
     estate: string;
 
-    @Column()
+    @Column({nullable: true})
     zipcode: string;
 
-    @Column()
+    @Column({nullable: true})
     social_id: string;
 
     @Column()
     email: string;
 
-    @Column()
+    @Column({nullable: true})
     avatar: string;
 
     @Column()

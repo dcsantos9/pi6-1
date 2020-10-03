@@ -23,7 +23,7 @@ interface Request{
 }
 
 class CreateUserService {
-    public async execute({name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, password}: Request): Promise<User>{
+    public async execute({name, type = 'adopter', phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, password}: Request): Promise<User>{
         const usersRepository = getRepository(User);
         const checkUserExists = await usersRepository.findOne({
             where: {email},
@@ -52,8 +52,12 @@ class CreateUserService {
             password: hashedPassword,
 
         });
+        try{
+            await usersRepository.save(user);
+        } catch (err) {
+            console.log(err);
+        }
 
-        await usersRepository.save(user);
 
         return user;
     }
