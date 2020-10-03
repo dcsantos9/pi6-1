@@ -29,8 +29,8 @@ const AuthProvider: React.FC = ({ children }) => {
 
      useEffect(() => {
         async function loadStoragedData(): Promise<void> {
-            const token = await AsyncStorage.getItem('@EasyBarber:token');
-            const user = await AsyncStorage.getItem('@EasyBarber:user');
+            const token = await AsyncStorage.getItem('@QueroPet:token');
+            const user = await AsyncStorage.getItem('@QueroPet:user');
 
             if(token && user ){
                 setData({ token: token, user: JSON.parse(user) });
@@ -46,15 +46,15 @@ const AuthProvider: React.FC = ({ children }) => {
          });
          const { token, user } = response.data;
 
-         await AsyncStorage.setItem('@EasyBarber:token', token);
-         await AsyncStorage.setItem('@EasyBarber:user', JSON.stringify(user));
+         await AsyncStorage.setItem('@QueroPet:token', token);
+         await AsyncStorage.setItem('@QueroPet:user', JSON.stringify(user));
 
          setData({ token, user});
      },[]);
 
      const signOut = useCallback(async ()=>{
-        await AsyncStorage.removeItem('@EasyBarber:token');
-        await AsyncStorage.removeItem('@EasyBarber:user');
+        await AsyncStorage.removeItem('@QueroPet:token');
+        await AsyncStorage.removeItem('@QueroPet:user');
         setData({} as AuthState);
 
      },[]);
