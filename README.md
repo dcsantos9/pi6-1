@@ -1,4 +1,4 @@
-# KEROPET
+# QueroPet
 
 pi6 univesp
 
