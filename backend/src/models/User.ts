@@ -12,6 +12,11 @@ export enum PhoneType {
     WORK = "work"
 }
 
+export enum SocialIdType {
+    CNPJ = "CNPJ",
+    CPF = "CPF"
+}
+
 @Entity('users')
 class User {
     @PrimaryGeneratedColumn('uuid')
@@ -66,13 +71,21 @@ class User {
     city: string;
 
     @Column({nullable: true})
-    estate: string;
+    state: string;
 
     @Column({nullable: true})
     zipcode: string;
 
     @Column({nullable: true})
     social_id: string;
+
+    @Column({
+        type: "enum",
+        enum: SocialIdType,
+        default: SocialIdType.CNPJ,
+        nullable: true
+    })
+    social_id_type: SocialIdType;    
 
     @Column()
     email: string;
