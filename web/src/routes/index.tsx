@@ -7,6 +7,7 @@ import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import Test from '../pages/Test';
 import CadastroInstituicao from '../pages/CadastroInstituicao';
+import CardPet from '../pages/CardPet';
 
 
 const Routes: React.FC = () => (
@@ -18,6 +19,7 @@ const Routes: React.FC = () => (
        
         {/*Necessario voltar telas a seguir para private */}
         <Route path="/cadastroInstituicao" exact component={CadastroInstituicao}  />
+        <Route path="/cardPet" exact component={CardPet}  />
     </Switch>
 );
 

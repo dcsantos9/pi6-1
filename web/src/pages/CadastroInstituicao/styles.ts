@@ -123,7 +123,7 @@ export const AnimationContainer = styled.div`
         
     }
     .button{
-        width: 150px;    
+        width: 45%;    
         height: 50px;
         padding: 0px;              
     }
