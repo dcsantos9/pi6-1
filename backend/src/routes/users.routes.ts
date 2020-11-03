@@ -18,8 +18,8 @@ usersRouter.get('/', async (request, response) => {
   const userRepository = getRepository(User);
   const usersAllData = await userRepository.find({relations: ["favorite_pets", "candidate_pets"]});
 
-  const users = usersAllData.map(({id, name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, avatar, favorite_pets, candidate_pets}) => {
-    return { id, name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, avatar, favorite_pets, candidate_pets }
+  const users = usersAllData.map(({id, name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, state, zipcode, social_id, avatar, favorite_pets, candidate_pets}) => {
+    return { id, name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, state, zipcode, social_id, avatar, favorite_pets, candidate_pets }
   })
 
   return response.json(users);
@@ -29,8 +29,8 @@ usersRouter.get('/candidate/:id', async (request, response) => {
     const userRepository = getRepository(User);
     const usersAllData = await userRepository.find({relations: ["favorite_pets", "candidate_pets"]});
 
-    const users = usersAllData.map(({id, name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, avatar, favorite_pets, candidate_pets}) => {
-      return { id, name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, avatar, favorite_pets, candidate_pets }
+    const users = usersAllData.map(({id, name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, state, zipcode, social_id, avatar, favorite_pets, candidate_pets}) => {
+      return { id, name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, state, zipcode, social_id, avatar, favorite_pets, candidate_pets }
     })
     let candidates = [];
 
@@ -51,7 +51,7 @@ usersRouter.get('/candidate/:id', async (request, response) => {
 
 usersRouter.post('/', async (request, response) => {
 
-        const { name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, password } = request.body;
+        const { name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, state, zipcode, social_id, password } = request.body;
 
         const createUser = new CreateUserService();
 
@@ -68,7 +68,7 @@ usersRouter.post('/', async (request, response) => {
             number,
             neightborhood,
             city,
-            estate,
+            state,
             zipcode,
             social_id,
             password
@@ -93,7 +93,7 @@ usersRouter.put('/:id', async (request, response) => {
     if (!user) {
         throw new AppError('User not found', 401);
     }
-    const { name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, estate, zipcode, social_id, password, favorite_pets, candidate_pets } = request.body;
+    const { name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, state, zipcode, social_id, password, favorite_pets, candidate_pets } = request.body;
     const fav_pet = await petRepo.findOne(favorite_pets);
     const cand_pet = await petRepo.findOne(candidate_pets);
 
