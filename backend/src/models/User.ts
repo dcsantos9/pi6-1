@@ -13,8 +13,8 @@ export enum PhoneType {
 }
 
 export enum SocialIdType {
-    CNPJ = "CNPJ",
-    CPF = "CPF"
+    CNPJ = "cnpj",
+    CPF = "cpf"
 }
 
 @Entity('users')
@@ -32,7 +32,6 @@ class User {
         nullable: true
     })
     type: UserType
-
 
     @Column({
         type: "enum",
@@ -85,7 +84,7 @@ class User {
         default: SocialIdType.CNPJ,
         nullable: true
     })
-    social_id_type: SocialIdType;    
+    social_id_type: SocialIdType;
 
     @Column()
     email: string;

@@ -19,11 +19,12 @@ interface Request{
     state: string;
     zipcode: string;
     social_id: string;
+    social_id_type: string;
     password: string;
 }
 
 class CreateUserService {
-    public async execute({name, type = 'adopter', phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, state, zipcode, social_id, password}: Request): Promise<User>{
+    public async execute({name, type = 'adopter', phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, state, zipcode, social_id, social_id_type = 'cpf', password}: Request): Promise<User>{
         const usersRepository = getRepository(User);
         const checkUserExists = await usersRepository.findOne({
             where: {email},
@@ -49,6 +50,7 @@ class CreateUserService {
             state,
             zipcode,
             social_id,
+            social_id_type,
             password: hashedPassword,
 
         });
