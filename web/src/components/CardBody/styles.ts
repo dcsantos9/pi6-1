@@ -6,6 +6,11 @@ export const Container = styled.div`
     padding: 15px;
     background-color:#fff;
     width:100%;
+    border-radius: 10px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
 `;
 
 export const Date = styled.p`
