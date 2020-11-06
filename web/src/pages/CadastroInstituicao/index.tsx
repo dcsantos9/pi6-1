@@ -12,8 +12,9 @@ import Button from '../../components/Button';
 import logoImg from '../../assets/logo.svg';
 import getValidationErrors from '../../utils/getValidationErrors';
 import imgPhoto from '../../assets/cat-login.jpg';
+import api from '../../services/api';
 interface CadastroInstituicaoFormData {
-    nome: string;
+    name: string;
     social_id: string;
     info: string;
     email: string;
@@ -31,22 +32,39 @@ interface CadastroInstituicaoFormData {
 
 const CadastroInstituicao: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
-    const { addToast, removeToast } = useToast();
+    const {addToast} = useToast();
     const history = useHistory();
 
-    const handleSubmit = useCallback(async (data: CadastroInstituicaoFormData) => {
-
+    const handleSubmit = useCallback( async (data: object) => {
         try {
             formRef.current?.setErrors({});
             const schema = Yup.object().shape({
+                name: Yup.string().required('Nome obrigatório'),
+                social_id: Yup.string().required('Documento obrigatório'),
                 email: Yup.string().required('Email obrigatório').email("Digite um e-mail válido"),
-                password: Yup.string().required('Senha obrigatória'),
+                phone: Yup.string().required('Telefone obrigatório'),
+                street: Yup.string().required('Endereço obrigatório'),
+                number: Yup.string().required('Número obrigatório'),
+                neightborhood: Yup.string().required('Bairro obrigatório'),
+                city: Yup.string().required('Cidade obrigatória'),
+                state: Yup.string().required('Estado obrigatório'),
+                zipcode: Yup.string().required('CEP obrigatório'),
+                //password: Yup.string().min(6, 'No mínimo 6 dígitos'),
+            });
+            await schema.validate(data, {
+                abortEarly: false,
+            });
+            await api.post('/users', data);
+            history.push('/');
+
+            addToast({
+                type: 'success',
+                title: 'Cadastro atualizado!',
+                description: 'Dados salvos com sucesso.'
             });
 
-
-            history.push('/dashboard');
         } catch (err) {
-            if (err instanceof Yup.ValidationError) {
+            if (err instanceof Yup.ValidationError){
                 const errors = getValidationErrors(err);
 
                 formRef.current?.setErrors(errors);
@@ -54,12 +72,12 @@ const CadastroInstituicao: React.FC = () => {
             }
             addToast({
                 type: 'error',
-                title: 'Erro na autenticação',
-                description: 'Occorreu um erro ao fazer login, cheque as credenciais',
+                title: 'Erro ao salvar',
+                description: 'preencha corretamente todos os campos obrigatórios',
             });
-
         }
-    }, [addToast, history]);
+
+    },[addToast, history]);
     return (
         <Container>
             <Content>
@@ -67,17 +85,12 @@ const CadastroInstituicao: React.FC = () => {
                     <img src={logoImg} alt="QueroPet" />
                     <Form ref={formRef} onSubmit={handleSubmit}>
                         <h1><span>Cadastro</span></h1>
-                        <h3><span>Dados</span></h3>
                         <img src={imgPhoto}></img>
-                        <div className="item">
-                            <label></label>
                             <input type="file" id="file" name="filename" value="" />
                             <Button type="submit" name="sendPhoto" className="button button2">enviar</Button>
-                        </div>
-                        <div className="item">
-                            <label>nome</label>
                             <InputFormulario name="name" />
-                        </div>
+
+                            <h3><span>Dados</span></h3>
 
                         <div className="item divMargin">
                             <label>
@@ -90,68 +103,30 @@ const CadastroInstituicao: React.FC = () => {
                             </label>
                         </div>
 
-                        <div className="item">
-                            <label>documento</label>
                             <InputFormulario name="social_id" placeholder="00.000.000/0000-00" />
-                        </div>
 
-                        <div className="item">
-                            <label>informações</label>
-                            <textarea name="info" />
-
-                        </div>
+                            <textarea name="info" placeholder="informações" />
                         <h3><span>Contato</span></h3>
-                        <div className="item">
-                            <label>e-mail</label>
                             <InputFormulario name="email" placeholder="email@email.com.br" />
-                        </div>
-                        <div className="item">
-                            <label>telefone</label>
                             <InputFormulario name="phone" placeholder="(XX) XXXXX-XXXX" />
                             <select>
                                 <option key="MOBILE" value="MOBILE" >celular</option>
                                 <option key="HOME" value="HOME">residencial</option>
                                 <option key="WORK" value="WORK" >trabalho</option>
                             </select>
-                        </div>
                         <a href="">adicionar outro telefone</a>
                         <h3><span>Endereço</span></h3>
-                        <div className="item">
-                            <label>rua</label>
-                            <InputFormulario name="street" placeholder="" />
-                        </div>  <div className="item">
-                            <label>número</label>
-                            <InputFormulario name="number" placeholder="" />
-                        </div>
-                        <div className="item">
-                            <label>complemento</label>
-                            <InputFormulario name="complement" placeholder="" />
-                        </div>
-                        <div className="item">
-                            <label>bairro</label>
-                            <InputFormulario name="neightborhood" placeholder="" />
-                        </div>
-                        <div className="item">
-                            <label>cidade</label>
-                            <InputFormulario name="city" placeholder="" />
-                        </div>
-                        <div className="item">
-                            <label>uf</label>
-                            <InputFormulario name="state" placeholder="" />
-                        </div>
-                        <div className="item">
-                            <label>cep</label>
-                            <InputFormulario name="zipcode" placeholder="" />
-                        </div>
+                            <InputFormulario name="street" placeholder="rua, avenida" />
+                            <InputFormulario name="number" placeholder="número" />
+                            <InputFormulario name="complement" placeholder="complemento, bloco, apartamento, casa" />
+                            <InputFormulario name="neightborhood" placeholder="bairro" />
+                            <InputFormulario name="city" placeholder="cidade" />
+                            <InputFormulario name="state" placeholder="uf" />
+                            <label></label>
+                            <InputFormulario name="zipcode" placeholder="cep" />
                         <h3><span>Senha</span></h3>
-                        <div className="item">
-                            <label>Senha</label>
                             <InputFormulario type="password" name="password" placeholder="senha" />
-                        </div>
-                        <div className="item">
-                            <label>Confirmar Senha</label>
                             <InputFormulario type="password" name="password" placeholder="confirmar senha" />
-                        </div>
                         <div className="divMargin">
                             <Button type="submit" className="button">salvar</Button>
                             <div className="button" style={{ float: "right" }}>

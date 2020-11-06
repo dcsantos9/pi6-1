@@ -91,23 +91,7 @@ export const AnimationContainer = styled.div`
             margin-right: 16px;
         }
     }
-    label{
-        display: flex;
-        justify-content: flex-end;
-        padding-right: 5px;
-        font-size: 14px;
-        min-width: 25%;
-        text-transform: lowercase;
-    }
-    
-    .item{
-         margin-bottom: 10px;    
-        display: flex;
-    align-items: baseline;
-    }
-    .item div{      
-       //display: initial;   
-   }
+
     .radio{
         margin-right: 10px;
     }
