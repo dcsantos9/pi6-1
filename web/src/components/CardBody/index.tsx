@@ -1,19 +1,33 @@
 import React , { ButtonHTMLAttributes } from 'react';
-import { Container, Date , BodyContent} from './styles';
+import { Container, Date , BodyContent, Name, ButtonPanel} from './styles';
 import Button from '../Button';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> ;
 
-const CardBody: React.FC = () => (
+interface CardBodyProps {
+    date?: string;
+    name: string;
+    info: string;
+    user: string;
+    species: string;
+    gender: string;
+}
+
+const CardBody: React.FC<CardBodyProps> = ({date, name, info, user, species, gender,...rest}) => (
 
     <Container>
-    <Date>March 20 2015</Date>
+    <Date>{date}</Date>
 
-    <h2>Title</h2>
+    <Name>{name}</Name>
+    espécie:  <BodyContent> <strong>{species}</strong></BodyContent>
+    sexo:  <BodyContent> <strong>{gender}</strong></BodyContent>
+    instituição:  <BodyContent> <strong>{user}</strong></BodyContent>
 
-    <BodyContent>Kayaks crowd Three Sister Springs, where people and manatees maintain controversial coexistence</BodyContent>
-
-    <Button>Favoritar</Button>
+    informações: <BodyContent> {info}</BodyContent>
+    <ButtonPanel>
+        <Button>Favoritar</Button>
+        <Button>Quero Adotar</Button>
+    </ButtonPanel>
     </Container>
     );
 

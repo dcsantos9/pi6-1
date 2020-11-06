@@ -6,11 +6,10 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> ;
 
 interface CardHeaderProps {
     image: string;
-
+    header_name?: string;
 }
 
-
-const CardHeader: React.FC<CardHeaderProps> = ({image, ...rest}) => {
+const CardHeader: React.FC<CardHeaderProps> = ({image,header_name, ...rest}) => {
     var style=
     {
         background: 'url(' + image + ')',
@@ -19,7 +18,7 @@ const CardHeader: React.FC<CardHeaderProps> = ({image, ...rest}) => {
     return (
 
         <Container  style={style} >
-        <HeaderTitle>News</HeaderTitle>
+        <HeaderTitle>{header_name}</HeaderTitle>
     </Container>
     );
 }

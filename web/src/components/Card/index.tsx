@@ -8,13 +8,19 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> ;
 
 interface CardProps {
     image: string;
-
+    header_name?: string;
+    date?: string;
+    name: string;
+    info: string;
+    user: string;
+    species: string;
+    gender: string;
 }
 
-const Card: React.FC<CardProps> = ({image, ...rest}) => (
+const Card: React.FC<CardProps> = ({image, header_name, date, name, info, user, species, gender, ...rest}) => (
         <Container>
-            <CardHeader image={image}/>
-            <CardBody />
+            <CardHeader header_name={header_name} image={image}/>
+            <CardBody date={date} name={name} info={info} user={user} species={species} gender={gender} />
         </Container>
     );
 
