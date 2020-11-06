@@ -9,10 +9,9 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-    //display: flex;
+
     place-content: center;
     width: 100%;
-    //max-width: 250px;
     padding-left: 50px;
     overflow: auto;
     background: url(${HomeBg}) no-repeat center;
