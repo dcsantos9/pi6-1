@@ -95,14 +95,9 @@ export const AnimationContainer = styled.div`
     .radio{
         margin-right: 10px;
     }
-    .divMargin{
-        margin-left: 25%;
-    }
-    .divMargin label{
-        justify-content: flex-start;
-    }
+
     h3{
-        margin-bottom: 15px 5px;
+        margin: 15px 5px;
         color:#FF9000;
         
     }
@@ -169,6 +164,13 @@ export const AnimationContainer = styled.div`
     input[type='file'] {
         font-family: initial;
       } 
+     div{
+        border-radius: 10px;
+        border: 1px solid #ccc;
+      }
+      .button{
+        border: none;
+      }
 
        
 `;

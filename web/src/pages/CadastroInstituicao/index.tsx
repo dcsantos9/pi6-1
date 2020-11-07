@@ -4,15 +4,18 @@ import { Link, useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { Container, Content, AnimationContainer, Background } from './styles';
-//import { Container, Content, AnimationContainer } from './styles';
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
-import InputFormulario from '../../components/InputFormulario';
+//import InputFormulario from '../../components/InputFormulario';
+import Input from '../../components/Input';
 import Button from '../../components/Button';
 import logoImg from '../../assets/logo.svg';
 import getValidationErrors from '../../utils/getValidationErrors';
 import imgPhoto from '../../assets/cat-login.jpg';
 import api from '../../services/api';
+import { FiUser , FiMail , FiLock, FiPhone, FiMapPin } from 'react-icons/fi';
+import { FaRegAddressCard } from "react-icons/fa";
+import { AiOutlineFieldNumber } from "react-icons/ai";
 interface CadastroInstituicaoFormData {
     name: string;
     social_id: string;
@@ -49,7 +52,7 @@ const CadastroInstituicao: React.FC = () => {
                 city: Yup.string().required('Cidade obrigatória'),
                 state: Yup.string().required('Estado obrigatório'),
                 zipcode: Yup.string().required('CEP obrigatório'),
-                //password: Yup.string().min(6, 'No mínimo 6 dígitos'),
+                password: Yup.string().min(6, 'No mínimo 6 dígitos'),
             });
             await schema.validate(data, {
                 abortEarly: false,
@@ -88,11 +91,9 @@ const CadastroInstituicao: React.FC = () => {
                         <img src={imgPhoto}></img>
                             <input type="file" id="file" name="filename" value="" />
                             <Button type="submit" name="sendPhoto" className="button button2">enviar</Button>
-                            <InputFormulario name="name" />
+                            <Input name="name" icon={FiUser} />
 
                             <h3><span>Dados</span></h3>
-
-                        <div className="item divMargin">
                             <label>
                                 <input type="radio" value="CNPJ" className="radio" />
                                 CNPJ
@@ -101,14 +102,12 @@ const CadastroInstituicao: React.FC = () => {
                                 <input type="radio" value="CPF" className="radio" />
                                 CPF
                             </label>
-                        </div>
 
-                            <InputFormulario name="social_id" placeholder="00.000.000/0000-00" />
-
+                            <Input name="social_id" placeholder="00.000.000/0000-00" icon={FaRegAddressCard}/>
                             <textarea name="info" placeholder="informações" />
                         <h3><span>Contato</span></h3>
-                            <InputFormulario name="email" placeholder="email@email.com.br" />
-                            <InputFormulario name="phone" placeholder="(XX) XXXXX-XXXX" />
+                            <Input name="email" placeholder="email@email.com.br" icon={FiMail} />
+                            <Input name="phone" placeholder="(XX) XXXXX-XXXX" icon={FiPhone} />
                             <select>
                                 <option key="MOBILE" value="MOBILE" >celular</option>
                                 <option key="HOME" value="HOME">residencial</option>
@@ -116,23 +115,21 @@ const CadastroInstituicao: React.FC = () => {
                             </select>
                         <a href="">adicionar outro telefone</a>
                         <h3><span>Endereço</span></h3>
-                            <InputFormulario name="street" placeholder="rua, avenida" />
-                            <InputFormulario name="number" placeholder="número" />
-                            <InputFormulario name="complement" placeholder="complemento, bloco, apartamento, casa" />
-                            <InputFormulario name="neightborhood" placeholder="bairro" />
-                            <InputFormulario name="city" placeholder="cidade" />
-                            <InputFormulario name="state" placeholder="uf" />
+                            <Input name="street" placeholder="rua, avenida" icon={FiMapPin} />
+                            <Input name="number" placeholder="número" icon={AiOutlineFieldNumber} />
+                            <Input name="complement" placeholder="complemento, bloco, apartamento, casa" icon={FiMapPin} />
+                            <Input name="neightborhood" placeholder="bairro" icon={FiMapPin} />
+                            <Input name="city" placeholder="cidade" icon={FiMapPin} />
+                            <Input name="state" placeholder="uf" icon={FiMapPin}  />
                             <label></label>
-                            <InputFormulario name="zipcode" placeholder="cep" />
+                            <Input name="zipcode" placeholder="cep"icon={FiMapPin}  />
                         <h3><span>Senha</span></h3>
-                            <InputFormulario type="password" name="password" placeholder="senha" />
-                            <InputFormulario type="password" name="password" placeholder="confirmar senha" />
-                        <div className="divMargin">
+                            <Input type="password" name="password" placeholder="senha" icon={FiLock} />
+                            <Input type="password" name="password" placeholder="confirmar senha" icon={FiLock} />
                             <Button type="submit" className="button">salvar</Button>
                             <div className="button" style={{ float: "right" }}>
                                 <Link to="/dashboard">voltar</Link>
                             </div>
-                        </div>
                     </Form>
                 </AnimationContainer>
             </Content>
