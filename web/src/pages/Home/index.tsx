@@ -7,12 +7,18 @@ interface PetParams {
     pet: string;
 }
 
+interface Institution {
+    id: string;
+    name: string;
+}
+
 interface Pet {
+    id: string;
     name: string;
     info: string;
     header_name: string;
     image: string;
-    user_id: string;
+    institution: Institution;
     species: string;
     gender: string;
 }
@@ -20,7 +26,7 @@ interface Pet {
 const Home: React.FC = () => {
 
     const [ pets, setPets ] = useState<Pet[]>(() => {
-        const storagedPets = localStorage.getItem('@QueroPet:Pets');
+        const storagedPets = localStorage.getItem('@QueroPet:pets');
         if (storagedPets){
             return JSON.parse(storagedPets);
         }
@@ -50,10 +56,12 @@ const Home: React.FC = () => {
             <Content>
                 { pets.map( pet => (
                     <Card
+                    key={pet.id}
+                    item_id={pet.id}
                     name={pet.name}
                     info={pet.info}
                     header_name={pet.name}
-                    user={pet.user_id}
+                    institution={pet.institution}
                     image={'https://source.unsplash.com/user/erondu/600x400'}
                     species={pet.species}
                     gender={pet.gender}

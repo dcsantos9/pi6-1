@@ -1,40 +1,32 @@
 import React , { ButtonHTMLAttributes } from 'react';
 import { Container } from './styles';
-import Button from '../Button';
 import CardHeader from '../CardHeader';
 import CardBody from '../CardBody';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> ;
 
+interface Institution {
+    id: string;
+    name: string;
+}
+
 interface CardProps {
+    item_id: string;
     image: string;
     header_name?: string;
     date?: string;
     name: string;
     info: string;
-    user: string;
+    institution: Institution;
     species: string;
     gender: string;
 }
 
-const Card: React.FC<CardProps> = ({image, header_name, date, name, info, user, species, gender, ...rest}) => (
+const Card: React.FC<CardProps> = ({item_id, image, header_name, date, name, info, institution, species, gender, ...rest}) => (
         <Container>
             <CardHeader header_name={header_name} image={image}/>
-            <CardBody date={date} name={name} info={info} user={user} species={species} gender={gender} />
+            <CardBody pet_id={item_id} date={date} name={name} info={info} institution={institution} species={species} gender={gender} />
         </Container>
     );
 
 export default Card;
-
-
-/*class CardHeader extends React.Component {
-    render() {
-      const { image } = this.props;
-      var style = {
-          backgroundImage: 'url(' + image + ')',
-      };
-      return (
-
-      )
-    }
-  }*/
