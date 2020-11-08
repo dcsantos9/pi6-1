@@ -4,7 +4,7 @@ import Pet from '../models/Pet';
 import AppError from '../errors/AppError';
 
 class AskAdoptionPetService {
-    public async execute(user_id, pet_id): Promise<User> {
+    public async execute(user_id: any, pet_id: any): Promise<User> {
 
         const userRepository = getRepository(User);
         const user = await userRepository.findOne(user_id);
