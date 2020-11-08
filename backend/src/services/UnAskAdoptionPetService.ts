@@ -3,7 +3,7 @@ import User from '../models/User';
 import Pet from '../models/Pet';
 import AppError from '../errors/AppError';
 
-class FavePetService {
+class UnAskAdoptionPetService {
     public async execute(user_id, pet_id): Promise<User> {
 
         const userRepository = getRepository(User);
@@ -13,21 +13,23 @@ class FavePetService {
         const pet = await petRepository.findOne(pet_id);
 
         if(!user){
-            throw new AppError('Only authenticated users can fave pets', 401);
+            throw new AppError('Only authenticated users can unask for adoption pets', 401);
         }
 
         if(!pet){
             throw new AppError('Cant find the Pet', 404);
         }
-        if(user.favorite_pets.includes(pet)){
+
+        if(user.candidate_pets.includes(pet)){
             throw new AppError('Pet Already Faved', 401);
         }
 
-        user.favorite_pets.push(pet);
+        user.candidate_pets = user.candidate_pets.filter((peti) => !(peti.id === pet.id ))
+
         await userRepository.save(user);
 
         return user;
     }
 }
 
-export default FavePetService;
+export default UnAskAdoptionPetService;

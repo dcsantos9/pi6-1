@@ -6,6 +6,8 @@ import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import UpdateAvatarUserService from '../services/UpdateUserAvatarService';
 import FavePetService from '../services/FavePetService';
 import UnFavePetService from '../services/UnFavePetService';
+import AskAdoptionPetService from '../services/AskAdoptionPetService';
+import UnAskAdoptionPetService from '../services/UnAskAdoptionPetService';
 import { getRepository } from 'typeorm';
 import User from '../models/User';
 import Pet from '../models/Pet';
@@ -144,7 +146,24 @@ usersRouter.get('/unfave/:id', ensureAuthenticated, async ( request, response ) 
     const user = await unFavePetService.execute(request.user.id, request.params.id);
     delete user.password;
     return response.json(user);
-} );
+});
+
+usersRouter.get('/askadoption/:id', ensureAuthenticated, async ( request, response ) => {
+
+    const askAdoptionService = new AskAdoptionPetService();
+    const user = await askAdoptionService.execute(request.user.id, request.params.id);
+    delete user.password;
+    return response.json(user);
+});
+
+usersRouter.get('/unaskadoption/:id', ensureAuthenticated, async ( request, response ) => {
+
+    const unAskAdoptionService = new UnAskAdoptionPetService();
+    const user = await unAskAdoptionService.execute(request.user.id, request.params.id);
+    delete user.password;
+    return response.json(user);
+});
+
 
 
 export default usersRouter;
