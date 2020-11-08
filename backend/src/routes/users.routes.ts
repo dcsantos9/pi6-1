@@ -5,6 +5,7 @@ import CreateUserService from '../services/CreateUserService';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import UpdateAvatarUserService from '../services/UpdateUserAvatarService';
 import FavePetService from '../services/FavePetService';
+import UnFavePetService from '../services/UnFavePetService';
 import { getRepository } from 'typeorm';
 import User from '../models/User';
 import Pet from '../models/Pet';
@@ -135,6 +136,15 @@ usersRouter.get('/fave/:id', ensureAuthenticated, async ( request, response ) =>
         const user = await faveService.execute(request.user.id, request.params.id);
         delete user.password;
         return response.json(user);
+});
+
+usersRouter.get('/unfave/:id', ensureAuthenticated, async ( request, response ) => {
+
+    const unFavePetService = new UnFavePetService();
+    const user = await unFavePetService.execute(request.user.id, request.params.id);
+    delete user.password;
+    return response.json(user);
 } );
+
 
 export default usersRouter;
