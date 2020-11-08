@@ -14,7 +14,6 @@ const upload = multer(uploadConfig);
 upload.array
 
 petsRouter.get('/', async (request, response) => {
-    console.log(request)
     const petRepository = getRepository(Pet);
     const userRepository = getRepository(User);
 
@@ -26,12 +25,15 @@ petsRouter.get('/', async (request, response) => {
         const pet = petsAllData.filter((pet) => (pet.id === id ))[0];
 
         const has_faved_by = usersAllData.filter( (user) => user.favorite_pets.filter(
-            (petz) => (petz.id === id))[0]);
+            (user_pet) => (user_pet.id === id))[0]);
+
+        const has_asked_for_adoption = usersAllData.filter( (user) => user.candidate_pets.filter(
+            (user_pet) => (user_pet.id === id))[0]);
 
         const user_name = user_data.name;
         const institution = { id: user_id , name: user_name }
 
-        return { id, institution, has_faved_by, name, species, particulars, info, avatar }
+        return { id, institution, has_faved_by, has_asked_for_adoption, name, species, particulars, info, avatar }
     });
 
   return response.json(pets);

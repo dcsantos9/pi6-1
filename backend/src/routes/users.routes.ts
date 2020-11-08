@@ -148,7 +148,7 @@ usersRouter.post('/unfave/:id', ensureAuthenticated, async ( request, response )
     return response.json(user);
 });
 
-usersRouter.get('/askadoption/:id', ensureAuthenticated, async ( request, response ) => {
+usersRouter.post('/askadoption/:id', ensureAuthenticated, async ( request, response ) => {
 
     const askAdoptionService = new AskAdoptionPetService();
     const user = await askAdoptionService.execute(request.user.id, request.params.id);
@@ -156,7 +156,7 @@ usersRouter.get('/askadoption/:id', ensureAuthenticated, async ( request, respon
     return response.json(user);
 });
 
-usersRouter.get('/unaskadoption/:id', ensureAuthenticated, async ( request, response ) => {
+usersRouter.post('/unaskadoption/:id', ensureAuthenticated, async ( request, response ) => {
 
     const unAskAdoptionService = new UnAskAdoptionPetService();
     const user = await unAskAdoptionService.execute(request.user.id, request.params.id);

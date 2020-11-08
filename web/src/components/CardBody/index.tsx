@@ -18,14 +18,19 @@ interface CardBodyProps {
     species: string;
     gender: string;
     has_faved_by: boolean;
+    has_asked_for_adoption: boolean;
 }
 
-const CardBody: React.FC<CardBodyProps> = ({pet_id, date, name, info, has_faved_by, institution, species, gender,...rest}) => {
+const CardBody: React.FC<CardBodyProps> = ({pet_id, date, name, info, has_faved_by, has_asked_for_adoption, institution, species, gender,...rest}) => {
     const {user} = useAuth();
 
     const [ fave , setFave ] = useState(false);
     const [ faveText , setFaveText ] = useState("Favoritar");
     const [ faveBgColor , setFaveBgColor ] = useState({ backgroundColor: "orange" });
+
+    const [ askForAdoption , setAskForAdoption ] = useState(false);
+    const [ askForAdoptionText , setAskForAdoptionText ] = useState("Quero Adotar");
+    const [ askForAdoptionBgColor , setAskForAdoptionBgColor ] = useState({ backgroundColor: "orange" });
 
     const handleFave = () => {
         if(fave){
@@ -54,20 +59,38 @@ const CardBody: React.FC<CardBodyProps> = ({pet_id, date, name, info, has_faved_
             setFaveText("DesFavoritar");
             setFaveBgColor({ backgroundColor: "brown" });
         }
-    }, [fave]);
+    }, []);
 
-    const check = () => {
-        console.log('sdf')
-        if(!has_faved_by){
-            setFave(false);
-            setFaveText("Favoritar");
-            setFaveBgColor({ backgroundColor: "orange" });
+
+
+    const handleAskForAdoption = () => {
+        if(askForAdoption){
+            setAskForAdoption(false);
+            api.post(`/users/unaskadoption/${pet_id}`, {} , { headers: { Authorization: `Bearer ${localStorage.getItem('@QueroPet:token')}`, }}).then(response => {
+                setAskForAdoptionText("Quero Adotar");
+                setAskForAdoptionBgColor({backgroundColor: "orange"})
+            });
+
         } else {
-            setFave(true);
-            setFaveText("DesFavoritar");
-            setFaveBgColor({ backgroundColor: "brown" });
+            setAskForAdoption(true);
+            api.post(`/users/askadoption/${pet_id}`,  {} ,  { headers: { Authorization: `Bearer ${localStorage.getItem('@QueroPet:token')}`, }}).then(response => {
+                setAskForAdoptionText("Desistir da Adoção");
+                setAskForAdoptionBgColor({backgroundColor: "brown"})
+            });
+
         }
-    };
+    }
+    useEffect( () => {
+        if(!has_asked_for_adoption){
+            setAskForAdoption(false);
+            setAskForAdoptionText("Quero Adotar");
+            setAskForAdoptionBgColor({ backgroundColor: "orange" });
+        }else {
+            setAskForAdoption(true);
+            setAskForAdoptionText("Desistir da Adoção");
+            setAskForAdoptionBgColor({ backgroundColor: "brown" });
+        }
+    }, []);
 
     return (
 
@@ -81,8 +104,8 @@ const CardBody: React.FC<CardBodyProps> = ({pet_id, date, name, info, has_faved_
 
     informações: <BodyContent> {info}</BodyContent>
     <ButtonPanel>
-        <Button onLoad={() => (check()) } onClick={() => (handleFave())} style={faveBgColor}>{faveText}</Button>
-        <Button onClick={() => (console.log(pet_id, user))}>Quero Adotar</Button>
+        <Button onClick={() => (handleFave())} style={faveBgColor}>{faveText}</Button>
+        <Button onClick={() => (handleAskForAdoption())} style={askForAdoptionBgColor}>{askForAdoptionText}</Button>
         <Button onClick={() => (console.log(pet_id))}>Saiba Mais</Button>
 
     </ButtonPanel>
