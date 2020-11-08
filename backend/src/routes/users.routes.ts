@@ -4,6 +4,7 @@ import uploadConfig from '../config/upload';
 import CreateUserService from '../services/CreateUserService';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import UpdateAvatarUserService from '../services/UpdateUserAvatarService';
+import FavePetService from '../services/FavePetService';
 import { getRepository } from 'typeorm';
 import User from '../models/User';
 import Pet from '../models/Pet';
@@ -128,4 +129,12 @@ usersRouter.patch('/avatar', ensureAuthenticated, upload.single('avatar'), async
 
 } );
 
- export default usersRouter;
+usersRouter.get('/fave/:id', ensureAuthenticated, async ( request, response ) => {
+
+        const faveService = new FavePetService();
+        const user = await faveService.execute(request.user.id, request.params.id);
+        delete user.password;
+        return response.json(user);
+} );
+
+export default usersRouter;
