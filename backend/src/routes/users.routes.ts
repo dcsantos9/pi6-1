@@ -132,7 +132,7 @@ usersRouter.patch('/avatar', ensureAuthenticated, upload.single('avatar'), async
 
 } );
 
-usersRouter.get('/fave/:id', ensureAuthenticated, async ( request, response ) => {
+usersRouter.post('/fave/:id', ensureAuthenticated, async ( request, response ) => {
 
         const faveService = new FavePetService();
         const user = await faveService.execute(request.user.id, request.params.id);
@@ -140,7 +140,7 @@ usersRouter.get('/fave/:id', ensureAuthenticated, async ( request, response ) =>
         return response.json(user);
 });
 
-usersRouter.get('/unfave/:id', ensureAuthenticated, async ( request, response ) => {
+usersRouter.post('/unfave/:id', ensureAuthenticated, async ( request, response ) => {
 
     const unFavePetService = new UnFavePetService();
     const user = await unFavePetService.execute(request.user.id, request.params.id);
