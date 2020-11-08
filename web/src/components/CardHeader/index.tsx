@@ -1,8 +1,5 @@
-import { backgroundImages } from 'polished';
 import React , { ButtonHTMLAttributes } from 'react';
 import { Container, HeaderTitle } from './styles';
-
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> ;
 
 interface CardHeaderProps {
     image: string;
@@ -24,16 +21,3 @@ const CardHeader: React.FC<CardHeaderProps> = ({image,header_name, ...rest}) => 
 }
 
 export default CardHeader;
-
-
-/*class CardHeader extends React.Component {
-    render() {
-      const { image } = this.props;
-      var style = {
-          backgroundImage: 'url(' + image + ')',
-      };
-      return (
-
-      )
-    }
-  }*/
