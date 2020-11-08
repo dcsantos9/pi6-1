@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { Container, Content, Menu } from './styles';
 import  Card  from '../../components/Card';
 import  api from '../../services/api';
@@ -32,6 +33,7 @@ interface Pet {
 }
 
 const Home: React.FC = () => {
+    const history = useHistory();
     const user = JSON.parse(localStorage.getItem('@QueroPet:user') || "{}");
 
     const [ pets, setPets ] = useState<Pet[]>(() => {

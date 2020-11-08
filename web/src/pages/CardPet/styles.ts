@@ -1,29 +1,34 @@
 import styled, { keyframes } from 'styled-components';
+import HomeBg from '../../assets/dog-home.jpg';
 import cadastroInBG from '../../assets/cat-login.jpg';
 
 
 import { shade } from 'polished';
-export const Container = styled.div`    
-    margin: 0 auto 0;
-    max-width: 550px;
-    width 100%;
+export const Container = styled.div`
+    height: 100vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: stretch;
 `;
 
 export const Content = styled.div`
     img {
-        width: 100%;
-        height: 150px;
+        width: 640px;
+        height: 90vh;
         border-radius: 10px;
         background-size: cover;
     }
+    .logo{
+        width: 250px;
+        height: 120px;
+    }
+    display: flex;
+    flex: 1;
+    width: 100%;
+    height: 100vh;
+    background:#fff;
+    border-radius:10px;
+    padding:25px;
 
-      width: 100%;
-      background:#fff; 
-      border-radius:4px;
-      padding:25px;  
 `;
 
 const appearFromLeft = keyframes`
@@ -47,7 +52,7 @@ export const AnimationContainer = styled.div`
         background: #000;
     }
     .item{
-        margin-bottom: 10px;    
+        margin-bottom: 10px;
        display: flex;
    align-items: baseline;
    }
@@ -68,6 +73,7 @@ export const AnimationContainer = styled.div`
         padding: 16px;
         width: 100%;
         margin-top: 16px !important;
+        margin-left: 20px;
         font-weight: 500;
         height: 56px;
         transition: background-color 0.2s;
@@ -77,19 +83,27 @@ export const AnimationContainer = styled.div`
         }
         text-align: center;
         font-size: initial;
-        margin-bottom: 0px;            
-        height: 50px;       
-    }  
+        margin-bottom: 0px;
+        height: 50px;
+    }
 
     span{
         text-transform: lowercase;
     }
 
-       
+
 `;
 
-export const Background = styled.div`
-    flex: 1;
-    background: url(${cadastroInBG});
-    background-size: cover;
+export const Menu = styled.div`
+    display: flex;
+    place-content: center;
+    width: 100%;
+    max-width: 300px;
+    padding: 50px;
+    color: #FFF;
+    background-color: #FF9000;
+    img {
+        max-width: 340px;
+    }
+
 `;

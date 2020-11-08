@@ -19,7 +19,7 @@ petsRouter.get('/', async (request, response) => {
 
     const petsAllData = await petRepository.find();
     const usersAllData = await userRepository.find();
-    const pets = petsAllData.map( ({id, user_id, name, species, particulars, info, avatar}) => {
+    const pets = petsAllData.map( ({id, user_id, name, species, particulars, info, avatar, birth_day, gender, coat, breed}) => {
 
         const user_data = usersAllData.filter((user) => (user.id === user_id ))[0];
         const pet = petsAllData.filter((pet) => (pet.id === id ))[0];
@@ -33,7 +33,7 @@ petsRouter.get('/', async (request, response) => {
         const user_name = user_data.name;
         const institution = { id: user_id , name: user_name }
 
-        return { id, institution, has_faved_by, has_asked_for_adoption, name, species, particulars, info, avatar }
+        return { id, institution, has_faved_by, has_asked_for_adoption, name, species, particulars, info, avatar, birth_day, gender, coat, breed }
     });
 
   return response.json(pets);

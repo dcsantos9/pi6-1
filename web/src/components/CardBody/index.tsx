@@ -1,8 +1,9 @@
-import React , { ButtonHTMLAttributes, useEffect, useState } from 'react';
+import React , { useEffect, useState } from 'react';
 import { Container, Date , BodyContent, Name, ButtonPanel} from './styles';
 import Button from '../Button';
 import  api from '../../services/api';
 import { useAuth } from '../../hooks/auth';
+import { Link, useHistory } from 'react-router-dom';
 
 interface Institution {
     id: string;
@@ -22,6 +23,7 @@ interface CardBodyProps {
 }
 
 const CardBody: React.FC<CardBodyProps> = ({pet_id, date, name, info, has_faved_by, has_asked_for_adoption, institution, species, gender,...rest}) => {
+    const history = useHistory();
     const {user} = useAuth();
 
     const [ fave , setFave ] = useState(false);
@@ -106,7 +108,7 @@ const CardBody: React.FC<CardBodyProps> = ({pet_id, date, name, info, has_faved_
     <ButtonPanel>
         <Button onClick={() => (handleFave())} style={faveBgColor}>{faveText}</Button>
         <Button onClick={() => (handleAskForAdoption())} style={askForAdoptionBgColor}>{askForAdoptionText}</Button>
-        <Button onClick={() => (console.log(pet_id))}>Saiba Mais</Button>
+        <Button onClick={() => (history.push(`/cardPet/${pet_id}`))}>Saiba Mais</Button>
 
     </ButtonPanel>
     </Container>
