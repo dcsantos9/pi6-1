@@ -112,6 +112,10 @@ usersRouter.put('/:id', async (request, response) => {
 
     const merged = {...user,...request.body}
 
+    if (password === ""){
+        delete merged.password;
+    }
+
     await userRepo.save(merged);
 
     delete merged.password;
