@@ -6,20 +6,16 @@ import { Form } from '@unform/web';
 import { Container, Content, AnimationContainer, Background, Image } from './styles';
 import { useAuth, AuthProvider } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
-//import InputFormulario from '../../components/InputFormulario';
 import Input from '../../components/Input';
+import TextArea from '../../components/TextArea';
 import Button from '../../components/Button';
 import logoImg from '../../assets/logo.svg';
 import getValidationErrors from '../../utils/getValidationErrors';
-import imgPhoto from '../../assets/cat-login.jpg';
 import api from '../../services/api';
 import { FiUser , FiMail , FiLock, FiPhone, FiMapPin } from 'react-icons/fi';
 import { FaLessThan, FaRegAddressCard } from "react-icons/fa";
 import { AiOutlineFieldNumber } from "react-icons/ai";
 import  MainMenu  from '../../components/MainMenu';
-import Select from '../../components/Select';
-import userEvent from '@testing-library/user-event';
-import { request } from 'http';
 
 interface CadastroInstituicaoFormData {
     name: string;
@@ -59,12 +55,19 @@ const CadastroInstituicao: React.FC = () => {
                 city: Yup.string().required('Cidade obrigatória'),
                 state: Yup.string().required('Estado obrigatório'),
                 zipcode: Yup.string().required('CEP obrigatório'),
-                password: Yup.string().min(6, 'No mínimo 6 dígitos'),
+                info: Yup.string(),
+                // O usuário não deveria ser obrigado a alterar a senha nesse
+                // formulário. Talvez seja o caso de criar um fluxo só para
+                // alteração de senha.
+
+                //password: Yup.string().min(6, 'No mínimo 6 dígitos'),
             });
             await schema.validate(data, {
                 abortEarly: false,
             });
-            await api.post('/users', data);
+            await api.put(`/users/${user.id}`, data);
+            const merged = {...user,...data}
+            localStorage.setItem('@QueroPet:user', JSON.stringify(merged));
             history.push('/');
 
             addToast({
@@ -78,7 +81,6 @@ const CadastroInstituicao: React.FC = () => {
                 const errors = getValidationErrors(err);
 
                 formRef.current?.setErrors(errors);
-                console.log(errors);
             }
             addToast({
                 type: 'error',
@@ -122,36 +124,36 @@ const CadastroInstituicao: React.FC = () => {
                         <Image src={'https://source.unsplash.com/user/erondu/600x400'}></Image>
                             <input type="file" id="file" name="filename" value="" />
                             <Button type="submit" name="sendPhoto" className="button button2">enviar</Button>
-                            <Input name="name" value={user.name} placeholder="Nome" icon={FiUser}/>
+                            <Input name="name" defaultValue={user.name} placeholder="Nome" icon={FiUser}/>
 
                             <h3><span>Dados</span></h3>
                             <label>
-                                <input type="radio" value="CNPJ" className="radio" checked={cnpj_radio_selected}/> CNPJ
+                                <input type="radio" defaultValue="CNPJ" className="radio" checked={cnpj_radio_selected}/> CNPJ
                             </label>
                             <label>
-                                <input type="radio" value="CPF" className="radio" checked={cpf_radio_selected}/> CPF
+                                <input type="radio" defaultValue="CPF" className="radio" checked={cpf_radio_selected}/> CPF
                             </label>
 
-                            <Input name="social_id" value={user.social_id} placeholder="00.000.000/0000-00" icon={FaRegAddressCard}/>
-                            <textarea name="info" value={user.info} placeholder="informações" />
+                            <Input name="social_id" defaultValue={user.social_id} placeholder="00.000.000/0000-00" icon={FaRegAddressCard}/>
+                            <TextArea name="info" defaultValue={user.info} placeholder="informações" />
                         <h3><span>Contato</span></h3>
-                            <Input name="email" value={user.email} placeholder="email@email.com.br" icon={FiMail} />
-                            <Input name="phone" value={user.phone} placeholder="(XX) XXXXX-XXXX" icon={FiPhone} />
+                            <Input name="email" defaultValue={user.email} placeholder="email@email.com.br" icon={FiMail} />
+                            <Input name="phone" defaultValue={user.phone} placeholder="(XX) XXXXX-XXXX" icon={FiPhone} />
                             <select>
-                                <option key="MOBILE" value="MOBILE" selected={phone_type_mobile}>celular</option>
-                                <option key="HOME" value="HOME" selected={phone_type_home}>residencial</option>
-                                <option key="WORK" value="WORK" selected={phone_type_work}>trabalho</option>
+                                <option key="MOBILE" defaultValue="MOBILE" selected={phone_type_mobile}>celular</option>
+                                <option key="HOME" defaultValue="HOME" selected={phone_type_home}>residencial</option>
+                                <option key="WORK" defaultValue="WORK" selected={phone_type_work}>trabalho</option>
                             </select>
                         <a href="">adicionar outro telefone</a>
                         <h3><span>Endereço</span></h3>
-                            <Input name="street" value={user.street} placeholder="rua, avenida" icon={FiMapPin} />
-                            <Input name="number" value={user.number} placeholder="número" icon={AiOutlineFieldNumber} />
-                            <Input name="complement"value={user.complement}  placeholder="complemento, bloco, apartamento, casa" icon={FiMapPin} />
-                            <Input name="neightborhood" value={user.neightborhood} placeholder="bairro" icon={FiMapPin} />
-                            <Input name="city" value={user.city} placeholder="cidade" icon={FiMapPin} />
-                            <Input name="state" value={user.state} placeholder="uf" icon={FiMapPin}  />
+                            <Input name="street" defaultValue={user.street} placeholder="rua, avenida" icon={FiMapPin} />
+                            <Input name="number" defaultValue={user.number} placeholder="número" icon={AiOutlineFieldNumber} />
+                            <Input name="complement"defaultValue={user.complement}  placeholder="complemento, bloco, apartamento, casa" icon={FiMapPin} />
+                            <Input name="neightborhood" defaultValue={user.neightborhood} placeholder="bairro" icon={FiMapPin} />
+                            <Input name="city" defaultValue={user.city} placeholder="cidade" icon={FiMapPin} />
+                            <Input name="state" defaultValue={user.state} placeholder="uf" icon={FiMapPin}  />
                             <label></label>
-                            <Input name="zipcode" value={user.zipcode}  placeholder="cep"icon={FiMapPin}  />
+                            <Input name="zipcode" defaultValue={user.zipcode}  placeholder="cep"icon={FiMapPin}  />
                         <h3><span>Senha</span></h3>
                             <Input type="password" name="password" placeholder="senha" icon={FiLock} />
                             <Input type="password" name="password" placeholder="confirmar senha" icon={FiLock} />
