@@ -89,13 +89,11 @@ const CadastroInstituicao: React.FC = () => {
     return (
         <Container>
             <Menu>
+            <img className="logo" src={logoImg} alt="QueroPet" />
             <h1>Home</h1>
             </Menu>
             <Content>
                 <AnimationContainer>
-                    <img className="logo" src={logoImg} alt="QueroPet" />
-
-
                         <div className="item">
                             <label className="titleItemCard">instituição </label>
                             <label id="instituicao" >{ pet.institution.name }</label>
