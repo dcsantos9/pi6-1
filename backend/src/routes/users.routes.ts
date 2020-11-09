@@ -98,18 +98,7 @@ usersRouter.put('/:id', async (request, response) => {
     if (!user) {
         throw new AppError('User not found', 401);
     }
-    const { name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, state, zipcode, social_id, social_id_type,  password, favorite_pets, candidate_pets } = request.body;
-    const fav_pet = await petRepo.findOne(favorite_pets);
-    const cand_pet = await petRepo.findOne(candidate_pets);
-
-    if (fav_pet) {
-        user.favorite_pets.push(fav_pet);
-    }
-
-    if (cand_pet) {
-        user.candidate_pets.push(cand_pet);
-    }
-
+    const { name, type, phone_type, phone, info, email, birthday, street, complement, number, neightborhood, city, state, zipcode, social_id, social_id_type,  password } = request.body;
     const merged = {...user,...request.body}
 
     if (password === ""){
