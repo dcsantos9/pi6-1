@@ -63,7 +63,7 @@ const CadastroInstituicao: React.FC = () => {
             addToast({
                 type: 'success',
                 title: 'Cadastro atualizado!',
-                description: 'Dados salvos com sucesso.'
+                description: 'dados salvos com sucesso.'
             });
 
         } catch (err) {

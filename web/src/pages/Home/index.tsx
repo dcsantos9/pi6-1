@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Container, Content, Menu } from './styles';
 import  Card  from '../../components/Card';
 import  api from '../../services/api';
+import logoImg from '../../assets/logo.svg';
 
 interface PetParams {
     pet: string;
@@ -59,6 +60,7 @@ const Home: React.FC = () => {
 
         <Container>
             <Menu>
+            <img className="logo" src={logoImg} alt="QueroPet" />
             <h1>Home</h1>
             </Menu>
 
