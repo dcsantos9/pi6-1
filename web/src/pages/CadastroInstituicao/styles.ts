@@ -1,30 +1,29 @@
 import styled, { keyframes } from 'styled-components';
 import cadastroInBG from '../../assets/cat-login.jpg';
-
-
 import { shade } from 'polished';
-export const Container = styled.div`    
-    margin: 0 auto 0;
-    max-width: 550px;
-    width 100%;
+
+export const Container = styled.div`
+    height: 100vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+
+`;
+export const Image = styled.img`
+    height: 150px;
+    border-radius: 10px;
+    background-size: cover;
+    margin-bottom: 40px;
+    margin-right: 40px;
+    float: left;
+
 `;
 
 export const Content = styled.div`
-    img {
-        width: 75%;
-        height: 150px;
-        margin-left: 25%;
-        border-radius: 10px;
-        background-size: cover;
-    }
-
-      width: 100%;
-      background:#fff; 
-      border-radius:4px;
-      padding:25px;  
+    width: 100%;
+    background:#fff;
+    border-radius:4px;
+    padding:35px;
+    overflow: scroll;
 `;
 
 const appearFromLeft = keyframes`
@@ -69,14 +68,14 @@ export const AnimationContainer = styled.div`
             font-size:12px;
             &:hover{
                 color: ${shade(0.2, '#FF9000')};
-            }            
+            }
         }
 
     }
-    
+
     > a {
 
-        color: #FF9FF;        
+        color: #FF9FF;
         display: block;
         margin-top: 24px;
         text-decoration: none;
@@ -99,17 +98,17 @@ export const AnimationContainer = styled.div`
     h3{
         margin: 15px 5px;
         color:#FF9000;
-        
+
     }
     .button{
-        width: 45%;    
+        width: 45%;
         height: 50px;
-        padding: 0px;              
+        padding: 0px;
     }
     .button2{
-        width: 150px;    
+        width: 150px;
         height: 30px;
-        padding: 0px;              
+        padding: 0px;
     }
     .button a {
         text-decoration: none;
@@ -130,9 +129,9 @@ export const AnimationContainer = styled.div`
         text-align: center;
         font-size: initial;
         margin-bottom: 0px;
-     
-        height: 50px;       
-    }  
+
+        height: 50px;
+    }
     textarea
     {
         background: #FFFFFF;
@@ -163,7 +162,7 @@ export const AnimationContainer = styled.div`
 
     input[type='file'] {
         font-family: initial;
-      } 
+      }
      div{
         border-radius: 10px;
         border: 1px solid #ccc;
@@ -172,7 +171,7 @@ export const AnimationContainer = styled.div`
         border: none;
       }
 
-       
+
 `;
 
 export const Background = styled.div`
