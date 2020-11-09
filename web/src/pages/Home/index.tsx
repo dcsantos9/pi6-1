@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Container, Content, Menu } from './styles';
+import { Container, Content } from './styles';
 import  Card  from '../../components/Card';
+import  MainMenu  from '../../components/MainMenu';
 import  api from '../../services/api';
 import logoImg from '../../assets/logo.svg';
 
@@ -59,10 +60,21 @@ const Home: React.FC = () => {
     return(
 
         <Container>
-            <Menu>
+            <MainMenu>
             <img className="logo" src={logoImg} alt="QueroPet" />
-            <h1>Home</h1>
-            </Menu>
+
+            <h1>Pets</h1>
+            <ul>
+                <li><Link to='/'>Adicionar Novo Pet</Link></li>
+                <li><Link to='/'>Meus Pets Favoritos</Link></li>
+                <li><Link to='/'>Meus Pedidos de Adoção</Link></li>
+            </ul>
+
+            <h1>Cadastro</h1>
+            <ul>
+                <li><Link to='/cadastroInstituicao'>Meu Cadastro</Link></li>
+            </ul>
+            </MainMenu>
 
             <Content>
                 { pets.map( pet => (
