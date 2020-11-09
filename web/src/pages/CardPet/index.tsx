@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
-import { Container, Content, AnimationContainer, Menu } from './styles';
+import { Container, Content, AnimationContainer } from './styles';
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 import InputFormulario from '../../components/InputFormulario';
@@ -12,6 +12,7 @@ import logoImg from '../../assets/logo.svg';
 import getValidationErrors from '../../utils/getValidationErrors';
 import imgPhoto from '../../assets/cat-login.jpg';
 import  api from '../../services/api';
+import  MainMenu  from '../../components/MainMenu';
 
 interface User {
     id: string;
@@ -88,10 +89,10 @@ const CadastroInstituicao: React.FC = () => {
 
     return (
         <Container>
-            <Menu>
+            <MainMenu>
             <img className="logo" src={logoImg} alt="QueroPet" />
             <h1>Home</h1>
-            </Menu>
+            </MainMenu>
             <Content>
                 <AnimationContainer>
                         <div className="item">
