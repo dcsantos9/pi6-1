@@ -19,7 +19,7 @@ const Routes: React.FC = () => (
         <Route path="/dashboard" exact component={Dashboard} isPrivate />
 
         {/*Necessario voltar telas a seguir para private */}
-        <Route path="/cadastroInstituicao" exact component={CadastroInstituicao}  />
+        <Route path="/cadastroInstituicao" exact component={CadastroInstituicao}  isPrivate/>
         <Route path="/cardPet/:id" exact component={CardPet} isPrivate />
     </Switch>
 );
