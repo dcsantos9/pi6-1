@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useContext } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
@@ -40,6 +40,25 @@ const CadastroInstituicao: React.FC = () => {
     const {addToast} = useToast();
     const history = useHistory();
     const user = JSON.parse(localStorage.getItem('@QueroPet:user') || "{}");
+    localStorage.setItem('@QueroPet:user_tmp_phone_type', user.phone_type);
+    const [ phoneType, setPhoneType ] = useState(user.phone_type);
+
+    const [ cnpj_radio_selected, set_cnpj_radio_selected ] = useState(() => {
+        return user.social_id_type === 'cnpj' ? true : false;
+    });
+    const [ cpf_radio_selected, set_cpf_radio_selected ] = useState(() => {
+        return user.social_id_type === 'cpf' ? true : false;
+    });
+
+    const [ phone_type_work, set_phone_type_work ] = useState(() => {
+        return user.phone_type === 'work' ? true : false;
+    });
+    const [ phone_type_mobile, set_phone_type_mobile ] = useState(() => {
+        return user.phone_type === 'mobile' ? true : false;
+    });
+    const [ phone_type_home, set_phone_type_home ] = useState(() => {
+        return user.phone_type === 'home' ? true : false;
+    });
 
     const handleSubmit = useCallback( async (data: object) => {
         try {
@@ -65,9 +84,14 @@ const CadastroInstituicao: React.FC = () => {
             await schema.validate(data, {
                 abortEarly: false,
             });
-            await api.put(`/users/${user.id}`, data);
+
             const merged = {...user,...data}
+
+            merged.phone_type = localStorage.getItem('@QueroPet:user_tmp_phone_type') ;
+
+            await api.put(`/users/${user.id}`, merged);
             localStorage.setItem('@QueroPet:user', JSON.stringify(merged));
+
             history.push('/');
 
             addToast({
@@ -90,13 +114,6 @@ const CadastroInstituicao: React.FC = () => {
         }
 
     },[addToast, history]);
-
-    const cnpj_radio_selected = user.social_id_type === 'cnpj' ? true : false;
-    const cpf_radio_selected = user.social_id_type === 'cpf' ? true : false;
-
-    const phone_type_work = user.phone_type === 'work' ? true : false;
-    const phone_type_mobile = user.phone_type === 'mobile' ? true : false;
-    const phone_type_home = user.phone_type === 'home' ? true : false;
 
     return (
         <Container>
@@ -139,10 +156,10 @@ const CadastroInstituicao: React.FC = () => {
                         <h3><span>Contato</span></h3>
                             <Input name="email" defaultValue={user.email} placeholder="email@email.com.br" icon={FiMail} />
                             <Input name="phone" defaultValue={user.phone} placeholder="(XX) XXXXX-XXXX" icon={FiPhone} />
-                            <select>
-                                <option key="MOBILE" defaultValue="MOBILE" selected={phone_type_mobile}>celular</option>
-                                <option key="HOME" defaultValue="HOME" selected={phone_type_home}>residencial</option>
-                                <option key="WORK" defaultValue="WORK" selected={phone_type_work}>trabalho</option>
+                            <select onChange={(obj) => { localStorage.setItem('@QueroPet:user_tmp_phone_type', obj.target.value) }}>
+                                <option key="MOBILE" defaultValue="MOBILE" value="mobile" selected={phone_type_mobile}>celular</option>
+                                <option key="HOME" defaultValue="HOME" value="home" selected={phone_type_home}>residencial</option>
+                                <option key="WORK" defaultValue="WORK" value="work" selected={phone_type_work}>trabalho</option>
                             </select>
                         <a href="">adicionar outro telefone</a>
                         <h3><span>Endereço</span></h3>
