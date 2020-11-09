@@ -1,32 +1,22 @@
-import React , { InputHTMLAttributes, useEffect, useRef , useState, useCallback} from 'react';
+import React , { TextareaHTMLAttributes, useEffect, useRef , useState, useCallback} from 'react';
 import { IconBaseProps} from 'react-icons';
 import {FiAlertCircle} from 'react-icons/fi'
 import { useField } from '@unform/core';
 import { Container, Error } from './styles';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+
+interface InputProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     name: string;
     icon?: React.ComponentType<IconBaseProps>;
+    defaultValue?: string;
+    placeholder?: string;
 }
-const Input: React.FC<InputProps> = ({name, icon: Icon, ...rest}) => {
-    const inputRef = useRef<HTMLInputElement>(null);
+
+const TextArea: React.FC<InputProps> = ({name, icon: Icon, ...rest}) => {
+    const inputRef = useRef<HTMLTextAreaElement>(null);
     const [isFocused, setIsFocused] = useState(false);
     const [isFilled, setIsFilled] = useState(false);
     const {fieldName, defaultValue, error, registerField } = useField(name);
-
-    const handleInputFocus = useCallback(() => {
-        setIsFocused(true);
-    },[])
-
-    const handleInputBlur = useCallback(() => {
-        setIsFocused(false);
-        if (inputRef.current?.value) {
-            setIsFilled(true);
-        } else {
-            setIsFilled(false);
-        }
-    },[])
-
 
     useEffect(() => {
         registerField({
@@ -39,9 +29,7 @@ const Input: React.FC<InputProps> = ({name, icon: Icon, ...rest}) => {
     return(
         <Container isErrored={!!error} isFilled={isFilled} isFocused={isFocused}>
             { Icon && <Icon size={20} />}
-            <input
-                onFocus={handleInputFocus}
-                onBlur={handleInputBlur}
+            <textarea
                 defaultValue={defaultValue}
                 ref={inputRef}
                 {...rest}
@@ -54,4 +42,4 @@ const Input: React.FC<InputProps> = ({name, icon: Icon, ...rest}) => {
         </Container>
     );
 };
-export default Input;
+export default TextArea;
