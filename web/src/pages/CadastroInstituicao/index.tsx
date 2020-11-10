@@ -157,7 +157,7 @@ const CadastroInstituicao: React.FC = () => {
                             <option key="WORK" defaultValue="WORK" selected={phone_type_work}>trabalho</option>
                         </select>
                         <h3><span>Endereço</span></h3>
-                        <label>endereço</label>
+                        <span>endereço</span>
                         <Input name="street" defaultValue={user.street} placeholder="rua, avenida" icon={FiMapPin} />
                         <span>número</span>
                         <Input name="number" defaultValue={user.number} placeholder="número" icon={AiOutlineFieldNumber} />

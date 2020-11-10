@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
+import TextArea from '../../components/TextArea';
+//precisa desses imports 
 // import { FiUser , FiMail , FiLock, FiPhone, FiMapPin } from 'react-native-vector-icons/fi';
 // import { FaRegAddressCard } from "react-icons/fa";
 // import { AiOutlineFieldNumber } from "react-icons/ai";
@@ -28,7 +30,7 @@ import {
     BackToSignIn,
     BackToSignInText,
     CreateAccountButton,
-    CreateAccountButtonText 
+    CreateAccountButtonText
 } from './styles';
 
 import Input from '../../components/Input';
@@ -53,7 +55,7 @@ interface SignUpFormData {
     password: string;
 }
 
-const SignUp: React.FC = () => {
+const Cadastro: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
     const navigation = useNavigation();
 
@@ -121,16 +123,20 @@ const SignUp: React.FC = () => {
                             <input type="file" id="file" name="filename" value="" />
                             <Button type="submit" name="sendPhoto" className="button button2">enviar</Button> */}
                             <h3><span>Dados</span></h3>
+                            <span>Nome</span>
                             <Input
                                 autoCapitalize="words"
                                 name="name"
                                 icon="user"
-                                placeholder="Nome"
+                                placeholder="nome"
                                 returnKeyType="next"
                                 onSubmitEditing={() => {
                                     emailInputRef.current?.focus();
                                 }}
                             />
+                            <span>documento</span>
+
+
                             <Input
                                 ref={emailInputRef}
                                 autoCapitalize="none"
@@ -138,19 +144,6 @@ const SignUp: React.FC = () => {
                                 name="social_id"
                                 icon="address-card"
                                 placeholder="000.000.000-00"
-                                returnKeyType="next"
-                                onSubmitEditing={() => {
-                                    passwordInputRef.current?.focus();
-                                }}
-                            />
-                            <Input
-                                ref={emailInputRef}
-                                keyboardType="email-address"
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                name="email"
-                                icon="mail"
-                                placeholder="Email"
                                 returnKeyType="next"
                                 onSubmitEditing={() => {
                                     passwordInputRef.current?.focus();
@@ -170,51 +163,95 @@ const SignUp: React.FC = () => {
                                 placeholder="00.000.000/0000-00"
                                 icon="FaRegAddressCard"
                             />
+                            <label>informações</label>
+                            {/* <TextArea name="info" defaultValue={user.info} placeholder="" /> */}
+                            {/* esta dando erro no defaultValue */}
+
+                            <h3><span>Contato</span></h3>
+                            <span>e-mail</span>
+                            <Input
+                                ref={emailInputRef}
+                                keyboardType="email-address"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                name="email"
+                                icon="mail"
+                                placeholder="Email"
+                                returnKeyType="next"
+                                onSubmitEditing={() => {
+                                    passwordInputRef.current?.focus();
+                                }}
+                            />
+                            <span>informações</span>
+
                             <textarea
                                 name="info"
                                 placeholder="informações"
                             />
                             <h3><span>Contato</span></h3>
+                            <span>e-mail</span>
+
                             <Input
                                 name="email"
                                 placeholder="email@email.com.br"
                                 icon="mail"
                             />
+                            <span>Telefone</span>
+
+                            <Input
+                                name="phone"
+                                placeholder="(XX) XXXXX-XXXX"
+                                icon="phone"
+                            />
+                            <span>celular</span>
                             <Input
                                 name="phone"
                                 placeholder="(XX) XXXXX-XXXX"
                                 icon="phone"
                             />
                             <h3><span>Endereço</span></h3>
+                            <span>endereço</span>
+
                             <Input
                                 name="street"
                                 placeholder="rua, avenida"
                                 icon="MapPin"
                             />
+                            <span>número</span>
+
                             <Input
                                 name="number"
                                 placeholder="número"
                                 icon="AiOutlineFieldNumber"
                             />
+                            <span>complemento</span>
+
                             <Input
                                 name="complement"
                                 placeholder="complemento, bloco, apartamento, casa"
                                 icon="FiMapPin"
                             />
+                            <span>bairro</span>
+
                             <Input
                                 name="neightborhood"
                                 placeholder="bairro"
                                 icon="FiMapPin"
                             />
+                            <span>cidade</span>
+
                             <Input
                                 name="city"
                                 placeholder="cidade"
                                 icon="FiMapPin"
                             />
+                            <span>uf</span>
+
                             <Input
                                 name="state"
                                 placeholder="uf"
                                 icon="FiMapPin" />
+                            <span>cep</span>
 
                             <Input
                                 name="zipcode"
@@ -243,14 +280,14 @@ const SignUp: React.FC = () => {
                                 returnKeyType="send"
                                 onSubmitEditing={() => { formRef.current.submitForm(); }}
                             />
-                      <Button onPress={() => { formRef.current.submitForm(); }}>Salvar</Button>
-                        <CreateAccountButton onPress={() => navigation.navigate('dashboard')}>
-                            <Icon name="voltar" size={20} color="#ff9000" />
-                            <CreateAccountButtonText>
-                                voltar
+                            <Button onPress={() => { formRef.current.submitForm(); }}>Salvar</Button>
+                            <CreateAccountButton onPress={() => navigation.navigate('dashboard')}>
+                                <Icon name="voltar" size={20} color="#ff9000" />
+                                <CreateAccountButtonText>
+                                    voltar
                              </CreateAccountButtonText>
-                        </CreateAccountButton>
-                        </Form>                      
+                            </CreateAccountButton>
+                        </Form>
                     </Container>
                 </ScrollView>
             </KeyboardAvoidingView>
@@ -266,4 +303,4 @@ const SignUp: React.FC = () => {
 
 };
 
-export default SignUp;
+export default Cadastro;
