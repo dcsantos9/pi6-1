@@ -12,10 +12,10 @@ import Button from '../../components/Button';
 import logoImg from '../../assets/logo.svg';
 import getValidationErrors from '../../utils/getValidationErrors';
 import api from '../../services/api';
-import { FiUser , FiMail , FiLock, FiPhone, FiMapPin } from 'react-icons/fi';
+import { FiUser, FiMail, FiLock, FiPhone, FiMapPin } from 'react-icons/fi';
 import { FaLessThan, FaRegAddressCard } from "react-icons/fa";
 import { AiOutlineFieldNumber } from "react-icons/ai";
-import  MainMenu  from '../../components/MainMenu';
+import MainMenu from '../../components/MainMenu';
 
 interface CadastroInstituicaoFormData {
     name: string;
@@ -37,11 +37,11 @@ interface CadastroInstituicaoFormData {
 
 const CadastroInstituicao: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
-    const {addToast} = useToast();
+    const { addToast } = useToast();
     const history = useHistory();
     const user = JSON.parse(localStorage.getItem('@QueroPet:user') || "{}");
 
-    const handleSubmit = useCallback( async (data: object) => {
+    const handleSubmit = useCallback(async (data: object) => {
         try {
             formRef.current?.setErrors({});
             const schema = Yup.object().shape({
@@ -66,7 +66,7 @@ const CadastroInstituicao: React.FC = () => {
                 abortEarly: false,
             });
             await api.put(`/users/${user.id}`, data);
-            const merged = {...user,...data}
+            const merged = { ...user, ...data }
             localStorage.setItem('@QueroPet:user', JSON.stringify(merged));
             history.push('/');
 
@@ -77,7 +77,7 @@ const CadastroInstituicao: React.FC = () => {
             });
 
         } catch (err) {
-            if (err instanceof Yup.ValidationError){
+            if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err);
 
                 formRef.current?.setErrors(errors);
@@ -89,7 +89,7 @@ const CadastroInstituicao: React.FC = () => {
             });
         }
 
-    },[addToast, history]);
+    }, [addToast, history]);
 
     const cnpj_radio_selected = user.social_id_type === 'cnpj' ? true : false;
     const cpf_radio_selected = user.social_id_type === 'cpf' ? true : false;
@@ -102,19 +102,19 @@ const CadastroInstituicao: React.FC = () => {
         <Container>
             <MainMenu>
 
-            <img className="logo" src={logoImg} alt="QueroPet" />
+                <img className="logo" src={logoImg} alt="QueroPet" />
 
-            <h1>Pets</h1>
-            <ul>
-                <li><Link to='/'>Adicionar Novo Pet</Link></li>
-                <li><Link to='/'>Meus Pets Favoritos</Link></li>
-                <li><Link to='/'>Meus Pedidos de Adoção</Link></li>
-            </ul>
+                <h1>Pets</h1>
+                <ul>
+                    <li><Link to='/'>Adicionar Novo Pet</Link></li>
+                    <li><Link to='/'>Meus Pets Favoritos</Link></li>
+                    <li><Link to='/'>Meus Pedidos de Adoção</Link></li>
+                </ul>
 
-            <h1>Cadastro</h1>
-            <ul>
-                <li><Link to='/cadastroInstituicao'>Meu Cadastro</Link></li>
-            </ul>
+                <h1>Cadastro</h1>
+                <ul>
+                    <li><Link to='/cadastroInstituicao'>Meu Cadastro</Link></li>
+                </ul>
 
             </MainMenu>
             <Content>
@@ -122,47 +122,68 @@ const CadastroInstituicao: React.FC = () => {
                     <Form ref={formRef} onSubmit={handleSubmit}>
                         <h1><span>Cadastro</span></h1>
                         <Image src={'https://source.unsplash.com/user/erondu/600x400'}></Image>
-                            <input type="file" id="file" name="filename" value="" />
-                            <Button type="submit" name="sendPhoto" className="button button2">enviar</Button>
-                            <Input name="name" defaultValue={user.name} placeholder="Nome" icon={FiUser}/>
+                        <input type="file" id="file" name="filename" value="" />
+                        <Button type="submit" name="sendPhoto" className="button button2">enviar</Button>
 
-                            <h3><span>Dados</span></h3>
-                            <label>
-                                <input type="radio" defaultValue="CNPJ" className="radio" checked={cnpj_radio_selected}/> CNPJ
+                        <h3><span>Dados</span></h3>
+                        <span>Nome</span>
+                        <Input name="name" defaultValue={user.name} placeholder="Nome" icon={FiUser} />
+                        <span>documento</span>
+                        <label>
+                            <input type="radio" defaultValue="CNPJ" className="radio" checked={cnpj_radio_selected} /> CNPJ
                             </label>
-                            <label>
-                                <input type="radio" defaultValue="CPF" className="radio" checked={cpf_radio_selected}/> CPF
+                        <label>
+                            <input type="radio" defaultValue="CPF" className="radio" checked={cpf_radio_selected} /> CPF
                             </label>
 
-                            <Input name="social_id" defaultValue={user.social_id} placeholder="00.000.000/0000-00" icon={FaRegAddressCard}/>
-                            <TextArea name="info" defaultValue={user.info} placeholder="informações" />
+                        <Input name="social_id" defaultValue={user.social_id} placeholder="00.000.000/0000-00" icon={FaRegAddressCard} />
+                        <label>informações</label>
+                        <TextArea name="info" defaultValue={user.info} placeholder="" />
                         <h3><span>Contato</span></h3>
-                            <Input name="email" defaultValue={user.email} placeholder="email@email.com.br" icon={FiMail} />
-                            <Input name="phone" defaultValue={user.phone} placeholder="(XX) XXXXX-XXXX" icon={FiPhone} />
-                            <select>
-                                <option key="MOBILE" defaultValue="MOBILE" selected={phone_type_mobile}>celular</option>
-                                <option key="HOME" defaultValue="HOME" selected={phone_type_home}>residencial</option>
-                                <option key="WORK" defaultValue="WORK" selected={phone_type_work}>trabalho</option>
-                            </select>
-                        <a href="">adicionar outro telefone</a>
+                        <span>e-mail</span>
+                        <Input name="email" defaultValue={user.email} placeholder="email@email.com.br" icon={FiMail} />
+                        <span>Telefone</span>
+                        <Input name="phone" defaultValue={user.phone} placeholder="(XX) XXXXX-XXXX" icon={FiPhone} />
+                        <select>
+                            <option key="MOBILE" defaultValue="MOBILE" selected={phone_type_mobile}>celular</option>
+                            <option key="HOME" defaultValue="HOME" selected={phone_type_home}>residencial</option>
+                            <option key="WORK" defaultValue="WORK" selected={phone_type_work}>trabalho</option>
+                        </select>
+                        <span>Celular</span>
+                        <Input name="celular" defaultValue={user.phone} placeholder="(XX) XXXXX-XXXX" icon={FiPhone} />
+                        <select>
+                            <option key="MOBILE" defaultValue="MOBILE" selected={phone_type_mobile}>celular</option>
+                            <option key="HOME" defaultValue="HOME" selected={phone_type_home}>residencial</option>
+                            <option key="WORK" defaultValue="WORK" selected={phone_type_work}>trabalho</option>
+                        </select>
                         <h3><span>Endereço</span></h3>
-                            <Input name="street" defaultValue={user.street} placeholder="rua, avenida" icon={FiMapPin} />
-                            <Input name="number" defaultValue={user.number} placeholder="número" icon={AiOutlineFieldNumber} />
-                            <Input name="complement"defaultValue={user.complement}  placeholder="complemento, bloco, apartamento, casa" icon={FiMapPin} />
-                            <Input name="neightborhood" defaultValue={user.neightborhood} placeholder="bairro" icon={FiMapPin} />
-                            <Input name="city" defaultValue={user.city} placeholder="cidade" icon={FiMapPin} />
-                            <Input name="state" defaultValue={user.state} placeholder="uf" icon={FiMapPin}  />
-                            <label></label>
-                            <Input name="zipcode" defaultValue={user.zipcode}  placeholder="cep"icon={FiMapPin}  />
+                        <label>endereço</label>
+                        <Input name="street" defaultValue={user.street} placeholder="rua, avenida" icon={FiMapPin} />
+                        <span>número</span>
+                        <Input name="number" defaultValue={user.number} placeholder="número" icon={AiOutlineFieldNumber} />
+                        <span>complemento</span>
+
+                        <Input name="complement" defaultValue={user.complement} placeholder="complemento, bloco, apartamento, casa" icon={FiMapPin} />
+                        <span>bairro</span>
+
+                        <Input name="neightborhood" defaultValue={user.neightborhood} placeholder="" icon={FiMapPin} />
+                        <span>cidade</span>
+
+                        <Input name="city" defaultValue={user.city} placeholder="" icon={FiMapPin} />
+                        <span>uf</span>
+
+                        <Input name="state" defaultValue={user.state} placeholder="podemos fazer um autocomplete?" icon={FiMapPin} />
+                        <span>cep</span>
+                        <Input name="zipcode" defaultValue={user.zipcode} placeholder="00000-000" icon={FiMapPin} />
                         <h3><span>Senha</span></h3>
-                            <Input type="password" name="password" placeholder="senha" icon={FiLock} />
-                            <Input type="password" name="password" placeholder="confirmar senha" icon={FiLock} />
-                            <Button type="submit" className="button">salvar</Button>
-                            <div className="button" style={{ float: "right" }}>
-                                <Link to="/">voltar</Link>
+                        <Input type="password" name="password" placeholder="senha" icon={FiLock} />
+                        <Input type="password" name="password" placeholder="confirmar senha" icon={FiLock} />
+                        <Button type="submit" className="button">salvar</Button>
+                        <div className="button" style={{ float: "right" }}>
+                            <Link to="/">voltar</Link>
 
 
-                            </div>
+                        </div>
                     </Form>
                 </AnimationContainer>
             </Content>

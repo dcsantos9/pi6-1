@@ -166,11 +166,15 @@ export const AnimationContainer = styled.div`
      div{
         border-radius: 10px;
         border: 1px solid #ccc;
+        margin-bottom: 24px;
+        margin-top: 10px;
       }
       .button{
         border: none;
       }
-
+     label{
+        margin-top: 24px;
+     }
 
 `;
 
