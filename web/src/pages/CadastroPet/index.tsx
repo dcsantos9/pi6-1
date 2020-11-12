@@ -19,15 +19,15 @@ import MainMenu from '../../components/MainMenu';
 
 interface CadastroPetFormData {
     name: string;
-    Species: string;
-    // particulars: string; //excluimos esse campo, trocamos por specie, peso, etc.
+    species: string;
+    //particulars: string; //excluimos esse campo, trocamos por specie, peso, etc.
     birth_day: string;
     coat: string;
     gender: string;
     breed: string;
     info: string;
     avatar: string;
-    user: string;
+
     user_id: string;
     created_at: Date;
     updated_at: Date;
@@ -45,7 +45,7 @@ const CadastroPet: React.FC = () => {
             formRef.current?.setErrors({});
             const schema = Yup.object().shape({
                 name: Yup.string().required('Nome obrigatório'),
-                Species: Yup.string().required('Documento obrigatório'),
+                species: Yup.string().required('Espécie obrigatória'),
                 birth_day: Yup.string().required('Nascimento obrigatório'),
                 coat: Yup.string().required('Pelagem obrigatória'),
                 gender: Yup.string().required('Sexo obrigatório'),
@@ -80,11 +80,12 @@ const CadastroPet: React.FC = () => {
 
     }, [addToast, history]);
 
-    const Species_felina = pet.species === 'dog' ? true : false;
-    const Species_canina = pet.species === 'cat' ? true : false;
+    // ao deixar com essa configuração, não consigo escolher uma opção
+    // const Species_felina = pet.species === 'dog' ? true : false;
+    // const Species_canina = pet.species === 'cat' ? true : false;
 
-    const gender_female = pet.gender === 'female' ? true : false;
-    const gender_male = pet.species === 'male' ? true : false;
+    // const gender_female = pet.gender === 'female' ? true : false;
+    // const gender_male = pet.species === 'male' ? true : false;
 
     return (
         <Container>
@@ -109,23 +110,31 @@ const CadastroPet: React.FC = () => {
                 <AnimationContainer>
                     <Form ref={formRef} onSubmit={handleSubmit}>
 
-
-                        <Image src={'https://source.unsplash.com/user/erondu/600x400'}></Image>
-                        <input type="file" id="file" name="filename" value="" />
-                        <Button type="submit" name="sendPhoto" className="button button2">enviar</Button>
-
-                        <h1><span>Cadastro</span></h1>
                         <div className="item">
-                            <label className="titleItemCard">Nome </label>
+                            <Image src={'https://source.unsplash.com/user/erondu/600x400'}></Image>
+                            <input type="file" id="file" name="filename" value="" />
+                            <Button type="submit" name="sendPhoto" className="button button2">enviar</Button>
+                        </div>
+                        <h1><span>Cadastro</span></h1>
+
+                        <div className="item">
+                            <label className="titleItemCard">nome </label>
                             <Input name="name" placeholder="Nome" icon={FiUser} />
+                            <label className="titleItemCard">espécie </label>
+                            <label>
+                                <input type="radio" name="species" value="DOG" className="radio" /> canina
+                            </label>
+                            <label>
+                                <input type="radio" name="species" value="CAT" className="radio" /> felina
+                            </label>
                         </div>
                         <div className="item">
                             <label className="titleItemCard">espécie </label>
                             <label>
-                                <input type="radio" defaultValue="female" className="radio" checked={Species_canina} /> canina
+                                <input type="radio" name="species" value="DOG" className="radio" /> canina
                             </label>
                             <label>
-                                <input type="radio" defaultValue="male" className="radio" checked={Species_felina} /> felina
+                                <input type="radio" name="species" value="CAT" className="radio" /> felina
                             </label>
                         </div>
                         <div className="item">
@@ -136,14 +145,12 @@ const CadastroPet: React.FC = () => {
                             <label className="titleItemCard">raça </label>
                             <Input name="breed" placeholder="Dálmata, SRD, outros." icon={FiUser} />
                         </div>
-                        <div className="item">
-                            <label>
-                                <input type="radio" defaultValue="female" className="radio" checked={gender_female} /> Fêmea
+                        <div className="item">  <label>
+                            <input type="radio" name="gender" value="female" className="radio" /> Fêmea
                             </label>
                             <label>
-                                <input type="radio" defaultValue="male" className="radio" checked={gender_male} /> Macho
+                                <input type="radio" name="gender" value="male" className="radio" /> Macho
                             </label>
-
                         </div>
                         <div className="item">
                             <label className="titleItemCard">Pelagem </label>
@@ -162,7 +169,7 @@ const CadastroPet: React.FC = () => {
             </Content>
             <Background />
 
-        </Container>
+        </Container >
     );
 
 };

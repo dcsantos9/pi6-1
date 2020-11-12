@@ -175,6 +175,9 @@ export const AnimationContainer = styled.div`
      label{
         margin-top: 24px;
      }
+     .item{
+        border: 0px;
+     }
 
 `;
 

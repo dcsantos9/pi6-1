@@ -8,10 +8,14 @@ interface Request{
     name: string;
     species: string;
     particulars: string;
-    info: string;
+    info: string;    
+    birth_day: string;  
+    coat: string;  
+    gender: string;  
+    breed: string;  
 }
 class CreatePetService {
-    public async execute({user_id, name, species, particulars, info}: Request): Promise<Pet>{
+    public async execute({ user_id, name, species, particulars, info }: Request): Promise<Pet> {
         const petsRepository = getRepository(Pet);
 
         const pet = petsRepository.create({
@@ -19,7 +23,11 @@ class CreatePetService {
             name,
             species,
             particulars,
-            info
+            info,
+            birth_day,
+            coat,
+            gender,
+            breed
         });
 
         await petsRepository.save(pet);

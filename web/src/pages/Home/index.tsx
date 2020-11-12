@@ -65,7 +65,7 @@ const Home: React.FC = () => {
 
             <h1>Pets</h1>
             <ul>
-                <li><Link to='/'>Adicionar Novo Pet</Link></li>
+                <li><Link to='/cadastropet'>Adicionar Novo Pet</Link></li>
                 <li><Link to='/'>Meus Pets Favoritos</Link></li>
                 <li><Link to='/'>Meus Pedidos de Adoção</Link></li>
             </ul>
