@@ -15,7 +15,7 @@ interface Request{
     breed: string;  
 }
 class CreatePetService {
-    public async execute({ user_id, name, species, particulars, info }: Request): Promise<Pet> {
+    public async execute({ user_id, name, species, particulars, info, birth_day, coat, gender, breed }: Request): Promise<Pet> {
         const petsRepository = getRepository(Pet);
 
         const pet = petsRepository.create({

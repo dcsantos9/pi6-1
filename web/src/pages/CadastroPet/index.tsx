@@ -12,9 +12,10 @@ import Button from '../../components/Button';
 import logoImg from '../../assets/logo.svg';
 import getValidationErrors from '../../utils/getValidationErrors';
 import api from '../../services/api';
-import { FiUser, FiMail, FiLock, FiPhone, FiMapPin } from 'react-icons/fi';
-import { FaLessThan, FaRegAddressCard } from "react-icons/fa";
-import { AiOutlineFieldNumber } from "react-icons/ai";
+import { FiUser } from 'react-icons/fi';
+import { FaBirthdayCake, FaCat, FaDog } from "react-icons/fa";
+// import { AiOutlineFieldNumber } from "react-icons/ai";
+import { MdPets } from "react-icons/md";
 import MainMenu from '../../components/MainMenu';
 
 interface CadastroPetFormData {
@@ -119,14 +120,7 @@ const CadastroPet: React.FC = () => {
 
                         <div className="item">
                             <label className="titleItemCard">nome </label>
-                            <Input name="name" placeholder="Nome" icon={FiUser} />
-                            <label className="titleItemCard">espécie </label>
-                            <label>
-                                <input type="radio" name="species" value="DOG" className="radio" /> canina
-                            </label>
-                            <label>
-                                <input type="radio" name="species" value="CAT" className="radio" /> felina
-                            </label>
+                            <Input name="name" placeholder="Nome" icon={MdPets} />
                         </div>
                         <div className="item">
                             <label className="titleItemCard">espécie </label>
@@ -136,14 +130,6 @@ const CadastroPet: React.FC = () => {
                             <label>
                                 <input type="radio" name="species" value="CAT" className="radio" /> felina
                             </label>
-                        </div>
-                        <div className="item">
-                            <label className="titleItemCard">Nascimento </label>
-                            <Input name="birth_day" placeholder="XX/XX/XXXX" icon={FiUser} />
-                        </div>
-                        <div className="item">
-                            <label className="titleItemCard">raça </label>
-                            <Input name="breed" placeholder="Dálmata, SRD, outros." icon={FiUser} />
                         </div>
                         <div className="item">  <label>
                             <input type="radio" name="gender" value="female" className="radio" /> Fêmea
@@ -153,8 +139,16 @@ const CadastroPet: React.FC = () => {
                             </label>
                         </div>
                         <div className="item">
+                            <label className="titleItemCard">Nascimento </label>
+                            <Input name="birth_day" placeholder="XX/XX/XXXX" icon={FaBirthdayCake} />
+                        </div>
+                        <div className="item">
+                            <label className="titleItemCard">raça </label>
+                            <Input name="breed" placeholder="Dálmata, SRD, outros." icon={FaDog} />
+                        </div>                        
+                        <div className="item">
                             <label className="titleItemCard">Pelagem </label>
-                            <Input name="coat" placeholder="Curta, Tricolor, Característica" icon={FiUser} />
+                            <Input name="coat" placeholder="Curta, Tricolor, Característica" icon={FaCat} />
                         </div>
                         <div className="item">
                             <label className="titleItemCard">Informações </label>
