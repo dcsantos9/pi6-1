@@ -1,51 +1,43 @@
 import styled from 'styled-components/native';
-import { FlatList } from 'react-native';
 
-interface Pet {
-  id: string;
-  name: string;
-  image_url: string;
-  price: number;
-}
-
-export const Container = styled.SafeAreaView`
+export const BackgroundImage = styled.ImageBackground`
   flex: 1;
+  padding: 40px 40px 0;
+  justify-content: space-around;
+`;
+
+export const Container = styled.View``;
+
+export const Title = styled.Text`
+  font-style: normal;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 50px;
+  color: #fff;
+  margin-top: 80px;
+  width: 250px;
+  font-family: 'Poppins-Regular';
+`;
+
+export const NavigationButton = styled.TouchableOpacity`
+  background: #ffb84d;
+  border-radius: 8px;
+  flex-direction: row;
   align-items: center;
 `;
 
-export const PetContainer = styled.View`
-  border-radius: 5px;
-  margin-top: 60px;
+export const ButtonText = styled.Text`
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+  color: #7a1818;
   flex: 1;
-  flex-direction: row;
+  text-align: center;
 `;
 
-export const PetList = styled(
-  FlatList as new () => FlatList<Pet>,
-).attrs({
-  numColumns: 1,
-})`
-  flex: 1;
-  padding: 0 10px;
+export const IconContainer = styled.View`
+  background-color: #ffc46b;
+  padding: 16px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
 `;
-
-export const Pet = styled.View`
-  background: #fff;
-  padding: 16px 16px;
-  border-radius: 5px;
-  margin: 8px;
-  flex: 1;
-`;
-
-export const PetImage = styled.Image`
-  height: 122px;
-  width: 122px;
-  align-self: center;
-`;
-
-export const PetTitle = styled.Text`
-  font-size: 14px;
-  margin-top: 10px;
-`;
-
-export const PetButton = styled.TouchableOpacity``;
