@@ -22,7 +22,6 @@ petsRouter.get('/', async (request, response) => {
     const pets = petsAllData.map( ({id, user_id, name, species, particulars, info, avatar, birth_day, gender, coat, breed}) => {
 
         const user_data = usersAllData.filter((user) => (user.id === user_id ))[0];
-        const pet = petsAllData.filter((pet) => (pet.id === id ))[0];
 
         const has_faved_by = usersAllData.filter( (user) => user.favorite_pets.filter(
             (user_pet) => (user_pet.id === id))[0]);
@@ -31,7 +30,8 @@ petsRouter.get('/', async (request, response) => {
             (user_pet) => (user_pet.id === id))[0]);
 
         const user_name = user_data.name;
-        const institution = { id: user_id , name: user_name }
+
+        const institution = { id: user_id , name: user_data.name }
 
         return { id, institution, has_faved_by, has_asked_for_adoption, name, species, particulars, info, avatar, birth_day, gender, coat, breed }
     });
@@ -41,12 +41,12 @@ petsRouter.get('/', async (request, response) => {
 
 petsRouter.post('/', async (request, response) => {
 
-        const { user_id, name, species, particulars, info} = request.body;
+        const { user_id, name, species, particulars, info, coat, gender, breed, birth_day} = request.body;
 
         const createPet = new CreatePetService();
 
         const pet = await createPet.execute({
-            user_id, name, species, particulars, info
+            user_id, name, species, particulars, info, coat, gender, breed, birth_day
         });
 
         return response.json(pet);

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useContext } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
@@ -36,28 +36,91 @@ interface CadastroPetFormData {
 
 
 const CadastroPet: React.FC = () => {
-    const formRef = useRef<FormHandles>(null);
+    const formRef = useRef  <FormHandles>(null);
     const { addToast } = useToast();
     const history = useHistory();
-    const pet = JSON.parse(localStorage.getItem('@QueroPet:pet') || "{}");
+    const user = JSON.parse(localStorage.getItem('@QueroPet:user') || "{}");
+
+    localStorage.setItem('@QueroPet:pet_species', JSON.stringify("dog"));
+    localStorage.setItem('@QueroPet:pet_gender', JSON.stringify("F"));
+
+    const [speciesFelina, setSpeciesFelina] = useState( () => {
+           return localStorage.getItem('@QueroPet:pet_species') === 'dog' ? true : false
+        }
+    );
+
+    const [speciesCanina, setSpeciesCanina] = useState( () => {
+        return localStorage.getItem('@QueroPet:pet_species') === 'cat' ? true : false
+        }
+    );
+
+    const setSpecies = (ele: any) => {
+        localStorage.setItem('@QueroPet:pet_species', ele.target.value)
+        console.log(ele.target.value)
+        setSpeciesFelina(localStorage.getItem('@QueroPet:pet_species') === 'cat' ? true : false)
+        setSpeciesCanina(localStorage.getItem('@QueroPet:pet_species') === 'dog' ? true : false)
+        return
+    }
+
+    useEffect(() => {
+        if(speciesFelina){
+            localStorage.setItem('@QueroPet:pet_species','cat');
+        } else {
+            localStorage.setItem('@QueroPet:pet_species','dog');
+        }
+    },[speciesFelina]);
+
+    const [speciesFemale, setSpeciesFemale] = useState( () => {
+           return localStorage.getItem('@QueroPet:pet_gender') === 'F' ? true : false
+        }
+    );
+
+    const [speciesMale, setSpeciesMale] = useState( () => {
+            return localStorage.getItem('@QueroPet:pet_species') === 'M' ? true : false
+        }
+    );
+
+    const setGender = (ele: any) => {
+        localStorage.setItem('@QueroPet:pet_gender', ele.target.value)
+        console.log(ele.target.value)
+        setSpeciesFemale(localStorage.getItem('@QueroPet:pet_species') === 'F' ? true : false)
+        setSpeciesMale(localStorage.getItem('@QueroPet:pet_species') === 'M' ? true : false)
+        return
+    }
+
+    useEffect(() => {
+        if(speciesFelina){
+            localStorage.setItem('@QueroPet:pet_species','cat');
+        } else {
+            localStorage.setItem('@QueroPet:pet_species','dog');
+        }
+    },[speciesFelina]);
+
+
 
     const handleSubmit = useCallback(async (data: object) => {
         try {
             formRef.current?.setErrors({});
             const schema = Yup.object().shape({
                 name: Yup.string().required('Nome obrigatório'),
-                species: Yup.string().required('Espécie obrigatória'),
                 birth_day: Yup.string().required('Nascimento obrigatório'),
                 coat: Yup.string().required('Pelagem obrigatória'),
-                gender: Yup.string().required('Sexo obrigatório'),
                 breed: Yup.string().required('Raça obrigatória'),
             });
+
             await schema.validate(data, {
                 abortEarly: false,
             });
-            await api.put(`/users/${pet.id}`, data);
-            const merged = { ...pet, ...data }
+            localStorage.getItem('@QueroPet:pet_gender')
+
+            const merged = { ...{
+                "user_id": user.id,
+                "gender": JSON.parse(localStorage.getItem('@QueroPet:pet_gender') || "{}"),
+                "species": JSON.parse(localStorage.getItem('@QueroPet:pet_species') || "{}")
+            }, ...data }
+            await api.post(`/pets`, merged);
             localStorage.setItem('@QueroPet:pet', JSON.stringify(merged));
+            console.log(merged)
             history.push('/');
 
             addToast({
@@ -75,18 +138,11 @@ const CadastroPet: React.FC = () => {
             addToast({
                 type: 'error',
                 title: 'Erro ao salvar',
-                description: 'preencha corretamente todos os campos obrigatórios',
+                description: 'preencha corretamente todos os campos obrigatórios'+err,
             });
         }
 
     }, [addToast, history]);
-
-    // ao deixar com essa configuração, não consigo escolher uma opção
-    // const Species_felina = pet.species === 'dog' ? true : false;
-    // const Species_canina = pet.species === 'cat' ? true : false;
-
-    // const gender_female = pet.gender === 'female' ? true : false;
-    // const gender_male = pet.species === 'male' ? true : false;
 
     return (
         <Container>
@@ -123,19 +179,19 @@ const CadastroPet: React.FC = () => {
                             <Input name="name" placeholder="Nome" icon={MdPets} />
                         </div>
                         <div className="item">
-                            <label className="titleItemCard">espécie </label>
+                            <label className="titleItemCard">espécie:</label>
                             <label>
-                                <input type="radio" name="species" value="DOG" className="radio" /> canina
+                                <input type="radio" name="species" value="dog" onChange={setSpecies} className="radio" checked={speciesCanina}/> canina
                             </label>
                             <label>
-                                <input type="radio" name="species" value="CAT" className="radio" /> felina
+                                <input type="radio" name="species" value="cat" onChange={setSpecies} className="radio"  checked={speciesFelina}/> felina
                             </label>
                         </div>
-                        <div className="item">  <label>
-                            <input type="radio" name="gender" value="female" className="radio" /> Fêmea
+                        <div className="item">gênero:<label>
+                            <input type="radio" name="gender" value="F" className="radio" onChange={setGender}  /> Fêmea
                             </label>
                             <label>
-                                <input type="radio" name="gender" value="male" className="radio" /> Macho
+                                <input type="radio" name="gender" value="M" className="radio" onChange={setGender}  /> Macho
                             </label>
                         </div>
                         <div className="item">
@@ -145,7 +201,7 @@ const CadastroPet: React.FC = () => {
                         <div className="item">
                             <label className="titleItemCard">raça </label>
                             <Input name="breed" placeholder="Dálmata, SRD, outros." icon={FaDog} />
-                        </div>                        
+                        </div>
                         <div className="item">
                             <label className="titleItemCard">Pelagem </label>
                             <Input name="coat" placeholder="Curta, Tricolor, Característica" icon={FaCat} />
