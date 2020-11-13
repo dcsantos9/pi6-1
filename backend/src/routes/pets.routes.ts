@@ -17,7 +17,7 @@ petsRouter.get('/', async (request, response) => {
     const petRepository = getRepository(Pet);
     const userRepository = getRepository(User);
 
-    const petsAllData = await petRepository.find();
+    const petsAllData = await (await petRepository.find()).reverse();
     const usersAllData = await userRepository.find();
     const pets = petsAllData.map( ({id, user_id, name, species, particulars, info, avatar, birth_day, gender, coat, breed}) => {
 
