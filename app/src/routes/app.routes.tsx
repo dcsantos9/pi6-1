@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Dashboard from '../pages/Dashboard';
+import Home from '../pages/Home';
 
 const App = createStackNavigator();
 
@@ -10,7 +10,7 @@ const AppRoutes: React.FC = () => (
         headerShown: false,
         cardStyle: { backgroundColor: '#eeeeee'}
     }}>
-        <App.Screen name="Dashboard" component={Dashboard} />
+        <App.Screen name="Home" component={Home} />
     </App.Navigator>
 )
 
