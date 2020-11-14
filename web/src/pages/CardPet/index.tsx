@@ -11,8 +11,11 @@ import Button from '../../components/Button';
 import logoImg from '../../assets/logo.svg';
 import getValidationErrors from '../../utils/getValidationErrors';
 import imgPhoto from '../../assets/cat-login.jpg';
-import  api from '../../services/api';
-import  MainMenu  from '../../components/MainMenu';
+import api from '../../services/api';
+import MainMenu from '../../components/MainMenu';
+
+import { FaDog, FaCat } from "react-icons/fa";
+import { GiFemale, GiMale } from "react-icons/gi";
 
 interface User {
     id: string;
@@ -22,6 +25,8 @@ interface User {
 interface Institution {
     id: string;
     name: string;
+    state: string;
+    city: string;
 }
 
 
@@ -41,23 +46,23 @@ interface Pet {
     coat: string;
 }
 
-interface CadastroInstituicaoFormData {
-    nome: string;
-    social_id: string;
-    info: string;
-    email: string;
-    phone: string;
-    PhoneType: string;
-    street: string;
-    number: string;
-    complement: string;
-    neightborhood: string;
-    city: string;
-    state: string;
-    zipcode: string;
-    password: string;
+// interface CadastroInstituicaoFormData {
+//     nome: string;
+//     social_id: string;
+//     info: string;
+//     email: string;
+//     phone: string;
+//     PhoneType: string;
+//     street: string;
+//     number: string;
+//     complement: string;
+//     neightborhood: string;
+//     city: string;
+//     state: string;
+//     zipcode: string;
+//     password: string;
 
-}
+// }
 
 const CadastroInstituicao: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
@@ -75,7 +80,7 @@ const CadastroInstituicao: React.FC = () => {
     });
 
     useEffect(()=> {
-        localStorage.setItem('@QueroPet:pets', JSON.stringify(pets) );
+        localStorage.setItem('@QueroPet:pets', JSON.stringify(pets));
     }, [pets]);
 
     useEffect(()=>{
@@ -85,63 +90,57 @@ const CadastroInstituicao: React.FC = () => {
 
     },[]);
 
-    const pet = pets.filter( (p) => (p.id === pet_id) )[0];
+    const pet = pets.filter( (p) => (p.id === pet_id) )[0];   
 
     return (
         <Container>
             <MainMenu>
-            <img className="logo" src={logoImg} alt="QueroPet" />
-            <h1>Home</h1>
+                <img className="logo" src={logoImg} alt="QueroPet" />
+                <h1>Home</h1>
             </MainMenu>
             <Content>
                 <AnimationContainer>
-                        <div className="item">
-                            <label className="titleItemCard">instituição </label>
-                            <label id="instituicao" >{ pet.institution.name }</label>
-                        </div>
-                        <div className="item">
-                            <label className="titleItemCard">nome </label>
-                            <label id="name">{ pet.name }</label>
+                    <h1 className="principalTitle"><label id="name" className="title">{pet.name}</label></h1>
+                        
+                        <div className="item" >
+                            <FaDog className={pet.species === 'dog' ? 'iconSpecie' : 'invisible'} />
+                            <FaCat className={pet.species === 'cat' ? 'iconSpecie' : 'invisible'}  />
+                            <GiFemale className={pet.gender === 'F' ? 'iconSpecie' : 'invisible'}/>
+                            <GiMale className={pet.gender === 'M' ? 'iconSpecie' : 'invisible'}/>
 
                         </div>
-                        <div className="item">
-                        <label className="titleItemCard">espécie </label>
-                            <label id="species">{ pet.species }</label>
-                        </div>
+                        
                         <div className="item">
                             <label className="titleItemCard">Nascimento </label>
-                            <label id="bithday">{ pet.birth_day }</label>
+                            <label id="bithday">{pet.birth_day}</label>
                         </div>
                         <div className="item">
                             <label className="titleItemCard">raça </label>
-                            <label id="breed">{ pet.breed }</label>
+                            <label id="breed">{pet.breed}</label>
                         </div>
-                        <div className="item">
-                            <label className="titleItemCard">Sexo </label>
-                            <label id="gender">{ pet.gender }</label>
-                        </div>
+
                         <div className="item">
                             <label className="titleItemCard">Pelagem </label>
-                            <label id="coat">{ pet.coat }</label>
+                            <label id="coat">{pet.coat}</label>
                         </div>
                         <div className="item">
                             <label className="titleItemCard">Informações </label>
-                            <label id="info">{ pet.info }</label>
+                            <label id="info" className="textJustify">{pet.info}</label>
                         </div>
                         <div className="item">
-                        <div className="button" >
-                        <Link to="/home" >voltar</Link></div>
-                        <div className="button" >
-                            <Link to="/cadastroPet">editar</Link>
-                        </div></div>
-                        {/*
-                      {
-
-o    Botões candidatar, excluir candidatura, favorito, voltar para listagem;
-o    Links para card instituição.
-                         */}
-
-
+                            <label className="titleItemCard">instituição </label>
+                            <label id="instituicao" >{pet.institution.name}</label>
+                        </div>
+                        <div className="item">
+                            <label className="titleItemCard">Localização </label>
+                            <label id="instituicao" >{pet.institution.city} - {pet.institution.state}</label>
+                        </div>
+                        <div className="item">
+                            <div className="button" >
+                                <Link to="/home" >voltar</Link></div>
+                            <div className="button" >
+                                <Link to="/cadastroPet">editar</Link>
+                            </div></div>
                 </AnimationContainer>
             </Content>
             <Content>

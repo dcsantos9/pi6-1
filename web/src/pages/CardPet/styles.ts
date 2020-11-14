@@ -52,7 +52,8 @@ export const AnimationContainer = styled.div`
         background: #000;
     }
     .item{
-        margin-bottom: 10px;
+        margin-bottom: 20px;
+        margin-top: 10px;
        display: flex;
    align-items: baseline;
    }
@@ -60,6 +61,10 @@ export const AnimationContainer = styled.div`
     font-weight: bold;
     padding-right:10px;
     text-transform: lowercase;
+    min-width: 120px;
+   }
+   .title{
+    color: #FF9000;
    }
 .item .button{
     margin-top: 20px;
@@ -90,6 +95,20 @@ export const AnimationContainer = styled.div`
     span{
         text-transform: lowercase;
     }
-
-
+    .iconSpecie{
+        color: #ff90008c;
+        display: block;
+        font-size: 3.0rem;
+    }
+    .principalTitle{
+        margin-bottom: 27px;
+    }
+    .textJustify{
+    text-align: justify;
+    }
+    .invisible{
+        display: none;
+    }
 `;
+
+
