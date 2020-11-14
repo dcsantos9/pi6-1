@@ -54,7 +54,7 @@ export const AnimationContainer = styled.div`
         width: 100%;
         text-align: left;
         h1 {
-            margin-bottom: 24px;
+            margin-bottom: 10px;
         }
         a {
             color: #666;
@@ -95,10 +95,11 @@ export const AnimationContainer = styled.div`
         margin-right: 10px;
     }
 
-    h3{
-        margin: 15px 5px;
-        color:#FF9000;
-
+    h3 {
+        margin: 15px 0px;
+        span{
+            color:#FF9000;
+        }
     }
     .button{
         width: 45%;
@@ -133,27 +134,18 @@ export const AnimationContainer = styled.div`
         height: 50px;
     }
     textarea
-    {
-        background: #FFFFFF;
-        border-radius: 10px;
-        border: 1px solid #ccc;
-        color: #777;
-        padding: 10px;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        & + div {
-            margin-top: 16px;
-        }
+    {        
         height: 100px;
         resize: vertical;
     }
     span{
         text-transform: lowercase;
+        font-weight: 500;
+        color: #555555;
     }
     select{
         font-size: 16px;
-        padding: 10px;
+        padding: 17px;
         border-radius:10px;
         border: 1px solid #ccc;
         color: #333;
@@ -166,16 +158,44 @@ export const AnimationContainer = styled.div`
      div{
         border-radius: 10px;
         border: 1px solid #ccc;
-        margin-bottom: 24px;
-        margin-top: 10px;
+        margin-bottom: 5px;
       }
       .button{
         border: none;
       }
      label{
-        margin-top: 24px;
+        margin-top: 5px;
      }
-
+     .item{
+        // margin-bottom: 10px;
+        // display: flex;
+        // align-items: baseline;
+        // flex-direction: column;
+        border: 0px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        text-align: end;
+        span{
+            padding-right: 10px;
+        }
+   }
+   span{
+       min-width: 110px;
+   }
+   @media (max-width: 800px) {    
+       .item{
+            max-width:100% !important;
+            display: flex;
+            align-items: baseline !important;
+            flex-direction: column;            
+            text-align: end;             
+       }
+       span{
+        min-width:0px;
+    }
+    
+    }    
 `;
 
 export const Background = styled.div`

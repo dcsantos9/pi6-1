@@ -18,6 +18,20 @@ const TextArea: React.FC<InputProps> = ({name, icon: Icon, ...rest}) => {
     const [isFilled, setIsFilled] = useState(false);
     const {fieldName, defaultValue, error, registerField } = useField(name);
 
+    const handleInputFocus = useCallback(() => {
+        setIsFocused(true);
+    },[])
+
+    const handleInputBlur = useCallback(() => {
+        setIsFocused(false);
+        if (inputRef.current?.value) {
+            setIsFilled(true);
+        } else {
+            setIsFilled(false);
+        }
+    },[])
+
+
     useEffect(() => {
         registerField({
             name: fieldName,
@@ -30,6 +44,8 @@ const TextArea: React.FC<InputProps> = ({name, icon: Icon, ...rest}) => {
         <Container isErrored={!!error} isFilled={isFilled} isFocused={isFocused}>
             { Icon && <Icon size={20} />}
             <textarea
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
                 defaultValue={defaultValue}
                 ref={inputRef}
                 {...rest}

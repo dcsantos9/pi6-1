@@ -13,8 +13,8 @@ import logoImg from '../../assets/logo.svg';
 import getValidationErrors from '../../utils/getValidationErrors';
 import api from '../../services/api';
 import { FiUser, FiMail, FiLock, FiPhone, FiMapPin } from 'react-icons/fi';
-import { FaLessThan, FaRegAddressCard } from "react-icons/fa";
-import { AiOutlineFieldNumber } from "react-icons/ai";
+import { FaRegAddressCard } from "react-icons/fa";
+import { AiOutlineFieldNumber, AiOutlineInfoCircle } from "react-icons/ai";
 import MainMenu from '../../components/MainMenu';
 
 interface CadastroInstituicaoFormData {
@@ -98,6 +98,17 @@ const CadastroInstituicao: React.FC = () => {
     const phone_type_mobile = user.phone_type === 'mobile' ? true : false;
     const phone_type_home = user.phone_type === 'home' ? true : false;
 
+
+    //visualizar campo CNPJ - não consigui achar o elemento kkk
+    // if (user.type !== 'institution') {
+
+    //     let elem: HTMLElement = document.getElementById('documentDiv')!;
+    //     if (elem !== null) {
+    //         elem.setAttribute("style", "display:none;");
+    //     }
+    // }
+
+
     return (
         <Container>
             <MainMenu>
@@ -120,69 +131,84 @@ const CadastroInstituicao: React.FC = () => {
             <Content>
                 <AnimationContainer>
                     <Form ref={formRef} onSubmit={handleSubmit}>
-                        <h1><span>Cadastro</span></h1>
-                        <Image src={'https://source.unsplash.com/user/erondu/600x400'}></Image>
-                        <input type="file" id="file" name="filename" value="" />
-                        <Button type="submit" name="sendPhoto" className="button button2">enviar</Button>
-
+                        <h1><span>Cadastro</span></h1>                     
+                        <div className="item" >
+                            <Image src={'https://source.unsplash.com/user/erondu/600x400'}></Image>
+                            <input type="file" id="file" name="filename" value="" />
+                            <Button type="submit" name="sendPhoto" className="button button2">enviar</Button>
+                        </div>
                         <h3><span>Dados</span></h3>
-                        <span>Nome</span>
-                        <Input name="name" defaultValue={user.name} placeholder="Nome" icon={FiUser} />
-                        <span>documento</span>
-                        <label>
-                            <input type="radio" defaultValue="CNPJ" className="radio" checked={cnpj_radio_selected} /> CNPJ
-                            </label>
-                        <label>
-                            <input type="radio" defaultValue="CPF" className="radio" checked={cpf_radio_selected} /> CPF
-                            </label>
-
-                        <Input name="social_id" defaultValue={user.social_id} placeholder="00.000.000/0000-00" icon={FaRegAddressCard} />
-                        <label>informações</label>
-                        <TextArea name="info" defaultValue={user.info} placeholder="" />
+                        <div className="item" style={{ maxWidth: '600px' }}>
+                            <span>Nome</span>
+                            <Input name="name" defaultValue={user.name} placeholder="Nome" icon={FiUser} />
+                        </div>
+                        <div className="item" style={{ maxWidth: '300px' }} id="documentDiv">
+                            <span >CNPJ</span>
+                            <Input name="social_id" defaultValue={user.social_id} placeholder="00.000.000/0000-00" icon={FaRegAddressCard} />
+                        </div>
+                        <div className="item" style={{ maxWidth: '600px' }}>
+                            <span>informações</span>
+                            <TextArea name="info" defaultValue={user.info} placeholder="" icon={AiOutlineInfoCircle} />
+                        </div>
                         <h3><span>Contato</span></h3>
-                        <span>e-mail</span>
-                        <Input name="email" defaultValue={user.email} placeholder="email@email.com.br" icon={FiMail} />
-                        <span>Telefone</span>
-                        <Input name="phone" defaultValue={user.phone} placeholder="(XX) XXXXX-XXXX" icon={FiPhone} />
-                        <select>
-                            <option key="MOBILE" defaultValue="MOBILE" selected={phone_type_mobile}>celular</option>
-                            <option key="HOME" defaultValue="HOME" selected={phone_type_home}>residencial</option>
-                            <option key="WORK" defaultValue="WORK" selected={phone_type_work}>trabalho</option>
-                        </select>
-                        <span>Celular</span>
-                        <Input name="celular" defaultValue={user.phone} placeholder="(XX) XXXXX-XXXX" icon={FiPhone} />
-                        <select>
-                            <option key="MOBILE" defaultValue="MOBILE" selected={phone_type_mobile}>celular</option>
-                            <option key="HOME" defaultValue="HOME" selected={phone_type_home}>residencial</option>
-                            <option key="WORK" defaultValue="WORK" selected={phone_type_work}>trabalho</option>
-                        </select>
+                        <div className="item" style={{ maxWidth: '600px' }}>
+                            <span>e-mail</span>
+                            <Input name="email" defaultValue={user.email} placeholder="email@email.com.br" icon={FiMail} />
+                        </div>
+
+                        <div className="item" style={{ maxWidth: '300px' }}>
+                            <span>Telefone</span>
+                            <Input name="phone" defaultValue={user.phone} placeholder="(XX) XXXXX-XXXX" icon={FiPhone} />
+                            <select>
+                                <option key="MOBILE" defaultValue="MOBILE" selected={phone_type_mobile}>celular</option>
+                                <option key="HOME" defaultValue="HOME" selected={phone_type_home}>residencial</option>
+                                <option key="WORK" defaultValue="WORK" selected={phone_type_work}>trabalho</option>
+                            </select>
+                        </div>
                         <h3><span>Endereço</span></h3>
-                        <span>endereço</span>
-                        <Input name="street" defaultValue={user.street} placeholder="rua, avenida" icon={FiMapPin} />
-                        <span>número</span>
-                        <Input name="number" defaultValue={user.number} placeholder="número" icon={AiOutlineFieldNumber} />
+
+                        <div className="item" style={{ maxWidth: '600px' }}>
+                        <span>rua</span>
+
+                            <Input name="street" defaultValue={user.street} placeholder="rua, avenida" icon={FiMapPin} />
+                        </div>
+                        <div className="item" style={{ maxWidth: '300px' }}>
+                            <span>número</span>
+                            <Input name="number" defaultValue={user.number} placeholder="número" icon={AiOutlineFieldNumber} />
+                        </div>
+                        <div className="item" style={{ maxWidth: '300px' }}>
                         <span>complemento</span>
 
-                        <Input name="complement" defaultValue={user.complement} placeholder="complemento, bloco, apartamento, casa" icon={FiMapPin} />
-                        <span>bairro</span>
+                            <Input name="complement" defaultValue={user.complement} placeholder="bloco, apartamento, casa" icon={FiMapPin} />
+                        </div>
+                        <div className="item" style={{ maxWidth: '300px' }}>
+                            <span>bairro</span>
 
-                        <Input name="neightborhood" defaultValue={user.neightborhood} placeholder="" icon={FiMapPin} />
-                        <span>cidade</span>
+                            <Input name="neightborhood" defaultValue={user.neightborhood} placeholder="" icon={FiMapPin} />
+                        </div>
+                        <div className="item" style={{ maxWidth: '300px' }}>
 
-                        <Input name="city" defaultValue={user.city} placeholder="" icon={FiMapPin} />
-                        <span>uf</span>
+                            <span>cidade</span>
 
-                        <Input name="state" defaultValue={user.state} placeholder="podemos fazer um autocomplete?" icon={FiMapPin} />
-                        <span>cep</span>
-                        <Input name="zipcode" defaultValue={user.zipcode} placeholder="00000-000" icon={FiMapPin} />
+                            <Input name="city" defaultValue={user.city} placeholder="" icon={FiMapPin} />
+                        </div>
+                        <div className="item" style={{ maxWidth: '300px' }}>
+                            <span>uf</span>
+                            <Input name="state" defaultValue={user.state} placeholder="" icon={FiMapPin} />
+                        </div>
+                        <div className="item" style={{ maxWidth: '300px' }}>
+
+                            <span>cep</span>
+                            <Input name="zipcode" defaultValue={user.zipcode} placeholder="00000-000" icon={FiMapPin} />
+                        </div>
                         <h3><span>Senha</span></h3>
                         <Input type="password" name="password" placeholder="senha" icon={FiLock} />
                         <Input type="password" name="password" placeholder="confirmar senha" icon={FiLock} />
-                        <Button type="submit" className="button">salvar</Button>
-                        <div className="button" style={{ float: "right" }}>
-                            <Link to="/">voltar</Link>
-
-
+                        <div style={{ maxWidth: '300px', border:'none' }}>
+                            <Button type="submit" className="button">salvar</Button>
+                            <div className="button" style={{ float: "right" }}>
+                                <Link to="/">voltar</Link>
+                            </div>
                         </div>
                     </Form>
                 </AnimationContainer>

@@ -16,7 +16,7 @@ export const Container = styled.div<ContainerProps>`
     padding: 16px;
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     & + div {
         margin-top: 16px;
     }
@@ -49,7 +49,8 @@ export const Container = styled.div<ContainerProps>`
     }
     svg {
         margin-right: 16px;
-    }
+    }    
+
 `;
 
 export const Error = styled(Tooltip)`
