@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
 import TabRoutes from './tab.routes';
 import Home from '../pages/Home';
-import PetDetails from '../pages/Home';
+import PetDetails from '../pages/PetDetails';
 
 const App = createStackNavigator();
 

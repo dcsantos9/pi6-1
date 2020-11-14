@@ -13,6 +13,31 @@ const upload = multer(uploadConfig);
 
 upload.array
 
+petsRouter.get('/:id', async (request, response) => {
+    const petRepository = getRepository(Pet);
+    const userRepository = getRepository(User);
+
+    const pet = await (await petRepository.findOne(
+        {
+            where: { id: request.params.id }
+        }
+    ));
+    console.log(pet)
+    const usersAllData = await userRepository.find();
+
+        const user_data = usersAllData.filter((user) => (user.id === pet.user_id ))[0];
+
+        const has_faved_by = usersAllData.filter( (user) => user.favorite_pets.filter(
+            (user_pet) => (user_pet.id === pet.id))[0]);
+
+        const has_asked_for_adoption = usersAllData.filter( (user) => user.candidate_pets.filter(
+            (user_pet) => (user_pet.id === pet.id))[0]);
+
+        const institution = { id: pet.user_id , name: user_data.name }
+
+  return response.json(pet);
+});
+
 petsRouter.get('/', async (request, response) => {
     const petRepository = getRepository(Pet);
     const userRepository = getRepository(User);

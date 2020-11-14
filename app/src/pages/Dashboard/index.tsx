@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import Logo from '../../assets/logo.png';
+import { useNavigation } from '@react-navigation/native';
 import  api from '../../services/api';
 import { useAuth } from '../../hooks/auth';
 
@@ -52,6 +53,7 @@ interface Pet {
 
 const Home: React.FC = () => {
     const { signOut } = useAuth();
+    const navigation = useNavigation();
     const [ pets, setPets ] = useState<Pet[]>(() => {
         /*const storagedPets = localStorage.getItem('@QueroPet:pets');
         if (storagedPets){
@@ -59,6 +61,13 @@ const Home: React.FC = () => {
         }*/
         return [];
     });
+
+    async function handleNavigate(id: string): Promise<void> {
+      navigation.navigate('PetDetails', {
+        id,
+      });
+    }
+  
 
     useEffect(()=>{
         async function loadPets(): Promise<void> {
@@ -92,7 +101,7 @@ const Home: React.FC = () => {
               height: 80,
             }}
             renderItem={({item}) => (
-              <Pet>
+              <Pet key={item.id} onPress={() => handleNavigate(item.id)}>
                 <PetImage source={{uri: "https://source.unsplash.com/user/erondu/600x400" }} />
                 <PetTitle>{item.name}</PetTitle>
                 <PetDescription>lorem ipsum lasdf lasd asdf lllas dfoasdf sad fsadfl</PetDescription>

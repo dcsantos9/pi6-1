@@ -38,7 +38,7 @@ export const PetList = styled(
   padding: 0 10px;
 `;
 
-export const Pet = styled.View`
+export const Pet = styled.TouchableOpacity`
   background: #fff;
   padding: 16px 16px;
   border-radius: 5px;
