@@ -150,6 +150,7 @@ export const AnimationContainer = styled.div`
         border: 1px solid #ccc;
         color: #333;
         margin-left:5px;
+        margin-top: 24px;
     }
 
     input[type='file'] {
@@ -157,15 +158,12 @@ export const AnimationContainer = styled.div`
       }
      div{
         border-radius: 10px;
-        border: 1px solid #ccc;
-        margin-bottom: 5px;
+        border: 1px solid #ccc;        
       }
       .button{
         border: none;
       }
-     label{
-        margin-top: 5px;
-     }
+     
      .item{
         // margin-bottom: 10px;
         // display: flex;
@@ -182,7 +180,10 @@ export const AnimationContainer = styled.div`
    }
    span{
        min-width: 110px;
+       margin-top: 24px;
+       text-align: end;
    }
+
    @media (max-width: 800px) {    
        .item{
             max-width:100% !important;
@@ -191,11 +192,24 @@ export const AnimationContainer = styled.div`
             flex-direction: column;            
             text-align: end;             
        }
-       span{
-        min-width:0px;
-    }
+       span
+        {
+            min-width:0px;
+        }
+        select{           
+            margin-left:0px;
+        }
+        h3{
+            display: none;
+        }
+        .lblRadioButton{
+            min-width: 0px;
+        }
+        .divRadioButton{
+            flex-orientation: row;
+        }
     
-    }    
+    }   
 `;
 
 export const Background = styled.div`

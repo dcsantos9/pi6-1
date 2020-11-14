@@ -99,16 +99,6 @@ const CadastroInstituicao: React.FC = () => {
     const phone_type_home = user.phone_type === 'home' ? true : false;
 
 
-    //visualizar campo CNPJ - não consigui achar o elemento kkk
-    // if (user.type !== 'institution') {
-
-    //     let elem: HTMLElement = document.getElementById('documentDiv')!;
-    //     if (elem !== null) {
-    //         elem.setAttribute("style", "display:none;");
-    //     }
-    // }
-
-
     return (
         <Container>
             <MainMenu>
@@ -131,7 +121,7 @@ const CadastroInstituicao: React.FC = () => {
             <Content>
                 <AnimationContainer>
                     <Form ref={formRef} onSubmit={handleSubmit}>
-                        <h1><span>Cadastro</span></h1>                     
+                        <h1><span>Cadastro</span></h1>
                         <div className="item" >
                             <Image src={'https://source.unsplash.com/user/erondu/600x400'}></Image>
                             <input type="file" id="file" name="filename" value="" />
@@ -142,9 +132,17 @@ const CadastroInstituicao: React.FC = () => {
                             <span>Nome</span>
                             <Input name="name" defaultValue={user.name} placeholder="Nome" icon={FiUser} />
                         </div>
-                        <div className="item" style={{ maxWidth: '300px' }} id="documentDiv">
+                        <div className="item" style={{ maxWidth: '300px' }}>
                             <span >CNPJ</span>
                             <Input name="social_id" defaultValue={user.social_id} placeholder="00.000.000/0000-00" icon={FaRegAddressCard} />
+                            
+                            {/* <label style={{minWidth: '100px'}}>
+                                <input type="radio" defaultValue="CNPJ" className="radio" checked={cnpj_radio_selected} /> CNPJ
+                            </label>
+                            <label style={{minWidth: '100px'}}>
+                                <input type="radio" defaultValue="CPF" className="radio" checked={cpf_radio_selected} /> CPF
+                            </label> */}
+
                         </div>
                         <div className="item" style={{ maxWidth: '600px' }}>
                             <span>informações</span>
@@ -168,7 +166,7 @@ const CadastroInstituicao: React.FC = () => {
                         <h3><span>Endereço</span></h3>
 
                         <div className="item" style={{ maxWidth: '600px' }}>
-                        <span>rua</span>
+                            <span>rua</span>
 
                             <Input name="street" defaultValue={user.street} placeholder="rua, avenida" icon={FiMapPin} />
                         </div>
@@ -177,7 +175,7 @@ const CadastroInstituicao: React.FC = () => {
                             <Input name="number" defaultValue={user.number} placeholder="número" icon={AiOutlineFieldNumber} />
                         </div>
                         <div className="item" style={{ maxWidth: '300px' }}>
-                        <span>complemento</span>
+                            <span>complemento</span>
 
                             <Input name="complement" defaultValue={user.complement} placeholder="bloco, apartamento, casa" icon={FiMapPin} />
                         </div>
@@ -193,7 +191,7 @@ const CadastroInstituicao: React.FC = () => {
                             <Input name="city" defaultValue={user.city} placeholder="" icon={FiMapPin} />
                         </div>
                         <div className="item" style={{ maxWidth: '300px' }}>
-                            <span>uf</span>
+                            <span>estado</span>
                             <Input name="state" defaultValue={user.state} placeholder="" icon={FiMapPin} />
                         </div>
                         <div className="item" style={{ maxWidth: '300px' }}>
