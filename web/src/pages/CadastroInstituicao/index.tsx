@@ -108,7 +108,7 @@ const CadastroInstituicao: React.FC = () => {
                 
                 <ul>
                     <li><Link to='/cadastroInstituicao'>Meu Cadastro</Link></li>
-                    <li><Link to='/cadastroInstituicao'>Alterar Senha</Link></li>
+                    <li><Link to='/alterarsenha'>Alterar Senha</Link></li>
                 </ul>
                 <h1>Pets</h1>
                 <ul>

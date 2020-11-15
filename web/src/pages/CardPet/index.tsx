@@ -46,23 +46,6 @@ interface Pet {
     coat: string;
 }
 
-// interface CadastroInstituicaoFormData {
-//     nome: string;
-//     social_id: string;
-//     info: string;
-//     email: string;
-//     phone: string;
-//     PhoneType: string;
-//     street: string;
-//     number: string;
-//     complement: string;
-//     neightborhood: string;
-//     city: string;
-//     state: string;
-//     zipcode: string;
-//     password: string;
-
-// }
 
 const CadastroInstituicao: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
@@ -95,10 +78,12 @@ const CadastroInstituicao: React.FC = () => {
     return (
         <Container>
             <MainMenu>
-            <h1>Cadastro</h1>
+            <img className="logo" src={logoImg} alt="QueroPet" />
+                <h1 className="title">Cadastro</h1>
+                
                 <ul>
                     <li><Link to='/cadastroInstituicao'>Meu Cadastro</Link></li>
-                    <li><Link to='/alterarSenha'>Alterar Senha</Link></li>
+                    <li><Link to='/alterarsenha'>Alterar Senha</Link></li>
                 </ul>
                 <h1>Pets</h1>
                 <ul>

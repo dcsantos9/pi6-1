@@ -9,6 +9,7 @@ import Test from '../pages/Test';
 import CadastroInstituicao from '../pages/CadastroInstituicao';
 import CardPet from '../pages/CardPet';
 import CadastroPet from '../pages/CadastroPet';
+import AlterarSenha from '../pages/AlterarSenha';
 
 
 const Routes: React.FC = () => (
@@ -18,11 +19,10 @@ const Routes: React.FC = () => (
         <Route path="/test" exact component={Test} />
         <Route path="/signup" exact component={SignUp} />
         <Route path="/dashboard" exact component={Dashboard} isPrivate />
-
-        {/*Necessario voltar telas a seguir para private */}
         <Route path="/cadastroInstituicao" exact component={CadastroInstituicao}  isPrivate/>
         <Route path="/cadastroPet" exact component={CadastroPet}  isPrivate/>
         <Route path="/cardPet/:id" exact component={CardPet} isPrivate />
+        <Route path="/alterarsenha" exact component={AlterarSenha} isPrivate /> 
     </Switch>
 );
 

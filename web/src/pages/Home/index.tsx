@@ -64,11 +64,11 @@ const Home: React.FC = () => {
         <Container>
             <MainMenu>
             <img className="logo" src={logoImg} alt="QueroPet" />
-
-                <h1>Cadastro</h1>
+                <h1 className="title">Cadastro</h1>
+                
                 <ul>
                     <li><Link to='/cadastroInstituicao'>Meu Cadastro</Link></li>
-                    <li><Link to='/alterarSenha'>Alterar Senha</Link></li>
+                    <li><Link to='/alterarsenha'>Alterar Senha</Link></li>
                 </ul>
                 <h1>Pets</h1>
                 <ul>
