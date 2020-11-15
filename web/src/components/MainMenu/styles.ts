@@ -3,7 +3,17 @@ import styled from 'styled-components';
 export const Menu = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: initial;
+    
+    ul{
+        list-style-type:none;
+    }
+    li{
+        margin-top: 10px;
+    }
+    h1{
+    margin-top: 20px;    
+    }
 
     @media(max-width: 800px) {
         display: none;

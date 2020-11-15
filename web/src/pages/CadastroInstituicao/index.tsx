@@ -104,24 +104,26 @@ const CadastroInstituicao: React.FC = () => {
             <MainMenu>
 
                 <img className="logo" src={logoImg} alt="QueroPet" />
-
+                <h1 className="title">Cadastro</h1>
+                
+                <ul>
+                    <li><Link to='/cadastroInstituicao'>Meu Cadastro</Link></li>
+                    <li><Link to='/cadastroInstituicao'>Alterar Senha</Link></li>
+                </ul>
                 <h1>Pets</h1>
                 <ul>
                     <li><Link to='/'>Adicionar Novo Pet</Link></li>
-                    <li><Link to='/'>Meus Pets Favoritos</Link></li>
-                    <li><Link to='/'>Meus Pedidos de Adoção</Link></li>
+                    <li><Link to='/'>Meus Pets</Link></li>
+                    <li><Link to='/'>Pedidos de Adoção</Link></li>
                 </ul>
 
-                <h1>Cadastro</h1>
-                <ul>
-                    <li><Link to='/cadastroInstituicao'>Meu Cadastro</Link></li>
-                </ul>
+                
 
             </MainMenu>
             <Content>
                 <AnimationContainer>
                     <Form ref={formRef} onSubmit={handleSubmit}>
-                        <h1><span>Cadastro</span></h1>
+                        <h1><span>meu Cadastro</span></h1>
                         <div className="item" >
                             <Image src={'https://source.unsplash.com/user/erondu/600x400'}></Image>
                             <input type="file" id="file" name="filename" value="" />

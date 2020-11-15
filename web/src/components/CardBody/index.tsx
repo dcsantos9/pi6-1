@@ -4,6 +4,8 @@ import Button from '../Button';
 import  api from '../../services/api';
 import { useAuth } from '../../hooks/auth';
 import { Link, useHistory } from 'react-router-dom';
+import { FaDog, FaCat } from "react-icons/fa";
+import { GiFemale, GiMale } from "react-icons/gi";
 
 interface Institution {
     id: string;
@@ -97,14 +99,19 @@ const CardBody: React.FC<CardBodyProps> = ({pet_id, date, name, info, has_faved_
     return (
 
     <Container>
+    <FaDog className={species === 'dog' ? 'iconSpecie' : 'invisible'} />
+    <FaCat className={species === 'cat' ? 'iconSpecie' : 'invisible'}  />
+    <GiFemale className={gender === 'F' ? 'iconSpecie' : 'invisible'}/>
+    <GiMale className={gender === 'M' ? 'iconSpecie' : 'invisible'}/>
     <Date>{date}</Date>
 
     <Name>{name}</Name>
-    espécie:  <BodyContent> <strong>{species}</strong></BodyContent>
-    sexo:  <BodyContent> <strong>{gender}</strong></BodyContent>
-    instituição:  <BodyContent> <strong>{institution.name}</strong></BodyContent>
+    
+    
 
-    informações: <BodyContent> {info}</BodyContent>
+    instituição:  <BodyContent> <strong>{institution.name}, CITY  - STATE</strong></BodyContent>
+    {/* instituição:  <BodyContent> <strong>{institution.name}, {institution.city} - {institution.state}</strong></BodyContent> */}
+
     <ButtonPanel>
         <Button onClick={() => (handleFave())} style={faveBgColor}>{faveText}</Button>
         <Button onClick={() => (handleAskForAdoption())} style={askForAdoptionBgColor}>{askForAdoptionText}</Button>

@@ -183,6 +183,9 @@ export const AnimationContainer = styled.div`
        margin-top: 24px;
        text-align: end;
    }
+   .title{
+        color: #FF9000;
+   }
 
    @media (max-width: 800px) {    
        .item{

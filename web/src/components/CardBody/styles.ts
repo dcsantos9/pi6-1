@@ -11,6 +11,18 @@ export const Container = styled.div`
     border-top-right-radius: 0px;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
+
+
+    .iconSpecie{
+        color: #ff90008c;
+        display: block;
+        font-size: 3.0rem;
+        float: right;
+    }
+    .invisible{
+        display: none;        
+    }
+
 `;
 
 export const Date = styled.p`
