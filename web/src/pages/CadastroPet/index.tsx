@@ -12,11 +12,10 @@ import Button from '../../components/Button';
 import logoImg from '../../assets/logo.svg';
 import getValidationErrors from '../../utils/getValidationErrors';
 import api from '../../services/api';
-import { FiUser } from 'react-icons/fi';
 import { FaBirthdayCake, FaCat, FaDog } from "react-icons/fa";
-// import { AiOutlineFieldNumber } from "react-icons/ai";
 import { MdPets } from "react-icons/md";
 import MainMenu from '../../components/MainMenu';
+import { AiOutlineFieldNumber, AiOutlineInfoCircle } from "react-icons/ai";
 
 interface CadastroPetFormData {
     name: string;
@@ -36,13 +35,14 @@ interface CadastroPetFormData {
 
 
 const CadastroPet: React.FC = () => {
-    const formRef = useRef  <FormHandles>(null);
-    const { addToast } = useToast();
-    const history = useHistory();
-    const user = JSON.parse(localStorage.getItem('@QueroPet:user') || "{}");
+     const formRef = useRef  <FormHandles>(null);
+     const { addToast } = useToast();
+     const history = useHistory();
+     const user = JSON.parse(localStorage.getItem('@QueroPet:user') || "{}");
 
-    localStorage.setItem('@QueroPet:pet_species', JSON.stringify("dog"));
-    localStorage.setItem('@QueroPet:pet_gender', JSON.stringify("F"));
+// esta fixo oq salvar
+     localStorage.setItem('@QueroPet:pet_species', JSON.stringify("dog"));
+     localStorage.setItem('@QueroPet:pet_gender', JSON.stringify("F"));
 
     const [speciesFelina, setSpeciesFelina] = useState( () => {
            return localStorage.getItem('@QueroPet:pet_species') === 'dog' ? true : false
@@ -148,38 +148,39 @@ const CadastroPet: React.FC = () => {
         <Container>
             <MainMenu>
 
-                <img className="logo" src={logoImg} alt="QueroPet" />
-
-                <h1>Pets</h1>
-                <ul>
-                    <li><Link to='/'>Adicionar Novo Pet</Link></li>
-                    <li><Link to='/'>Meus Pets Favoritos</Link></li>
-                    <li><Link to='/'>Meus Pedidos de Adoção</Link></li>
-                </ul>
-
-                <h1>Cadastro</h1>
+            <img className="logo" src={logoImg} alt="QueroPet" />
+                <h1 className="title">Cadastro</h1>
+                
                 <ul>
                     <li><Link to='/cadastroInstituicao'>Meu Cadastro</Link></li>
+                    <li><Link to='/cadastroInstituicao'>Alterar Senha</Link></li>
                 </ul>
+                <h1>Pets</h1>
+                <ul>
+                    <li><Link to='/cadastropet'>Adicionar Novo Pet</Link></li>
+                    <li><Link to='/'>Meus Pets</Link></li>
+                    <li><Link to='/'>Pedidos de Adoção</Link></li>
+                </ul>
+
 
             </MainMenu>
             <Content>
                 <AnimationContainer>
                     <Form ref={formRef} onSubmit={handleSubmit}>
-
+                        <h1><span>Cadastro pet</span></h1>
                         <div className="item">
                             <Image src={'https://source.unsplash.com/user/erondu/600x400'}></Image>
                             <input type="file" id="file" name="filename" value="" />
                             <Button type="submit" name="sendPhoto" className="button button2">enviar</Button>
                         </div>
-                        <h1><span>Cadastro</span></h1>
+                   
 
-                        <div className="item">
-                            <label className="titleItemCard">nome </label>
+                        <div className="item" style={{ maxWidth: '600px' }}>
+                            <span className="titleItemCard">nome </span>
                             <Input name="name" placeholder="Nome" icon={MdPets} />
                         </div>
-                        <div className="item">
-                            <label className="titleItemCard">espécie:</label>
+                        <div className="item divRadioButton">
+                            <span className="titleItemCard">espécie:</span>
                             <label>
                                 <input type="radio" name="species" value="dog" onChange={setSpecies} className="radio" checked={speciesCanina}/> canina
                             </label>
@@ -187,32 +188,38 @@ const CadastroPet: React.FC = () => {
                                 <input type="radio" name="species" value="cat" onChange={setSpecies} className="radio"  checked={speciesFelina}/> felina
                             </label>
                         </div>
-                        <div className="item">gênero:<label>
-                            <input type="radio" name="gender" value="F" className="radio" onChange={setGender}  /> Fêmea
+                        <div className="item divRadioButton">
+                            <span className="titleItemCard">gênero:</span>
+                            <label>
+                                <input type="radio" name="gender" value="F" className="radio" onChange={setGender}  /> Fêmea
                             </label>
                             <label>
                                 <input type="radio" name="gender" value="M" className="radio" onChange={setGender}  /> Macho
                             </label>
                         </div>
-                        <div className="item">
-                            <label className="titleItemCard">Nascimento </label>
+                        <div className="item" style={{ maxWidth: '300px' }}>
+                            <span className="titleItemCard">Nascimento </span>
                             <Input name="birth_day" placeholder="XX/XX/XXXX" icon={FaBirthdayCake} />
                         </div>
-                        <div className="item">
-                            <label className="titleItemCard">raça </label>
+                        <div className="item" style={{ maxWidth: '600px' }}>
+
+                            <span className="titleItemCard">raça </span>
                             <Input name="breed" placeholder="Dálmata, SRD, outros." icon={FaDog} />
                         </div>
-                        <div className="item">
-                            <label className="titleItemCard">Pelagem </label>
+                        <div className="item" style={{ maxWidth: '600px' }}>
+
+                            <span className="titleItemCard">Pelagem </span>
                             <Input name="coat" placeholder="Curta, Tricolor, Característica" icon={FaCat} />
                         </div>
-                        <div className="item">
-                            <label className="titleItemCard">Informações </label>
-                            <TextArea name="info" placeholder="" />
+                        <div className="item" style={{ maxWidth: '600px' }}>
+                            <span className="titleItemCard">Informações </span>
+                            <TextArea name="info" placeholder=""   icon={AiOutlineInfoCircle}/>
                         </div>
+                        <div style={{ maxWidth: '300px', border:'none' }}>
                         <Button type="submit" className="button">salvar</Button>
                         <div className="button" style={{ float: "right" }}>
                             <Link to="/home">voltar</Link>
+                        </div>
                         </div>
                     </Form>
                 </AnimationContainer>

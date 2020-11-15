@@ -54,7 +54,7 @@ export const AnimationContainer = styled.div`
         width: 100%;
         text-align: left;
         h1 {
-            margin-bottom: 24px;
+            margin-bottom: 10px;
         }
         a {
             color: #666;
@@ -96,8 +96,10 @@ export const AnimationContainer = styled.div`
     }
 
     h3{
-        margin: 15px 5px;
-        color:#FF9000;
+        margin: 15px 0px;
+        span{
+            color:#FF9000;
+        }
 
     }
     .button{
@@ -134,31 +136,24 @@ export const AnimationContainer = styled.div`
     }
     textarea
     {
-        background: #FFFFFF;
-        border-radius: 10px;
-        border: 1px solid #ccc;
-        color: #777;
-        padding: 10px;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        & + div {
-            margin-top: 16px;
-        }
+        // background: #FFFFFF;
+        // border-radius: 10px;
+        // padding: 10px;
+        // width: 100%;
+        // display: flex;
+        // align-items: center;
+        // & + div {
+        //     margin-top: 16px;
+        // }
         height: 100px;
         resize: vertical;
     }
     span{
         text-transform: lowercase;
+        font-weight: 500;
+        color: #555555;
     }
-    select{
-        font-size: 16px;
-        padding: 10px;
-        border-radius:10px;
-        border: 1px solid #ccc;
-        color: #333;
-        margin-left:5px;
-    }
+
 
     input[type='file'] {
         font-family: initial;
@@ -166,18 +161,63 @@ export const AnimationContainer = styled.div`
      div{
         border-radius: 10px;
         border: 1px solid #ccc;
-        margin-bottom: 24px;
-        margin-top: 10px;
+        // margin-bottom: 24px;
+        // margin-top: 10px;
       }
       .button{
         border: none;
       }
-     label{
-        margin-top: 24px;
-     }
+
      .item{
         border: 0px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        text-align: end;
+        span, label{
+            padding-right: 10px;
+        }
+        label{
+            margin-top: 24px;
+        }
+    }
+    
+    span{
+        //margin-top: 24px;
+        min-width: 110px;
+        margin-top: 24px;
+        text-align: end;
      }
+     .title{
+        color: #FF9000;
+        }
+        @media (max-width: 800px) {    
+            .item{
+                 max-width:100% !important;
+                 display: flex;
+                 align-items: baseline !important;
+                 flex-direction: column;            
+                 text-align: end;             
+            }
+            span
+             {
+                 min-width:0px;
+             }
+             select{           
+                 margin-left:0px;
+             }
+             h3{
+                 display: none;
+             }
+             .lblRadioButton{
+                 min-width: 0px;
+             }
+             .divRadioButton {
+                flex-direction: row;
+             }
+         
+         }   
+
 
 `;
 
