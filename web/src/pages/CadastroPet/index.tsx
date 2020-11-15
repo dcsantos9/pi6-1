@@ -148,17 +148,18 @@ const CadastroPet: React.FC = () => {
         <Container>
             <MainMenu>
 
-            <img className="logo" src={logoImg} alt="QueroPet" />
-                <h1>Cadastro</h1>
-                <ul>
-                    <li><Link to='/cadastroInstituicao'>Meu Cadastro</Link></li>
-                    <li><Link to='/alterarSenha'>Alterar Senha</Link></li>
-                </ul>
+                <img className="logo" src={logoImg} alt="QueroPet" />
+
                 <h1>Pets</h1>
                 <ul>
                     <li><Link to='/'>Adicionar Novo Pet</Link></li>
-                    <li><Link to='/'>Meus Pets</Link></li>
-                    <li><Link to='/'>Pedidos de Adoção</Link></li>
+                    <li><Link to='/'>Meus Pets Favoritos</Link></li>
+                    <li><Link to='/'>Meus Pedidos de Adoção</Link></li>
+                </ul>
+
+                <h1>Cadastro</h1>
+                <ul>
+                    <li><Link to='/cadastroInstituicao'>Meu Cadastro</Link></li>
                 </ul>
 
             </MainMenu>
@@ -211,7 +212,7 @@ const CadastroPet: React.FC = () => {
                         </div>
                         <Button type="submit" className="button">salvar</Button>
                         <div className="button" style={{ float: "right" }}>
-                            <Link to="/Dashboard">voltar</Link>
+                            <Link to="/home">voltar</Link>
                         </div>
                     </Form>
                 </AnimationContainer>
