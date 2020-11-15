@@ -109,8 +109,7 @@ const CardBody: React.FC<CardBodyProps> = ({pet_id, date, name, info, has_faved_
     
     
 
-    instituição:  <BodyContent> <strong>{institution.name}, CITY  - STATE</strong></BodyContent>
-    {/* instituição:  <BodyContent> <strong>{institution.name}, {institution.city} - {institution.state}</strong></BodyContent> */}
+    instituição:  <BodyContent> <strong>{institution.name}, {institution.city} - {institution.state}</strong></BodyContent>
 
     <ButtonPanel>
         <Button onClick={() => (handleFave())} style={faveBgColor}>{faveText}</Button>
