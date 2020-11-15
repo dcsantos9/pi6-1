@@ -13,6 +13,8 @@ interface PetParams {
 interface Institution {
     id: string;
     name: string;
+    city: string;
+    state: string;
 }
 
 interface User {

@@ -10,6 +10,8 @@ import { GiFemale, GiMale } from "react-icons/gi";
 interface Institution {
     id: string;
     name: string;
+    city: string;
+    state: string;
 }
 
 interface CardBodyProps {
@@ -106,9 +108,9 @@ const CardBody: React.FC<CardBodyProps> = ({pet_id, date, name, info, has_faved_
     <Date>{date}</Date>
 
     <Name>{name}</Name>
-    
-    
 
+
+    
     instituição:  <BodyContent> <strong>{institution.name}, {institution.city} - {institution.state}</strong></BodyContent>
 
     <ButtonPanel>

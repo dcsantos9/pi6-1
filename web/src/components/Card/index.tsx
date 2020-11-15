@@ -6,6 +6,8 @@ import CardBody from '../CardBody';
 interface Institution {
     id: string;
     name: string;
+    city: string;
+    state: string;
 }
 
 interface CardProps {
