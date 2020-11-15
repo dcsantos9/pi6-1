@@ -102,7 +102,7 @@ const CadastroInstituicao: React.FC = () => {
                 </ul>
                 <h1>Pets</h1>
                 <ul>
-                    <li><Link to='/'>Adicionar Novo Pet</Link></li>
+                    <li><Link to='/cadastropet'>Adicionar Novo Pet</Link></li>
                     <li><Link to='/'>Meus Pets</Link></li>
                     <li><Link to='/'>Pedidos de Adoção</Link></li>
                 </ul>
@@ -147,9 +147,8 @@ const CadastroInstituicao: React.FC = () => {
                         <div className="item">
                             <div className="button" >
                                 <Link to="/home" >voltar</Link></div>
-                            <div className="button" >
-                                <Link to="/cadastroPet">editar</Link>
-                            </div></div>
+                                <Button className="button" onClick={() => (history.push(`/cadastroPet/${pet_id}`))}>editar</Button>
+                            </div>
                 </AnimationContainer>
             </Content>
             <Content>

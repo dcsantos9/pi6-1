@@ -40,7 +40,7 @@ const Home: React.FC = () => {
     const history = useHistory();
     const user = JSON.parse(localStorage.getItem('@QueroPet:user') || "{}");
 
-    const [ pets, setPets ] = useState<Pet[]>(() => {
+    const [ pets, setPets ] = useState<Pet[]>(() => {                
         const storagedPets = localStorage.getItem('@QueroPet:pets');
         if (storagedPets){
             return JSON.parse(storagedPets);
@@ -72,7 +72,7 @@ const Home: React.FC = () => {
                 </ul>
                 <h1>Pets</h1>
                 <ul>
-                    <li><Link to='/'>Adicionar Novo Pet</Link></li>
+                    <li><Link to='/cadastropet'>Adicionar Novo Pet</Link></li>
                     <li><Link to='/'>Meus Pets</Link></li>
                     <li><Link to='/'>Pedidos de Adoção</Link></li>
                 </ul>

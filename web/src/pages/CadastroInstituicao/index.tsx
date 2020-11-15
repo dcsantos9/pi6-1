@@ -112,7 +112,7 @@ const CadastroInstituicao: React.FC = () => {
                 </ul>
                 <h1>Pets</h1>
                 <ul>
-                    <li><Link to='/'>Adicionar Novo Pet</Link></li>
+                    <li><Link to='/cadastropet'>Adicionar Novo Pet</Link></li>
                     <li><Link to='/'>Meus Pets</Link></li>
                     <li><Link to='/'>Pedidos de Adoção</Link></li>
                 </ul>

@@ -68,6 +68,7 @@ export const AnimationContainer = styled.div`
    }
 .item .button{
     margin-top: 20px;
+    width: 150px;
 }
     .button a {
         text-decoration: none;
