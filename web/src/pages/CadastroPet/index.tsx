@@ -126,8 +126,8 @@ const CadastroPet: React.FC = () => {
 
     const setGender = (ele: any) => {
         localStorage.setItem('@QueroPet:pet_gender', ele.target.value)
-        setSpeciesFemale(localStorage.getItem('@QueroPet:pet_species') === 'F' ? true : false)
-        setSpeciesMale(localStorage.getItem('@QueroPet:pet_species') === 'M' ? true : false)
+        setSpeciesFemale(localStorage.getItem('@QueroPet:pet_gender') === 'F' ? true : false)
+        setSpeciesMale(localStorage.getItem('@QueroPet:pet_gender') === 'M' ? true : false)
         return
     }
 
@@ -137,7 +137,7 @@ const CadastroPet: React.FC = () => {
         } else {
             localStorage.setItem('@QueroPet:pet_gender','M');
         }
-    },[speciesFemale]);
+    },[speciesFemale, speciesMale]);
 
     const handleSubmit = useCallback(async (data: object) => {
         try {
@@ -152,13 +152,13 @@ const CadastroPet: React.FC = () => {
             await schema.validate(data, {
                 abortEarly: false,
             });
-            localStorage.getItem('@QueroPet:pet_gender')
 
             const merged = { ...{
                 "user_id": user.id,
-                "gender": JSON.parse(localStorage.getItem('@QueroPet:pet_gender') || "{}"),
-                "species": JSON.parse(localStorage.getItem('@QueroPet:pet_species') || "{}")
+                "gender": localStorage.getItem('@QueroPet:pet_gender'),
+                "species": localStorage.getItem('@QueroPet:pet_species')
             }, ...data }
+
             await api.put(`/pets/${id}`, merged);
             localStorage.setItem('@QueroPet:pet', JSON.stringify(merged));
             console.log(merged)
