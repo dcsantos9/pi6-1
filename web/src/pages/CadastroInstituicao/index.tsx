@@ -4,7 +4,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { Container, Content, AnimationContainer, Background, Image } from './styles';
-import { useAuth, AuthProvider } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 import Input from '../../components/Input';
 import TextArea from '../../components/TextArea';
@@ -91,13 +90,9 @@ const CadastroInstituicao: React.FC = () => {
 
     }, [addToast, history]);
 
-    const cnpj_radio_selected = user.social_id_type === 'cnpj' ? true : false;
-    const cpf_radio_selected = user.social_id_type === 'cpf' ? true : false;
-
     const phone_type_work = user.phone_type === 'work' ? true : false;
     const phone_type_mobile = user.phone_type === 'mobile' ? true : false;
     const phone_type_home = user.phone_type === 'home' ? true : false;
-
 
     return (
         <Container>
@@ -105,7 +100,7 @@ const CadastroInstituicao: React.FC = () => {
 
                 <img className="logo" src={logoImg} alt="QueroPet" />
                 <h1 className="title">Cadastro</h1>
-                
+
                 <ul>
                     <li><Link to='/cadastroInstituicao'>Meu Cadastro</Link></li>
                     <li><Link to='/alterarsenha'>Alterar Senha</Link></li>
@@ -117,7 +112,7 @@ const CadastroInstituicao: React.FC = () => {
                     <li><Link to='/'>Pedidos de Adoção</Link></li>
                 </ul>
 
-                
+
 
             </MainMenu>
             <Content>
@@ -137,13 +132,6 @@ const CadastroInstituicao: React.FC = () => {
                         <div className="item" style={{ maxWidth: '300px' }}>
                             <span >CNPJ</span>
                             <Input name="social_id" defaultValue={user.social_id} placeholder="00.000.000/0000-00" icon={FaRegAddressCard} />
-                            
-                            {/* <label style={{minWidth: '100px'}}>
-                                <input type="radio" defaultValue="CNPJ" className="radio" checked={cnpj_radio_selected} /> CNPJ
-                            </label>
-                            <label style={{minWidth: '100px'}}>
-                                <input type="radio" defaultValue="CPF" className="radio" checked={cpf_radio_selected} /> CPF
-                            </label> */}
 
                         </div>
                         <div className="item" style={{ maxWidth: '600px' }}>
