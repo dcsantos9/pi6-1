@@ -188,7 +188,7 @@ const pet =  pets.filter( (p) => (p.id === pet_id) )[0];
                 <ul>
                     <li><Link to='/cadastropet'>Adicionar Novo Pet</Link></li>
                     <li><Link to='/'>Meus Pets</Link></li>
-                    <li><Link to='/'>Pedidos de Adoção</Link></li>
+                    <li><Link to='/home/pedidosadocao'>Pedidos de Adoção</Link></li>
                 </ul>
 
 

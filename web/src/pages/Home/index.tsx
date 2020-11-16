@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Container, Content } from './styles';
 import  Card  from '../../components/Card';
 import  MainMenu  from '../../components/MainMenu';
@@ -39,9 +39,11 @@ interface Pet {
 const Home: React.FC = () => {
     const history = useHistory();
     const user = JSON.parse(localStorage.getItem('@QueroPet:user') || "{}");
+    const location = useLocation();
+    const tipoPesquisa = location.pathname.split('/')[2];
 
     const [ pets, setPets ] = useState<Pet[]>(() => {                
-        const storagedPets = localStorage.getItem('@QueroPet:pets');
+        const storagedPets = localStorage.getItem('@QueroPet:pets');        
         if (storagedPets){
             return JSON.parse(storagedPets);
         }
@@ -59,6 +61,17 @@ const Home: React.FC = () => {
 
     },[]);
 
+    function getListaPets(){
+        if (tipoPesquisa ==="pedidosadocao"){     
+            //ajustar                  
+            return pets.filter( (p) => (p.has_asked_for_adoption !== null)); 
+         }
+         else{
+            return pets.filter( (p) => (p.institution.id === user.id) );
+         } 
+    }
+    const listaPets = getListaPets();
+
     return(
 
         <Container>
@@ -74,12 +87,12 @@ const Home: React.FC = () => {
                 <ul>
                     <li><Link to='/cadastropet'>Adicionar Novo Pet</Link></li>
                     <li><Link to='/'>Meus Pets</Link></li>
-                    <li><Link to='/'>Pedidos de Adoção</Link></li>
+                    <li><Link to='/home/pedidosadocao'>Pedidos de Adoção</Link></li>
                 </ul>
             </MainMenu>
 
             <Content>
-                { pets.map( pet => (
+                { listaPets.map( pet => (
                     <Card
                     key={pet.id}
                     item_id={pet.id}

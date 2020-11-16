@@ -79,7 +79,7 @@ const AlterarSenha: React.FC = () => {
                 <ul>
                     <li><Link to='/'>Adicionar Novo Pet</Link></li>
                     <li><Link to='/'>Meus Pets</Link></li>
-                    <li><Link to='/'>Pedidos de Adoção</Link></li>
+                    <li><Link to='/home/pedidosadocao'>Pedidos de Adoção</Link></li>
                 </ul>
             </MainMenu>
             <Content>
