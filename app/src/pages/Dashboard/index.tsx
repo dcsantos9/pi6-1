@@ -96,7 +96,7 @@ const Home: React.FC = () => {
           <PetList
             data={pets}
             keyExtractor={item => item.id}
-            ListFooterComponent={<View />}
+            
             ListFooterComponentStyle={{
               height: 80,
             }}
