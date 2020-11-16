@@ -186,6 +186,12 @@ export const AnimationContainer = styled.div`
    .title{
         color: #FF9000;
    }
+   .divButtons{
+        max-Width: 300px;
+        border:none;
+        display: flex;    
+        margin-left:120px;        
+    }
 
    @media (max-width: 800px) {    
        .item{
@@ -209,9 +215,11 @@ export const AnimationContainer = styled.div`
             min-width: 0px;
         }
         .divRadioButton{
-            flex-orientation: row;
+            flex-direction: row;
         }
-    
+        .divButtons{
+            margin-left:0px;
+         }
     }   
 `;
 
