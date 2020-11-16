@@ -33,7 +33,7 @@ petsRouter.get('/:id', async (request, response) => {
         const has_asked_for_adoption = usersAllData.filter( (user) => user.candidate_pets.filter(
             (user_pet) => (user_pet.id === pet.id))[0]);
 
-        const institution = { id: pet.user_id , name: user_data.name, state: user_data.state, city: user_data.city }        
+        const institution = { id: pet.user_id , name: user_data.name, state: user_data.state, city: user_data.city }
 
   return response.json(pet);
 });
@@ -44,6 +44,7 @@ petsRouter.get('/', async (request, response) => {
 
     const petsAllData = await (await petRepository.find()).reverse();
     const usersAllData = await userRepository.find();
+
     const pets = petsAllData.map( ({id, user_id, name, species, particulars, info, avatar, birth_day, gender, coat, breed}) => {
 
         const user_data = usersAllData.filter((user) => (user.id === user_id ))[0];
