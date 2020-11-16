@@ -87,7 +87,7 @@ const CadastroInstituicao: React.FC = () => {
             }
             const merged = { ...user, ...data }
             await api.put(`/users/${user.id}`, merged);
-            localStorage.setItem('@QueroPet:user', merged);
+            localStorage.setItem('@QueroPet:user', JSON.stringify(merged));
             history.push('/');
 
             addToast({
