@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useContext } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
@@ -37,8 +37,17 @@ interface CadastroInstituicaoFormData {
 const CadastroInstituicao: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
     const { addToast } = useToast();
+
+
     const history = useHistory();
     const user = JSON.parse(localStorage.getItem('@QueroPet:user') || "{}");
+
+    const [ phoneType, setPhoneType ] = useState(user.phone_type);
+
+    useEffect(()=> {
+        localStorage.setItem('@QueroPet:user_phone_type', phoneType);
+    }, [phoneType]);
+
 
     const handleSubmit = useCallback(async (data: object) => {
         try {
@@ -64,9 +73,21 @@ const CadastroInstituicao: React.FC = () => {
             await schema.validate(data, {
                 abortEarly: false,
             });
-            await api.put(`/users/${user.id}`, data);
+
+            if (localStorage.getItem('@QueroPet:user_phone_type') === "trabalho") {
+                user.phone_type = "work"
+            }
+
+            if (localStorage.getItem('@QueroPet:user_phone_type') === "celular") {
+                user.phone_type = "mobile"
+            }
+
+            if  (localStorage.getItem('@QueroPet:user_phone_type') === "residencial") {
+                user.phone_type = "home"
+            }
             const merged = { ...user, ...data }
-            localStorage.setItem('@QueroPet:user', JSON.stringify(merged));
+            await api.put(`/users/${user.id}`, merged);
+            localStorage.setItem('@QueroPet:user', merged);
             history.push('/');
 
             addToast({
@@ -84,7 +105,8 @@ const CadastroInstituicao: React.FC = () => {
             addToast({
                 type: 'error',
                 title: 'Erro ao salvar',
-                description: 'preencha corretamente todos os campos obrigatórios',
+                description: 'preencha corretamente todos os campos obrigatórios' +err,
+
             });
         }
 
@@ -146,8 +168,8 @@ const CadastroInstituicao: React.FC = () => {
 
                         <div className="item" style={{ maxWidth: '300px' }}>
                             <span>Telefone</span>
-                            <Input name="phone" defaultValue={user.phone} placeholder="(XX) XXXXX-XXXX" icon={FiPhone} />
-                            <select>
+                            <Input name="phone" defaultValue={user.phone}  placeholder="(XX) XXXXX-XXXX" icon={FiPhone} />
+                            <select onChange={ (obj) => ( setPhoneType(obj.target.value))}>
                                 <option key="MOBILE" defaultValue="MOBILE" selected={phone_type_mobile}>celular</option>
                                 <option key="HOME" defaultValue="HOME" selected={phone_type_home}>residencial</option>
                                 <option key="WORK" defaultValue="WORK" selected={phone_type_work}>trabalho</option>
