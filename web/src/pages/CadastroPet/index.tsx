@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
+import { useParams } from "react-router";
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { Container, Content, AnimationContainer, Background, Image } from './styles';
@@ -17,17 +18,43 @@ import { MdPets } from "react-icons/md";
 import MainMenu from '../../components/MainMenu';
 import { AiOutlineFieldNumber, AiOutlineInfoCircle } from "react-icons/ai";
 
+interface User {
+    id: string;
+    name: string;
+}
+
+interface Institution {
+    id: string;
+    name: string;
+    state: string;
+    city: string;
+}
+
+interface Pet {
+    id: string;
+    name: string;
+    has_faved_by: User[];
+    has_asked_for_adoption: User[];
+    info: string;
+    header_name: string;
+    image: string;
+    institution: Institution;
+    species: string;
+    gender: string;
+    birth_day: string;
+    breed: string;
+    coat: string;
+}
+
 interface CadastroPetFormData {
     name: string;
     species: string;
-    //particulars: string; //excluimos esse campo, trocamos por specie, peso, etc.
     birth_day: string;
     coat: string;
     gender: string;
     breed: string;
     info: string;
     avatar: string;
-
     user_id: string;
     created_at: Date;
     updated_at: Date;
@@ -35,28 +62,45 @@ interface CadastroPetFormData {
 
 
 const CadastroPet: React.FC = () => {
-     const formRef = useRef  <FormHandles>(null);
-     const { addToast } = useToast();
-     const history = useHistory();
-     const user = JSON.parse(localStorage.getItem('@QueroPet:user') || "{}");
 
-// esta fixo oq salvar
-     localStorage.setItem('@QueroPet:pet_species', JSON.stringify("dog"));
-     localStorage.setItem('@QueroPet:pet_gender', JSON.stringify("F"));
+    const formRef = useRef  <FormHandles>(null);
+    const { addToast } = useToast();
+    const history = useHistory();
+    const user = JSON.parse(localStorage.getItem('@QueroPet:user') || "{}");
+    const { id } = useParams();
+
+    const [ pets, setPets ] = useState<Pet[]>(() => {
+        const storagedPets = localStorage.getItem('@QueroPet:pets');
+        if (storagedPets){
+            return JSON.parse(storagedPets);
+        }
+        return [];
+    });
+
+    useEffect(()=> {
+        localStorage.setItem('@QueroPet:pets', JSON.stringify(pets));
+    }, [pets]);
+
+    useEffect(()=>{
+        api.get(`pets/`).then(response => {
+            setPets(response.data);
+        });
+    },[]);
+
+    const pet = pets.filter( (p) => ( p.id === id ))[0];
 
     const [speciesFelina, setSpeciesFelina] = useState( () => {
-           return localStorage.getItem('@QueroPet:pet_species') === 'dog' ? true : false
+           return pet.species === 'cat' ? true : false
         }
     );
 
     const [speciesCanina, setSpeciesCanina] = useState( () => {
-        return localStorage.getItem('@QueroPet:pet_species') === 'cat' ? true : false
+        return pet.species === 'dog' ? true : false
         }
     );
 
     const setSpecies = (ele: any) => {
         localStorage.setItem('@QueroPet:pet_species', ele.target.value)
-        console.log(ele.target.value)
         setSpeciesFelina(localStorage.getItem('@QueroPet:pet_species') === 'cat' ? true : false)
         setSpeciesCanina(localStorage.getItem('@QueroPet:pet_species') === 'dog' ? true : false)
         return
@@ -68,35 +112,32 @@ const CadastroPet: React.FC = () => {
         } else {
             localStorage.setItem('@QueroPet:pet_species','dog');
         }
-    },[speciesFelina]);
+    },[speciesFelina, speciesCanina]);
 
     const [speciesFemale, setSpeciesFemale] = useState( () => {
-           return localStorage.getItem('@QueroPet:pet_gender') === 'F' ? true : false
+           return pet.gender === 'F' ? true : false
         }
     );
 
     const [speciesMale, setSpeciesMale] = useState( () => {
-            return localStorage.getItem('@QueroPet:pet_species') === 'M' ? true : false
+            return pet.gender === 'M' ? true : false
         }
     );
 
     const setGender = (ele: any) => {
         localStorage.setItem('@QueroPet:pet_gender', ele.target.value)
-        console.log(ele.target.value)
         setSpeciesFemale(localStorage.getItem('@QueroPet:pet_species') === 'F' ? true : false)
         setSpeciesMale(localStorage.getItem('@QueroPet:pet_species') === 'M' ? true : false)
         return
     }
 
     useEffect(() => {
-        if(speciesFelina){
-            localStorage.setItem('@QueroPet:pet_species','cat');
+        if(speciesFemale){
+            localStorage.setItem('@QueroPet:pet_gender','F');
         } else {
-            localStorage.setItem('@QueroPet:pet_species','dog');
+            localStorage.setItem('@QueroPet:pet_gender','M');
         }
-    },[speciesFelina]);
-
-
+    },[speciesFemale]);
 
     const handleSubmit = useCallback(async (data: object) => {
         try {
@@ -118,7 +159,7 @@ const CadastroPet: React.FC = () => {
                 "gender": JSON.parse(localStorage.getItem('@QueroPet:pet_gender') || "{}"),
                 "species": JSON.parse(localStorage.getItem('@QueroPet:pet_species') || "{}")
             }, ...data }
-            await api.post(`/pets`, merged);
+            await api.put(`/pets/${id}`, merged);
             localStorage.setItem('@QueroPet:pet', JSON.stringify(merged));
             console.log(merged)
             history.push('/');
@@ -150,7 +191,7 @@ const CadastroPet: React.FC = () => {
 
             <img className="logo" src={logoImg} alt="QueroPet" />
                 <h1 className="title">Cadastro</h1>
-                
+
                 <ul>
                     <li><Link to='/cadastroInstituicao'>Meu Cadastro</Link></li>
                     <li><Link to='/cadastroInstituicao'>Alterar Senha</Link></li>
@@ -173,11 +214,11 @@ const CadastroPet: React.FC = () => {
                             <input type="file" id="file" name="filename" value="" />
                             <Button type="submit" name="sendPhoto" className="button button2">enviar</Button>
                         </div>
-                   
+
 
                         <div className="item" style={{ maxWidth: '600px' }}>
                             <span className="titleItemCard">nome </span>
-                            <Input name="name" placeholder="Nome" icon={MdPets} />
+                            <Input name="name" placeholder="Nome" defaultValue={pet.name} icon={MdPets} />
                         </div>
                         <div className="item divRadioButton">
                             <span className="titleItemCard">espécie:</span>
@@ -191,29 +232,29 @@ const CadastroPet: React.FC = () => {
                         <div className="item divRadioButton">
                             <span className="titleItemCard">gênero:</span>
                             <label>
-                                <input type="radio" name="gender" value="F" className="radio" onChange={setGender}  /> Fêmea
+                                <input type="radio" name="gender" value="F" onChange={setGender}  className="radio" defaultChecked={speciesFemale}/> Fêmea
                             </label>
                             <label>
-                                <input type="radio" name="gender" value="M" className="radio" onChange={setGender}  /> Macho
+                                <input type="radio" name="gender" value="M" onChange={setGender}  className="radio" checked={speciesMale}/> Macho
                             </label>
                         </div>
                         <div className="item" style={{ maxWidth: '300px' }}>
                             <span className="titleItemCard">Nascimento </span>
-                            <Input name="birth_day" placeholder="XX/XX/XXXX" icon={FaBirthdayCake} />
+                            <Input name="birth_day" placeholder="XX/XX/XXXX" defaultValue={pet.birth_day} icon={FaBirthdayCake} />
                         </div>
                         <div className="item" style={{ maxWidth: '600px' }}>
 
                             <span className="titleItemCard">raça </span>
-                            <Input name="breed" placeholder="Dálmata, SRD, outros." icon={FaDog} />
+                            <Input name="breed" placeholder="Dálmata, SRD, outros." defaultValue={pet.breed} icon={FaDog} />
                         </div>
                         <div className="item" style={{ maxWidth: '600px' }}>
 
                             <span className="titleItemCard">Pelagem </span>
-                            <Input name="coat" placeholder="Curta, Tricolor, Característica" icon={FaCat} />
+                            <Input name="coat" placeholder="Curta, Tricolor, Característica" defaultValue={pet.coat} icon={FaCat} />
                         </div>
                         <div className="item" style={{ maxWidth: '600px' }}>
                             <span className="titleItemCard">Informações </span>
-                            <TextArea name="info" placeholder=""   icon={AiOutlineInfoCircle}/>
+                            <TextArea name="info" placeholder=""  defaultValue={pet.info}  icon={AiOutlineInfoCircle}/>
                         </div>
                         <div style={{ maxWidth: '300px', border:'none' }}>
                         <Button type="submit" className="button">salvar</Button>
