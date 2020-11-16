@@ -34,6 +34,7 @@ export const PetList = styled(
   FlatList as new () => FlatList<Pet>,
 ).attrs({
   numColumns: 1,
+  initialNumToRender: 1,
 
 })`
   display: flex;
