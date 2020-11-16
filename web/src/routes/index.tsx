@@ -21,6 +21,7 @@ const Routes: React.FC = () => (
         <Route path="/dashboard" exact component={Dashboard} isPrivate />
         <Route path="/cadastroInstituicao" exact component={CadastroInstituicao}  isPrivate/>
         <Route path="/cadastroPet" exact component={CadastroPet}  isPrivate/>
+        <Route path="/cadastroPet/:id" exact component={CadastroPet}  isPrivate/>
         <Route path="/cardPet/:id" exact component={CardPet} isPrivate />
         <Route path="/alterarsenha" exact component={AlterarSenha} isPrivate /> 
     </Switch>

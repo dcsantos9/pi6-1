@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 import * as Yup from 'yup';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory,useLocation } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { Container, Content, AnimationContainer, Background, Image } from './styles';
@@ -17,28 +17,32 @@ import { MdPets } from "react-icons/md";
 import MainMenu from '../../components/MainMenu';
 import { AiOutlineFieldNumber, AiOutlineInfoCircle } from "react-icons/ai";
 
-interface CadastroPetFormData {
-    name: string;
-    species: string;
-    //particulars: string; //excluimos esse campo, trocamos por specie, peso, etc.
-    birth_day: string;
-    coat: string;
-    gender: string;
-    breed: string;
-    info: string;
-    avatar: string;
 
-    user_id: string;
-    created_at: Date;
-    updated_at: Date;
+interface User {
+    id: string;
 }
-
+interface Pet {
+    id: string;
+    name: string;
+    has_faved_by: User[];
+    has_asked_for_adoption: User[];
+    info: string;
+    header_name: string;
+    image: string;
+    species: string;
+    gender: string;
+    birth_day: string;
+    breed: string;
+    coat: string;
+}
 
 const CadastroPet: React.FC = () => {
      const formRef = useRef  <FormHandles>(null);
      const { addToast } = useToast();
      const history = useHistory();
+     const location = useLocation();
      const user = JSON.parse(localStorage.getItem('@QueroPet:user') || "{}");
+     const pet_id = location.pathname.split('/')[2];
 
 // esta fixo oq salvar
      localStorage.setItem('@QueroPet:pet_species', JSON.stringify("dog"));
@@ -96,7 +100,32 @@ const CadastroPet: React.FC = () => {
         }
     },[speciesFelina]);
 
+////////////////////// editar pet
+const [ pets, setPet ] = useState<Pet[]>(() => {
+    const storagedPets = localStorage.getItem('@QueroPet:pets');
+    if (storagedPets){
+        return JSON.parse(storagedPets);
+    }
+    return [];
+});
 
+
+
+useEffect(()=> {
+    localStorage.setItem('@QueroPet:pets', JSON.stringify(pets));
+}, [pets]);
+
+useEffect(()=>{
+    api.get(`pets/`).then(response => {
+        setPet(response.data);
+    });
+
+},[]);
+
+
+const pet =  pets.filter( (p) => (p.id === pet_id) )[0]; 
+  
+/////////////////////////
 
     const handleSubmit = useCallback(async (data: object) => {
         try {
@@ -172,12 +201,10 @@ const CadastroPet: React.FC = () => {
                             <Image src={'https://source.unsplash.com/user/erondu/600x400'}></Image>
                             <input type="file" id="file" name="filename" value="" />
                             <Button type="submit" name="sendPhoto" className="button button2">enviar</Button>
-                        </div>
-                   
-
+                        </div>                   
                         <div className="item" style={{ maxWidth: '600px' }}>
                             <span className="titleItemCard">nome </span>
-                            <Input name="name" placeholder="Nome" icon={MdPets} />
+                            <Input name="name" placeholder="Nome" icon={MdPets} defaultValue={pet.name} />
                         </div>
                         <div className="item divRadioButton">
                             <span className="titleItemCard">espécie:</span>
@@ -199,27 +226,27 @@ const CadastroPet: React.FC = () => {
                         </div>
                         <div className="item" style={{ maxWidth: '300px' }}>
                             <span className="titleItemCard">Nascimento </span>
-                            <Input name="birth_day" placeholder="XX/XX/XXXX" icon={FaBirthdayCake} />
+                            <Input name="birth_day" placeholder="XX/XX/XXXX" icon={FaBirthdayCake} defaultValue={pet.birth_day}/>
                         </div>
                         <div className="item" style={{ maxWidth: '600px' }}>
 
                             <span className="titleItemCard">raça </span>
-                            <Input name="breed" placeholder="Dálmata, SRD, outros." icon={FaDog} />
+                            <Input name="breed" placeholder="Dálmata, SRD, outros." icon={FaDog}  defaultValue={pet.breed}/>
                         </div>
                         <div className="item" style={{ maxWidth: '600px' }}>
 
                             <span className="titleItemCard">Pelagem </span>
-                            <Input name="coat" placeholder="Curta, Tricolor, Característica" icon={FaCat} />
+                            <Input name="coat" placeholder="Curta, Tricolor, Característica" icon={FaCat} defaultValue={pet.coat}/>
                         </div>
                         <div className="item" style={{ maxWidth: '600px' }}>
                             <span className="titleItemCard">Informações </span>
-                            <TextArea name="info" placeholder=""   icon={AiOutlineInfoCircle}/>
+                            <TextArea name="info" placeholder=""   icon={AiOutlineInfoCircle} defaultValue={pet.info}/>
                         </div>
-                        <div style={{ maxWidth: '300px', border:'none' }}>
-                        <Button type="submit" className="button">salvar</Button>
-                        <div className="button" style={{ float: "right" }}>
-                            <Link to="/home">voltar</Link>
-                        </div>
+                        <div className="divButtons">
+                            <Button type="submit" className="button">salvar</Button>
+                            <div className="button" style={{ float: "right" }}>
+                                <Link to="/home">excluir</Link>
+                            </div>
                         </div>
                     </Form>
                 </AnimationContainer>

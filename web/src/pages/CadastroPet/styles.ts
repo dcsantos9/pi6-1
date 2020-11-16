@@ -103,12 +103,12 @@ export const AnimationContainer = styled.div`
 
     }
     .button{
-        width: 45%;
+        width: 35%;
         height: 50px;
         padding: 0px;
     }
     .button2{
-        width: 150px;
+        width: 30%;
         height: 30px;
         padding: 0px;
     }
@@ -136,15 +136,6 @@ export const AnimationContainer = styled.div`
     }
     textarea
     {
-        // background: #FFFFFF;
-        // border-radius: 10px;
-        // padding: 10px;
-        // width: 100%;
-        // display: flex;
-        // align-items: center;
-        // & + div {
-        //     margin-top: 16px;
-        // }
         height: 100px;
         resize: vertical;
     }
@@ -191,6 +182,12 @@ export const AnimationContainer = styled.div`
      .title{
         color: #FF9000;
         }
+        .divButtons{
+            max-Width: 300px;
+             border:none;
+             display: flex;    
+             margin-left:120px;     
+        }
         @media (max-width: 800px) {    
             .item{
                  max-width:100% !important;
@@ -214,6 +211,9 @@ export const AnimationContainer = styled.div`
              }
              .divRadioButton {
                 flex-direction: row;
+             }
+             .divButtons{
+                margin-left:0px;
              }
          
          }   
