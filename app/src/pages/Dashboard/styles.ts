@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
+import { ButtonHTMLAttributes } from 'react';
 
 export const Header = styled.View`
   padding: 40px 24px 40px;
@@ -33,8 +34,11 @@ export const PetList = styled(
   FlatList as new () => FlatList<Pet>,
 ).attrs({
   numColumns: 1,
+
 })`
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
   padding: 0 10px;
 `;
 
@@ -44,6 +48,8 @@ export const Pet = styled.TouchableOpacity`
   border-radius: 5px;
   margin: 8px;
   flex: 1;
+  margin-bottom: 10px;
+
 `;
 
 export const PetImage = styled.Image`
