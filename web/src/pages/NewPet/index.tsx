@@ -48,59 +48,29 @@ interface Pet {
 
 interface CadastroPetFormData {
     name: string;
-    has_faved_by: User[];
-    has_asked_for_adoption: User[];
-    info: string;
-    header_name: string;
-    image: string;
     species: string;
     birth_day: string;
     coat: string;
     gender: string;
     breed: string;
+    info: string;
     avatar: string;
     user_id: string;
     created_at: Date;
     updated_at: Date;
 }
 
-const CadastroPet: React.FC = () => {
+
+const NewPet: React.FC = () => {
 
     const formRef = useRef  <FormHandles>(null);
     const { addToast } = useToast();
     const history = useHistory();
     const user = JSON.parse(localStorage.getItem('@QueroPet:user') || "{}");
-    const { id } = useParams();
+    console.log('aaaaaaaaa')
+    const [speciesFelina, setSpeciesFelina] = useState(false);
 
-    const [ pets, setPets ] = useState<Pet[]>(() => {
-        const storagedPets = localStorage.getItem('@QueroPet:pets');
-        if (storagedPets){
-            return JSON.parse(storagedPets);
-        }
-        return [];
-    });
-
-    useEffect(()=> {
-        localStorage.setItem('@QueroPet:pets', JSON.stringify(pets));
-    }, [pets]);
-
-    useEffect(()=>{
-        api.get(`pets/`).then(response => {
-            setPets(response.data);
-        });
-    },[]);
-
-    const pet = pets.filter( (p) => ( p.id === id ))[0];
-
-    const [speciesFelina, setSpeciesFelina] = useState( () => {
-           return pet.species === 'cat' ? true : false
-        }
-    );
-
-    const [speciesCanina, setSpeciesCanina] = useState( () => {
-        return pet.species === 'dog' ? true : false
-        }
-    );
+    const [speciesCanina, setSpeciesCanina] = useState(true);
 
     const setSpecies = (ele: any) => {
         localStorage.setItem('@QueroPet:pet_species', ele.target.value)
@@ -117,15 +87,9 @@ const CadastroPet: React.FC = () => {
         }
     },[speciesFelina, speciesCanina]);
 
-    const [speciesFemale, setSpeciesFemale] = useState( () => {
-           return pet.gender === 'F' ? true : false
-        }
-    );
+    const [speciesFemale, setSpeciesFemale] = useState(true);
 
-    const [speciesMale, setSpeciesMale] = useState( () => {
-            return pet.gender === 'M' ? true : false
-        }
-    );
+    const [speciesMale, setSpeciesMale] = useState(false);
 
     const setGender = (ele: any) => {
         localStorage.setItem('@QueroPet:pet_gender', ele.target.value)
@@ -162,7 +126,7 @@ const CadastroPet: React.FC = () => {
                 "species": localStorage.getItem('@QueroPet:pet_species')
             }, ...data }
 
-            await api.put(`/pets/${id}`, merged);
+            await api.post(`/pets`, merged);
             localStorage.setItem('@QueroPet:pet', JSON.stringify(merged));
             console.log(merged)
             history.push('/');
@@ -203,7 +167,7 @@ const CadastroPet: React.FC = () => {
                 <ul>
                     <li><Link to='/novoPet'>Adicionar Novo Pet</Link></li>
                     <li><Link to='/'>Meus Pets</Link></li>
-                    <li><Link to='/home/pedidosadocao'>Pedidos de Adoção</Link></li>
+                    <li><Link to='/'>Pedidos de Adoção</Link></li>
                 </ul>
 
 
@@ -221,7 +185,7 @@ const CadastroPet: React.FC = () => {
 
                         <div className="item" style={{ maxWidth: '600px' }}>
                             <span className="titleItemCard">nome </span>
-                            <Input name="name" placeholder="Nome" defaultValue={pet.name} icon={MdPets} />
+                            <Input name="name" placeholder="Nome" icon={MdPets} />
                         </div>
                         <div className="item divRadioButton">
                             <span className="titleItemCard">espécie:</span>
@@ -243,21 +207,21 @@ const CadastroPet: React.FC = () => {
                         </div>
                         <div className="item" style={{ maxWidth: '300px' }}>
                             <span className="titleItemCard">Nascimento </span>
-                            <Input name="birth_day" placeholder="XX/XX/XXXX" defaultValue={pet.birth_day} icon={FaBirthdayCake} />
+                            <Input name="birth_day" placeholder="XX/XX/XXXX" icon={FaBirthdayCake} />
                         </div>
                         <div className="item" style={{ maxWidth: '600px' }}>
 
                             <span className="titleItemCard">raça </span>
-                            <Input name="breed" placeholder="Dálmata, SRD, outros." defaultValue={pet.breed} icon={FaDog} />
+                            <Input name="breed" placeholder="Dálmata, SRD, outros." icon={FaDog} />
                         </div>
                         <div className="item" style={{ maxWidth: '600px' }}>
 
                             <span className="titleItemCard">Pelagem </span>
-                            <Input name="coat" placeholder="Curta, Tricolor, Característica" defaultValue={pet.coat} icon={FaCat} />
+                            <Input name="coat" placeholder="Curta, Tricolor, Característica" icon={FaCat} />
                         </div>
                         <div className="item" style={{ maxWidth: '600px' }}>
                             <span className="titleItemCard">Informações </span>
-                            <TextArea name="info" placeholder=""  defaultValue={pet.info}  icon={AiOutlineInfoCircle}/>
+                            <TextArea name="info" placeholder="" icon={AiOutlineInfoCircle}/>
                         </div>
                         <div style={{ maxWidth: '300px', border:'none' }}>
                         <Button type="submit" className="button">salvar</Button>
@@ -274,4 +238,4 @@ const CadastroPet: React.FC = () => {
     );
 
 };
-export default CadastroPet;
+export default NewPet;

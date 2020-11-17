@@ -1,10 +1,9 @@
-import React, { useCallback, useRef, useContext } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { Container, Content, AnimationContainer, Background, Image } from './styles';
-import { useAuth, AuthProvider } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 import Input from '../../components/Input';
 import TextArea from '../../components/TextArea';
@@ -37,8 +36,17 @@ interface CadastroInstituicaoFormData {
 const CadastroInstituicao: React.FC = () => {
     const formRef = useRef<FormHandles>(null);
     const { addToast } = useToast();
+
+
     const history = useHistory();
     const user = JSON.parse(localStorage.getItem('@QueroPet:user') || "{}");
+
+    const [ phoneType, setPhoneType ] = useState(user.phone_type);
+
+    useEffect(()=> {
+        localStorage.setItem('@QueroPet:user_phone_type', phoneType);
+    }, [phoneType]);
+
 
     const handleSubmit = useCallback(async (data: object) => {
         try {
@@ -64,8 +72,20 @@ const CadastroInstituicao: React.FC = () => {
             await schema.validate(data, {
                 abortEarly: false,
             });
-            await api.put(`/users/${user.id}`, data);
+
+            if (localStorage.getItem('@QueroPet:user_phone_type') === "trabalho") {
+                user.phone_type = "work"
+            }
+
+            if (localStorage.getItem('@QueroPet:user_phone_type') === "celular") {
+                user.phone_type = "mobile"
+            }
+
+            if  (localStorage.getItem('@QueroPet:user_phone_type') === "residencial") {
+                user.phone_type = "home"
+            }
             const merged = { ...user, ...data }
+            await api.put(`/users/${user.id}`, merged);
             localStorage.setItem('@QueroPet:user', JSON.stringify(merged));
             history.push('/');
 
@@ -84,19 +104,16 @@ const CadastroInstituicao: React.FC = () => {
             addToast({
                 type: 'error',
                 title: 'Erro ao salvar',
-                description: 'preencha corretamente todos os campos obrigatórios',
+                description: 'preencha corretamente todos os campos obrigatórios' +err,
+
             });
         }
 
     }, [addToast, history]);
 
-    const cnpj_radio_selected = user.social_id_type === 'cnpj' ? true : false;
-    const cpf_radio_selected = user.social_id_type === 'cpf' ? true : false;
-
     const phone_type_work = user.phone_type === 'work' ? true : false;
     const phone_type_mobile = user.phone_type === 'mobile' ? true : false;
     const phone_type_home = user.phone_type === 'home' ? true : false;
-
 
     return (
         <Container>
@@ -104,19 +121,19 @@ const CadastroInstituicao: React.FC = () => {
 
                 <img className="logo" src={logoImg} alt="QueroPet" />
                 <h1 className="title">Cadastro</h1>
-                
+
                 <ul>
                     <li><Link to='/cadastroInstituicao'>Meu Cadastro</Link></li>
                     <li><Link to='/alterarsenha'>Alterar Senha</Link></li>
                 </ul>
                 <h1>Pets</h1>
                 <ul>
-                    <li><Link to='/cadastropet'>Adicionar Novo Pet</Link></li>
+                    <li><Link to='/novoPet'>Adicionar Novo Pet</Link></li>
                     <li><Link to='/'>Meus Pets</Link></li>
                     <li><Link to='/home/pedidosadocao'>Pedidos de Adoção</Link></li>
                 </ul>
 
-                
+
 
             </MainMenu>
             <Content>
@@ -136,13 +153,6 @@ const CadastroInstituicao: React.FC = () => {
                         <div className="item" style={{ maxWidth: '300px' }}>
                             <span >CNPJ</span>
                             <Input name="social_id" defaultValue={user.social_id} placeholder="00.000.000/0000-00" icon={FaRegAddressCard} />
-                            
-                            {/* <label style={{minWidth: '100px'}}>
-                                <input type="radio" defaultValue="CNPJ" className="radio" checked={cnpj_radio_selected} /> CNPJ
-                            </label>
-                            <label style={{minWidth: '100px'}}>
-                                <input type="radio" defaultValue="CPF" className="radio" checked={cpf_radio_selected} /> CPF
-                            </label> */}
 
                         </div>
                         <div className="item" style={{ maxWidth: '600px' }}>
@@ -157,8 +167,8 @@ const CadastroInstituicao: React.FC = () => {
 
                         <div className="item" style={{ maxWidth: '300px' }}>
                             <span>Telefone</span>
-                            <Input name="phone" defaultValue={user.phone} placeholder="(XX) XXXXX-XXXX" icon={FiPhone} />
-                            <select>
+                            <Input name="phone" defaultValue={user.phone}  placeholder="(XX) XXXXX-XXXX" icon={FiPhone} />
+                            <select onChange={ (obj) => ( setPhoneType(obj.target.value))}>
                                 <option key="MOBILE" defaultValue="MOBILE" selected={phone_type_mobile}>celular</option>
                                 <option key="HOME" defaultValue="HOME" selected={phone_type_home}>residencial</option>
                                 <option key="WORK" defaultValue="WORK" selected={phone_type_work}>trabalho</option>

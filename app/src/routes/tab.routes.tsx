@@ -4,8 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Icon from 'react-native-vector-icons/Feather';
 import Dashboard from '../pages/Dashboard';
-//import Favorites from '../pages/CadastroInstituicao';
-//import Orders from '../pages/Dashboard';
+import Orders from '../pages/Orders';
+import Favorites from '../pages/Favorites';
 
 const Tab = createBottomTabNavigator();
 
@@ -38,7 +38,7 @@ const TabRoutes: React.FC = () => (
         ),
         title: 'Pedidos',
       }}
-      component={Dashboard}
+      component={Orders}
     />
 
     <Tab.Screen
@@ -49,7 +49,7 @@ const TabRoutes: React.FC = () => (
         ),
         title: 'Favoritos',
       }}
-      component={Dashboard}
+      component={Favorites}
     />
   </Tab.Navigator>
 );

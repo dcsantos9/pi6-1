@@ -51,8 +51,8 @@ interface Pet {
     gender: string;
 }
 
-const Home: React.FC = () => {
-    const { signOut } = useAuth();
+const Orders: React.FC = () => {
+    const { signOut, user } = useAuth();
     const navigation = useNavigation();
     const [ pets, setPets ] = useState<Pet[]>(() => {
         /*const storagedPets = localStorage.getItem('@QueroPet:pets');
@@ -70,15 +70,7 @@ const Home: React.FC = () => {
   
 
     useEffect(()=>{
-        async function loadPets(): Promise<void> {
-            const response = await api.get(`pets/`);
-            setPets(response.data);
-            
-        }
-        
-       
-        loadPets();
-
+            setPets(user.candidate_pets);           
     },[]);
 
     return (
@@ -115,4 +107,4 @@ const Home: React.FC = () => {
       </Container>
     );
 }
-export default Home;
+export default Orders;
